@@ -35,7 +35,7 @@ void main() {
     WidgetsFlutterBinding.ensureInitialized();
 
     ...
-    await UserOrient.configure(
+    UserOrient.configure(
         apiKey: 'YOUR_API_KEY',
 
         // All fields are optional, use `User.anonymous()` if you don't have any user information
