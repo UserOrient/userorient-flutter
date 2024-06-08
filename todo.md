@@ -1,0 +1,7 @@
+- Translate to multiple languages
+- Reorder features when voted/upvoted
+- Prevent dark and light mode collision, handle theming internally, see wiredash
+- Teklif et buttonu borderi hereket etsin 
+- Show tip only once
+- implement cache
+- Add icons to locally
