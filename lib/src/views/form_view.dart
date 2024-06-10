@@ -42,14 +42,6 @@ class FormViewState extends State<FormView> {
           const Row(
             children: [
               SizedBox(width: 24.0),
-              // emoji
-              Text(
-                '📝',
-                style: TextStyle(
-                  fontSize: 28.0,
-                ),
-              ),
-              SizedBox(width: 8.0),
               Text(
                 'Təklif göndər',
                 style: TextStyle(

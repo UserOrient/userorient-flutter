@@ -13,8 +13,27 @@ import 'package:userorient_flutter/src/widgets/tip_card.dart';
 import 'package:userorient_flutter/src/widgets/watermark.dart';
 import 'package:userorient_flutter/userorient_flutter.dart';
 
-class BoardView extends StatelessWidget {
+class BoardView extends StatefulWidget {
   const BoardView({super.key});
+
+  @override
+  State<BoardView> createState() => _BoardViewState();
+}
+
+class _BoardViewState extends State<BoardView> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +43,9 @@ class BoardView extends StatelessWidget {
         return AnnotatedRegion(
           value: SystemUiOverlayStyle.light,
           child: Scaffold(
+            floatingActionButton: _RequestFeature(
+              controller: _scrollController,
+            ),
             body: Stack(
               children: [
                 SvgPicture.network(
@@ -42,83 +64,82 @@ class BoardView extends StatelessWidget {
                   project: project,
                 ),
                 Positioned(
-                  child: DraggableScrollableSheet(
-                    initialChildSize: 0.85,
-                    minChildSize: 0.85,
-                    maxChildSize: .85,
-                    builder: (context, scrollController) {
-                      return Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(16.0),
-                            topRight: Radius.circular(16.0),
-                          ),
-                        ),
-                        child: ValueListenableBuilder(
-                          valueListenable: UserOrient.features,
-                          builder: (context, List<Feature>? features, _) {
-                            features ??= List.generate(10, (index) {
-                              return Feature.skeleton();
-                            });
+                  top: MediaQuery.of(context).padding.top + 68.0,
+                  left: 0.0,
+                  right: 0.0,
+                  bottom: 0.0,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16.0),
+                        topRight: Radius.circular(16.0),
+                      ),
+                    ),
+                    child: ValueListenableBuilder(
+                      valueListenable: UserOrient.features,
+                      builder: (context, List<Feature>? features, _) {
+                        features ??= List.generate(10, (index) {
+                          return Feature.skeleton();
+                        });
 
-                            return ListView(
-                              controller: scrollController,
-                              padding: const EdgeInsets.only(
-                                left: 16.0,
-                                right: 16.0,
-                                top: 20.0,
-                                bottom: 80.0,
+                        return SingleChildScrollView(
+                          padding: const EdgeInsets.only(
+                            left: 16.0,
+                            right: 16.0,
+                            top: 20.0,
+                            bottom: 80.0,
+                          ),
+                          controller: _scrollController,
+                          child: Column(
+                            children: [
+                              _List(
+                                features: features,
                               ),
-                              children: [
-                                _List(
-                                  features: features,
-                                ),
-                                const SizedBox(height: 56.0),
-                                const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 16.0,
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              'Axtardığınızı tapmadınız?',
-                                              style: TextStyle(
-                                                fontSize: 16.0,
-                                                height: 24 / 16,
-                                                color: Color(0xff2F313F),
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(height: 8.0),
-                                            Text(
-                                              'Siyahıda olmayan təkliflərinzi bizə göndərin, ən yaxın zamanda əlavə edək 👇🏻',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 14.0,
-                                                height: 20 / 14,
-                                                color: Color(0xff818391),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                              const SizedBox(height: 56.0),
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 16.0,
                                       ),
-                                      SizedBox(height: 16.0),
-                                      _RequestButton(),
-                                      SizedBox(height: 24.0),
-                                    ],
-                                  ),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Axtardığınızı tapmadınız?',
+                                            style: TextStyle(
+                                              fontSize: 16.0,
+                                              height: 24 / 16,
+                                              color: Color(0xff2F313F),
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SizedBox(height: 8.0),
+                                          Text(
+                                            'Siyahıda olmayan təkliflərinzi bizə göndərin, ən yaxın zamanda əlavə edək 👇🏻',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 14.0,
+                                              height: 20 / 14,
+                                              color: Color(0xff818391),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 16.0),
+                                    _RequestButton(),
+                                    SizedBox(height: 24.0),
+                                  ],
                                 ),
-                              ],
-                            );
-                          },
-                        ),
-                      );
-                    },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 const Positioned(
@@ -308,10 +329,15 @@ class _RequestButton extends StatelessWidget {
         onPressed: () {
           UserOrient.openForm(context);
         },
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Icon(
+              Icons.add_circle_rounded,
+              color: Colors.white,
+            ),
+            const SizedBox(width: 8.0),
+            const Text(
               'Təklif et',
               style: TextStyle(
                 color: Colors.white,
@@ -319,14 +345,75 @@ class _RequestButton extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            SizedBox(width: 8.0),
-            Text(
-              '📝',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RequestFeature extends StatefulWidget {
+  final ScrollController controller;
+
+  const _RequestFeature({
+    required this.controller,
+  });
+
+  @override
+  State<_RequestFeature> createState() => _RequestFeatureState();
+}
+
+class _RequestFeatureState extends State<_RequestFeature> {
+  bool _isVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    final bool hide = widget.controller.position.maxScrollExtent - 104 >
+        widget.controller.position.pixels;
+
+    if (hide) {
+      setState(() {
+        _isVisible = true;
+      });
+    } else {
+      setState(() {
+        _isVisible = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      duration: kThemeAnimationDuration,
+      opacity: _isVisible ? 1.0 : 0.0,
+      child: AnimatedPadding(
+        duration: kThemeAnimationDuration,
+        padding: EdgeInsets.only(
+          bottom: _isVisible ? 32 : 0,
+        ),
+        child: FloatingActionButton.extended(
+          backgroundColor: const Color(0xff121212),
+          onPressed: () {
+            UserOrient.openForm(context);
+          },
+          label: const Text(
+            'Təklif et',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          icon: const Icon(
+            Icons.add_circle_rounded,
+            color: Colors.white,
+          ),
         ),
       ),
     );

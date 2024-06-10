@@ -147,9 +147,7 @@ class UserOrient {
     );
 
     logUO(
-      !feature.voted
-          ? 'Upvoted feature "${feature.title}"'
-          : 'Removed upvote from feature "${feature.title}"',
+      !feature.voted ? 'Upvoted' : 'Removed upvote',
       emoji: !feature.voted ? '👍' : '😶‍🌫️',
     );
   }
