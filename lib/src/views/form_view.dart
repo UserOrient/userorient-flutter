@@ -30,45 +30,47 @@ class FormViewState extends State<FormView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: stringToColor(
-        UserOrient.project.value?.color,
-      ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).padding.top + 8.0,
-          ),
-          const Row(
-            children: [
-              SizedBox(width: 24.0),
-              Text(
-                'Təklif göndər',
-                style: TextStyle(
+    return Theme(
+      data: ThemeData.light(),
+      child: Scaffold(
+        backgroundColor: stringToColor(
+          UserOrient.project.value?.color,
+        ),
+        body: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).padding.top + 8.0,
+            ),
+            const Row(
+              children: [
+                SizedBox(width: 24.0),
+                Text(
+                  'Təklif göndər',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Spacer(),
+                StyledCloseButton(),
+                SizedBox(width: 20.0),
+              ],
+            ),
+            const SizedBox(height: 20.0),
+            Expanded(
+              child: Container(
+                decoration: const BoxDecoration(
                   color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.w600,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16.0),
+                    topRight: Radius.circular(16.0),
+                  ),
                 ),
-              ),
-              Spacer(),
-              StyledCloseButton(),
-              SizedBox(width: 20.0),
-            ],
-          ),
-          const SizedBox(height: 20.0),
-          Expanded(
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16.0),
-                  topRight: Radius.circular(16.0),
-                ),
-              ),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Padding(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Padding(
                         padding: const EdgeInsets.all(24.0),
                         child: Column(
                           children: [
@@ -80,7 +82,7 @@ class FormViewState extends State<FormView> {
                               autoFocus: true,
                             ),
                           ],
-                        )
+                        ),
                         // TextField(
                         //   minLines: 5,
                         //   maxLines: 8,
@@ -114,57 +116,106 @@ class FormViewState extends State<FormView> {
                         //     ),
                         //   ),
                         // ),
-                        ),
-                  ),
-                  const SizedBox(height: 24.0),
-                  Container(
-                    height: 56.0,
-                    margin: const EdgeInsets.symmetric(horizontal: 24.0),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: const Color(0xff121212),
-                      borderRadius: BorderRadius.circular(12.0),
+                      ),
                     ),
-                    child: TextButton(
-                      onPressed: () {
-                        setState(() {
-                          _isLoading = true;
-                        });
-
-                        UserOrient.submitForm(
-                          content: _controller.text,
-                        ).then((_) {
+                    const SizedBox(height: 24.0),
+                    Container(
+                      height: 56.0,
+                      margin: const EdgeInsets.symmetric(horizontal: 24.0),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: const Color(0xff121212),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: TextButton(
+                        onPressed: () {
                           setState(() {
-                            _isLoading = false;
-                            Navigator.pop(context);
+                            _isLoading = true;
                           });
-                        });
-                      },
-                      child: _isLoading
-                          ? const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 24.0),
-                              child: LinearProgressIndicator(
-                                valueColor:
-                                    AlwaysStoppedAnimation(Colors.white),
-                                backgroundColor: Colors.transparent,
+
+                          UserOrient.submitForm(
+                            content: _controller.text,
+                          ).then((_) {
+                            setState(() {
+                              _isLoading = false;
+                              Navigator.pop(context);
+
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(24.0),
+                                    ),
+                                    content: const Padding(
+                                      padding: EdgeInsets.only(top: 24.0),
+                                      child: Text(
+                                        'Təklifiniz göndərildi. Təşəkkürlər!',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    actionsPadding: const EdgeInsets.only(
+                                      bottom: 24.0,
+                                      top: 8.0,
+                                    ),
+                                    actions: [
+                                      Container(
+                                        height: 56.0,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 24.0),
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        child: TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text(
+                                            'Bağla',
+                                            style: TextStyle(
+                                              color: Color(0xff121212),
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            });
+                          });
+                        },
+                        child: _isLoading
+                            ? const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 24.0),
+                                child: LinearProgressIndicator(
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.white),
+                                  backgroundColor: Colors.transparent,
+                                ),
+                              )
+                            : const Text(
+                                'Göndər',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            )
-                          : const Text(
-                              'Göndər',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                      ),
                     ),
-                  ),
-                  const BottomPadding(),
-                ],
+                    const BottomPadding(),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

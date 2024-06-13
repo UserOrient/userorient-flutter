@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
@@ -97,44 +98,44 @@ class _BoardViewState extends State<BoardView> {
                                 features: features,
                               ),
                               const SizedBox(height: 56.0),
-                              const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 16.0,
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            'Axtardığınızı tapmadınız?',
-                                            style: TextStyle(
-                                              fontSize: 16.0,
-                                              height: 24 / 16,
-                                              color: Color(0xff2F313F),
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          SizedBox(height: 8.0),
-                                          Text(
-                                            'Siyahıda olmayan təkliflərinzi bizə göndərin, ən yaxın zamanda əlavə edək 👇🏻',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 14.0,
-                                              height: 20 / 14,
-                                              color: Color(0xff818391),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(height: 16.0),
-                                    _RequestButton(),
-                                    SizedBox(height: 24.0),
-                                  ],
-                                ),
-                              ),
+                              // const Padding(
+                              //   padding: EdgeInsets.all(8.0),
+                              //   child: Column(
+                              //     children: [
+                              //       Padding(
+                              //         padding: EdgeInsets.symmetric(
+                              //           horizontal: 16.0,
+                              //         ),
+                              //         child: Column(
+                              //           children: [
+                              //             Text(
+                              //               'Axtardığınızı tapmadınız?',
+                              //               style: TextStyle(
+                              //                 fontSize: 16.0,
+                              //                 height: 24 / 16,
+                              //                 color: Color(0xff2F313F),
+                              //                 fontWeight: FontWeight.bold,
+                              //               ),
+                              //             ),
+                              //             SizedBox(height: 8.0),
+                              //             Text(
+                              //               'Siyahıda olmayan təkliflərinzi bizə göndərin, ən yaxın zamanda əlavə edək 👇🏻',
+                              //               textAlign: TextAlign.center,
+                              //               style: TextStyle(
+                              //                 fontSize: 14.0,
+                              //                 height: 20 / 14,
+                              //                 color: Color(0xff818391),
+                              //               ),
+                              //             ),
+                              //           ],
+                              //         ),
+                              //       ),
+                              //       SizedBox(height: 16.0),
+                              //       _RequestButton(),
+                              //       SizedBox(height: 24.0),
+                              //     ],
+                              //   ),
+                              // ),
                             ],
                           ),
                         );
@@ -208,20 +209,45 @@ class _Header extends StatelessWidget {
                       //           height: 40.0,
                       //         ),
 
-                      if (project?.logoUrl != null &&
-                          !project!.logoUrl!.contains('null'))
-                        project!.logoUrl!.contains('.svg') == false
-                            ? ImageFade(
-                                image: NetworkImage(project!.logoUrl!),
-                              )
-                            : ImageFade(
-                                image: svg.Svg(
-                                  project!.logoUrl!,
-                                  source: svg.SvgSource.network,
-                                  size: const Size(40.0, 40.0),
+                      Row(
+                        children: [
+                          if (project?.logoUrl != null &&
+                              !project!.logoUrl!.contains('null')) ...[
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: project!.logoUrl!.contains('.svg') == false
+                                  ? ImageFade(
+                                      image: NetworkImage(project!.logoUrl!),
+                                    )
+                                  : ImageFade(
+                                      image: svg.Svg(
+                                        project!.logoUrl!,
+                                        source: svg.SvgSource.network,
+                                        size: const Size(40.0, 40.0),
+                                      ),
+                                      height: 40.0,
+                                      width: 40.0,
+                                    ),
+                            ),
+                            const SizedBox(width: 12.0),
+                          ],
+                          AnimatedOpacity(
+                            duration: kThemeAnimationDuration,
+                            opacity: project != null ? 1.0 : 0.0,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 4.0),
+                              child: Text(
+                                project?.name ?? '',
+                                style: const TextStyle(
+                                  fontSize: 24.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
                                 ),
-                                height: 40.0,
                               ),
+                            ),
+                          ),
+                        ],
+                      ),
                       const Spacer(),
                       const StyledCloseButton(),
                       const SizedBox(width: 8.0),
@@ -373,17 +399,20 @@ class _RequestFeatureState extends State<_RequestFeature> {
   }
 
   void _scrollListener() {
-    final bool hide = widget.controller.position.maxScrollExtent - 104 >
-        widget.controller.position.pixels;
-
-    if (hide) {
-      setState(() {
-        _isVisible = true;
-      });
+    // hide when scrolling down, show when scrolling up
+    if (widget.controller.position.userScrollDirection ==
+        ScrollDirection.reverse) {
+      if (_isVisible) {
+        setState(() {
+          _isVisible = false;
+        });
+      }
     } else {
-      setState(() {
-        _isVisible = false;
-      });
+      if (!_isVisible) {
+        setState(() {
+          _isVisible = true;
+        });
+      }
     }
   }
 
