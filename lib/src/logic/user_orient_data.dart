@@ -98,17 +98,13 @@ class UserOrientData {
       userId: userId,
     );
 
-    await http
-        .post(
+    await http.post(
       Uri.parse(endpoint.url),
       headers: {
         'Content-Type': 'application/json',
       },
       body: jsonEncode(endpoint.body),
-    )
-        .then((response) {
-      logUO('Feature request sent: ${response.body}', emoji: '🚀');
-    });
+    );
   }
 
   static Future<UserUUID> resolveUserUuid({
@@ -140,5 +136,10 @@ class UserOrientData {
     }
 
     return uuid;
+  }
+
+  static Future<void> logout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('user_orient_uuid');
   }
 }

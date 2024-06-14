@@ -74,6 +74,19 @@ class UserOrient {
     _hardReset = hardReset;
   }
 
+  static Future<void> logout() async {
+    await UserOrientData.logout();
+
+    _isInitialized = false;
+    _apiKey = null;
+    _user = null;
+    userUuid = null;
+
+    features.value = null;
+
+    logUO('Logged out', emoji: '🚪');
+  }
+
   static Future<void> _initialize() async {
     if (_hardReset) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();

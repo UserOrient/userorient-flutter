@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:userorient_flutter/src/logic/user_orient.dart';
 import 'package:userorient_flutter/src/utilities/helper_functions.dart';
@@ -41,6 +42,8 @@ class FormViewState extends State<FormView> {
             SizedBox(
               height: MediaQuery.of(context).padding.top + 8.0,
             ),
+            if (defaultTargetPlatform != TargetPlatform.iOS)
+              const SizedBox(height: 12.0),
             const Row(
               children: [
                 SizedBox(width: 24.0),

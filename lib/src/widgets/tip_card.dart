@@ -53,6 +53,7 @@ class _TipCardState extends State<TipCard> {
               Expanded(
                 child: Text(
                   'Sizin üçün daha önəmli olan yeniliklərə səs verin ki, onları daha tez tətbiq edək.',
+                  // 'Vote for the features that matter most to you so we can implement them faster.',
                   style: TextStyle(
                     fontSize: 14.0,
                     height: 20 / 14,

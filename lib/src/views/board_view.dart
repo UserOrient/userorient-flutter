@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -44,31 +45,27 @@ class _BoardViewState extends State<BoardView> {
         return AnnotatedRegion(
           value: SystemUiOverlayStyle.light,
           child: Scaffold(
+            backgroundColor: stringToColor(project?.color),
             floatingActionButton: _RequestFeature(
               controller: _scrollController,
             ),
-            body: Stack(
+            body: Column(
               children: [
                 SvgPicture.network(
                   // TODO: add upvote icon from assets
                   'https://kamranbekirov.com/upvote.svg',
+                  width: .1,
                 ),
-                AnimatedContainer(
-                  duration: kThemeAnimationDuration,
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: stringToColor(project?.color),
-                  ),
+                SizedBox(
+                  height: MediaQuery.of(context).padding.top + 8.0,
                 ),
+                if (defaultTargetPlatform != TargetPlatform.iOS)
+                  const SizedBox(height: 12.0),
                 _Header(
                   project: project,
                 ),
-                Positioned(
-                  top: MediaQuery.of(context).padding.top + 68.0,
-                  left: 0.0,
-                  right: 0.0,
-                  bottom: 0.0,
+                const SizedBox(height: 20.0),
+                Expanded(
                   child: Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -92,63 +89,15 @@ class _BoardViewState extends State<BoardView> {
                             bottom: 80.0,
                           ),
                           controller: _scrollController,
-                          child: Column(
-                            children: [
-                              _List(
-                                features: features,
-                              ),
-                              const SizedBox(height: 56.0),
-                              // const Padding(
-                              //   padding: EdgeInsets.all(8.0),
-                              //   child: Column(
-                              //     children: [
-                              //       Padding(
-                              //         padding: EdgeInsets.symmetric(
-                              //           horizontal: 16.0,
-                              //         ),
-                              //         child: Column(
-                              //           children: [
-                              //             Text(
-                              //               'Axtardığınızı tapmadınız?',
-                              //               style: TextStyle(
-                              //                 fontSize: 16.0,
-                              //                 height: 24 / 16,
-                              //                 color: Color(0xff2F313F),
-                              //                 fontWeight: FontWeight.bold,
-                              //               ),
-                              //             ),
-                              //             SizedBox(height: 8.0),
-                              //             Text(
-                              //               'Siyahıda olmayan təkliflərinzi bizə göndərin, ən yaxın zamanda əlavə edək 👇🏻',
-                              //               textAlign: TextAlign.center,
-                              //               style: TextStyle(
-                              //                 fontSize: 14.0,
-                              //                 height: 20 / 14,
-                              //                 color: Color(0xff818391),
-                              //               ),
-                              //             ),
-                              //           ],
-                              //         ),
-                              //       ),
-                              //       SizedBox(height: 16.0),
-                              //       _RequestButton(),
-                              //       SizedBox(height: 24.0),
-                              //     ],
-                              //   ),
-                              // ),
-                            ],
+                          child: _List(
+                            features: features,
                           ),
                         );
                       },
                     ),
                   ),
                 ),
-                const Positioned(
-                  bottom: 0.0,
-                  right: 0.0,
-                  left: 0.0,
-                  child: Watermark(),
-                ),
+                const Watermark(),
               ],
             ),
           ),
@@ -174,143 +123,133 @@ class _Header extends StatelessWidget {
           return const SizedBox();
         }
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).padding.top,
-            ),
-            const SizedBox(height: 8.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 24.0, right: 12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        return Padding(
+          padding: const EdgeInsets.only(left: 24.0, right: 12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      // Text(
-                      //   _getHeaderText(user),
-                      //   style: const TextStyle(
-                      //     fontSize: 22.0,
-                      //     height: 32 / 22,
-                      //     color: Colors.white,
-                      //     fontWeight: FontWeight.w700,
-                      //   ),
-                      // ),
-                      // if (project?.logoUrl != null &&
-                      //     !project!.logoUrl!.contains('null'))
-                      //   project!.logoUrl!.contains('.svg')
-                      //       ? SvgPicture.network(
-                      //           project!.logoUrl!,
-                      //           height: 40.0,
-                      //         )
-                      //       : Image.network(
-                      //           project!.logoUrl!,
-                      //           height: 40.0,
-                      //         ),
-
-                      Row(
-                        children: [
-                          if (project?.logoUrl != null &&
-                              !project!.logoUrl!.contains('null')) ...[
-                            Container(
-                              // a border to make it differentiate from same background color
-                              decoration: BoxDecoration(
-                                // color: Colors.white,
-                                borderRadius: BorderRadius.circular(11.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    spreadRadius: 4,
-                                    blurRadius: 8,
-                                    offset: const Offset(
-                                      -2,
-                                      2,
-                                    ), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              padding: const EdgeInsets.all(1.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: project!.logoUrl!.contains('.svg') ==
-                                        false
-                                    ? ImageFade(
-                                        image: NetworkImage(project!.logoUrl!),
-                                      )
-                                    : ImageFade(
-                                        image: svg.Svg(
-                                          project!.logoUrl!,
-                                          source: svg.SvgSource.network,
-                                          size: const Size(40.0, 40.0),
-                                        ),
-                                        height: 40.0,
-                                        width: 40.0,
-                                      ),
-                              ),
-                            ),
-                            const SizedBox(width: 12.0),
-                          ],
-                          AnimatedOpacity(
-                            duration: kThemeAnimationDuration,
-                            opacity: project != null ? 1.0 : 0.0,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 4.0),
-                              child: Text(
-                                project?.name ?? '',
-                                style: const TextStyle(
-                                  fontSize: 24.0,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      const StyledCloseButton(),
-                      const SizedBox(width: 8.0),
-                    ],
-                  ),
-                  // const SizedBox(height: 8.0),
-                  // const Padding(
-                  //   padding: EdgeInsets.only(right: 56.0),
-                  //   child: Text(
-                  //     'Aşağıdaki yeniliklərdən hansılarını daha əvvəl görmək istərdiniz?',
-                  //     style: TextStyle(
-                  //       fontSize: 18.0,
-                  //       height: 24 / 18,
-                  //       fontWeight: FontWeight.w500,
-                  //       color: Colors.white,
-                  //     ),
+                  // Text(
+                  //   _getHeaderText(user),
+                  //   style: const TextStyle(
+                  //     fontSize: 22.0,
+                  //     height: 32 / 22,
+                  //     color: Colors.white,
+                  //     fontWeight: FontWeight.w700,
                   //   ),
                   // ),
-                  // const SizedBox(height: 28.0),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(right: 16.0),
-                  //   child: Row(
-                  //     children: [
-                  //       if (project?.logoUrl != null &&
-                  //           !project!.logoUrl!.contains('null'))
-                  //         project!.logoUrl!.contains('.svg')
-                  //             ? SvgPicture.network(
-                  //                 project!.logoUrl!,
-                  //                 height: 40.0,
-                  //               )
-                  //             : Image.network(
-                  //                 project!.logoUrl!,
-                  //                 height: 40.0,
-                  //               ),
-                  //       const Spacer(),
-                  //       const _RequestButton(),
-                  //     ],
-                  //   ),
-                  // )
+                  // if (project?.logoUrl != null &&
+                  //     !project!.logoUrl!.contains('null'))
+                  //   project!.logoUrl!.contains('.svg')
+                  //       ? SvgPicture.network(
+                  //           project!.logoUrl!,
+                  //           height: 40.0,
+                  //         )
+                  //       : Image.network(
+                  //           project!.logoUrl!,
+                  //           height: 40.0,
+                  //         ),
+
+                  Row(
+                    children: [
+                      if (project?.logoUrl != null &&
+                          !project!.logoUrl!.contains('null')) ...[
+                        Container(
+                          // a border to make it differentiate from same background color
+                          decoration: BoxDecoration(
+                            // color: Colors.white,
+                            borderRadius: BorderRadius.circular(11.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                spreadRadius: 4,
+                                blurRadius: 8,
+                                offset: const Offset(
+                                  -2,
+                                  2,
+                                ), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          padding: const EdgeInsets.all(1.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: project!.logoUrl!.contains('.svg') == false
+                                ? ImageFade(
+                                    image: NetworkImage(project!.logoUrl!),
+                                  )
+                                : ImageFade(
+                                    image: svg.Svg(
+                                      project!.logoUrl!,
+                                      source: svg.SvgSource.network,
+                                      size: const Size(40.0, 40.0),
+                                    ),
+                                    height: 40.0,
+                                    width: 40.0,
+                                  ),
+                          ),
+                        ),
+                        const SizedBox(width: 12.0),
+                      ],
+                      AnimatedOpacity(
+                        duration: kThemeAnimationDuration,
+                        opacity: project != null ? 1.0 : 0.0,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 4.0),
+                          child: Text(
+                            project?.name ?? '',
+                            style: const TextStyle(
+                              fontSize: 24.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  const StyledCloseButton(),
+                  const SizedBox(width: 8.0),
                 ],
               ),
-            ),
-          ],
+              // const SizedBox(height: 8.0),
+              // const Padding(
+              //   padding: EdgeInsets.only(right: 56.0),
+              //   child: Text(
+              //     'Aşağıdaki yeniliklərdən hansılarını daha əvvəl görmək istərdiniz?',
+              //     style: TextStyle(
+              //       fontSize: 18.0,
+              //       height: 24 / 18,
+              //       fontWeight: FontWeight.w500,
+              //       color: Colors.white,
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(height: 28.0),
+              // Padding(
+              //   padding: const EdgeInsets.only(right: 16.0),
+              //   child: Row(
+              //     children: [
+              //       if (project?.logoUrl != null &&
+              //           !project!.logoUrl!.contains('null'))
+              //         project!.logoUrl!.contains('.svg')
+              //             ? SvgPicture.network(
+              //                 project!.logoUrl!,
+              //                 height: 40.0,
+              //               )
+              //             : Image.network(
+              //                 project!.logoUrl!,
+              //                 height: 40.0,
+              //               ),
+              //       const Spacer(),
+              //       const _RequestButton(),
+              //     ],
+              //   ),
+              // )
+            ],
+          ),
         );
       },
     );

@@ -16,7 +16,7 @@ void main() async {
         'subscription_date': '2021-09-01',
       },
     ),
-    apiKey: 'YOUR_API_KEY',
+    apiKey: 'a679c29a-671a-4297-8cd8-5297a02527ae',
   );
 
   runApp(const MainApp());

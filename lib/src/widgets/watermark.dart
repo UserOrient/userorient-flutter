@@ -17,9 +17,9 @@ class Watermark extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.only(
-          top: 8.0,
-          bottom: defaultTargetPlatform == TargetPlatform.android
-              ? MediaQuery.of(context).padding.bottom + 16.0
+          top: 12.0,
+          bottom: defaultTargetPlatform != TargetPlatform.iOS
+              ? MediaQuery.of(context).padding.bottom + 12.0
               : MediaQuery.of(context).padding.bottom,
         ),
         decoration: const BoxDecoration(
