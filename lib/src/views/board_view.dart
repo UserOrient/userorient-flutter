@@ -213,21 +213,41 @@ class _Header extends StatelessWidget {
                         children: [
                           if (project?.logoUrl != null &&
                               !project!.logoUrl!.contains('null')) ...[
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0),
-                              child: project!.logoUrl!.contains('.svg') == false
-                                  ? ImageFade(
-                                      image: NetworkImage(project!.logoUrl!),
-                                    )
-                                  : ImageFade(
-                                      image: svg.Svg(
-                                        project!.logoUrl!,
-                                        source: svg.SvgSource.network,
-                                        size: const Size(40.0, 40.0),
+                            Container(
+                              // a border to make it differentiate from same background color
+                              decoration: BoxDecoration(
+                                // color: Colors.white,
+                                borderRadius: BorderRadius.circular(11.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    spreadRadius: 4,
+                                    blurRadius: 8,
+                                    offset: const Offset(
+                                      -2,
+                                      2,
+                                    ), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              padding: const EdgeInsets.all(1.0),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: project!.logoUrl!.contains('.svg') ==
+                                        false
+                                    ? ImageFade(
+                                        image: NetworkImage(project!.logoUrl!),
+                                      )
+                                    : ImageFade(
+                                        image: svg.Svg(
+                                          project!.logoUrl!,
+                                          source: svg.SvgSource.network,
+                                          size: const Size(40.0, 40.0),
+                                        ),
+                                        height: 40.0,
+                                        width: 40.0,
                                       ),
-                                      height: 40.0,
-                                      width: 40.0,
-                                    ),
+                              ),
                             ),
                             const SizedBox(width: 12.0),
                           ],
