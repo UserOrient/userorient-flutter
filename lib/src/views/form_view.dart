@@ -57,10 +57,10 @@ class FormViewState extends State<FormView> {
                 ),
                 Spacer(),
                 StyledCloseButton(),
-                SizedBox(width: 20.0),
+                SizedBox(width: 24.0),
               ],
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 22.0),
             Expanded(
               child: Container(
                 decoration: const BoxDecoration(

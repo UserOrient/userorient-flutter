@@ -128,9 +128,10 @@ class _Header extends StatelessWidget {
         children: [
           Row(
             children: [
-              if (project?.logoUrl != null &&
-                  !project!.logoUrl!.contains('null')) ...[
+              if (project?.logoUrl != null) ...[
                 Container(
+                  height: 40.0,
+                  width: 40.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(11.0),
                     boxShadow: [
@@ -163,7 +164,7 @@ class _Header extends StatelessWidget {
                 const SizedBox(width: 12.0),
               ] else
                 const SizedBox(
-                  height: 52.0,
+                  height: 40.0,
                   width: 52.0,
                 ),
               const _Title(),
@@ -186,8 +187,8 @@ class _Title extends StatefulWidget {
 
 class _TitleState extends State<_Title> {
   String? _newText;
-  User? _user;
-  Project? _project;
+  static User? _user;
+  static Project? _project;
   String _lastText = 'Xoş gəldin, ';
 
   @override
@@ -207,7 +208,7 @@ class _TitleState extends State<_Title> {
     });
 
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_user != null && _project != null) {
+      if (UserOrient.user.value != null && UserOrient.project.value != null) {
         Future.delayed(const Duration(seconds: 1), () {
           timer.cancel();
 
@@ -250,14 +251,15 @@ class _TitleState extends State<_Title> {
               )
                   .roll(
                     _newText ?? '',
-                    symbolDistanceMultiplier: 2,
-                    tapeCurve: Curves.easeInOutBack,
-                    widthCurve: Curves.easeInOutQuart,
-                    padding: const EdgeInsets.only(right: 3),
+                    symbolDistanceMultiplier: 1.2,
+                    tapeCurve: Curves.easeInExpo,
+                    widthCurve: Curves.easeInOutQuad,
+                    staggerSoftness: 100,
+                    widthDuration: const Duration(milliseconds: 100),
                   )
                   .animate(
                     trigger: _newText,
-                    duration: const Duration(milliseconds: 1500),
+                    duration: const Duration(milliseconds: 1000),
                   );
             },
           );
