@@ -1,9 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
+import 'package:hyper_effects/hyper_effects.dart';
 
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/models/project.dart';
@@ -46,15 +48,13 @@ class _BoardViewState extends State<BoardView> {
           value: SystemUiOverlayStyle.light,
           child: Scaffold(
             backgroundColor: stringToColor(project?.color),
-            floatingActionButton: _RequestFeature(
-              controller: _scrollController,
-            ),
             body: Column(
               children: [
                 SvgPicture.network(
                   // TODO: add upvote icon from assets
                   'https://kamranbekirov.com/upvote.svg',
                   width: .1,
+                  height: .1,
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).padding.top + 8.0,
@@ -89,8 +89,14 @@ class _BoardViewState extends State<BoardView> {
                             bottom: 80.0,
                           ),
                           controller: _scrollController,
-                          child: _List(
-                            features: features,
+                          child: Column(
+                            children: [
+                              _List(
+                                features: features,
+                              ),
+                              const SizedBox(height: 64.0),
+                              const _RequestFeature(),
+                            ],
                           ),
                         );
                       },
@@ -116,143 +122,146 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: UserOrient.user,
-      builder: (context, User? user, _) {
-        if (user == null) {
-          return const SizedBox();
-        }
-
-        return Padding(
-          padding: const EdgeInsets.only(left: 24.0, right: 12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Row(
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  // Text(
-                  //   _getHeaderText(user),
-                  //   style: const TextStyle(
-                  //     fontSize: 22.0,
-                  //     height: 32 / 22,
-                  //     color: Colors.white,
-                  //     fontWeight: FontWeight.w700,
-                  //   ),
-                  // ),
-                  // if (project?.logoUrl != null &&
-                  //     !project!.logoUrl!.contains('null'))
-                  //   project!.logoUrl!.contains('.svg')
-                  //       ? SvgPicture.network(
-                  //           project!.logoUrl!,
-                  //           height: 40.0,
-                  //         )
-                  //       : Image.network(
-                  //           project!.logoUrl!,
-                  //           height: 40.0,
-                  //         ),
-
-                  Row(
-                    children: [
-                      if (project?.logoUrl != null &&
-                          !project!.logoUrl!.contains('null')) ...[
-                        Container(
-                          // a border to make it differentiate from same background color
-                          decoration: BoxDecoration(
-                            // color: Colors.white,
-                            borderRadius: BorderRadius.circular(11.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                spreadRadius: 4,
-                                blurRadius: 8,
-                                offset: const Offset(
-                                  -2,
-                                  2,
-                                ), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(1.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: project!.logoUrl!.contains('.svg') == false
-                                ? ImageFade(
-                                    image: NetworkImage(project!.logoUrl!),
-                                  )
-                                : ImageFade(
-                                    image: svg.Svg(
-                                      project!.logoUrl!,
-                                      source: svg.SvgSource.network,
-                                      size: const Size(40.0, 40.0),
-                                    ),
-                                    height: 40.0,
-                                    width: 40.0,
-                                  ),
-                          ),
-                        ),
-                        const SizedBox(width: 12.0),
-                      ],
-                      AnimatedOpacity(
-                        duration: kThemeAnimationDuration,
-                        opacity: project != null ? 1.0 : 0.0,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 4.0),
-                          child: Text(
-                            project?.name ?? '',
-                            style: const TextStyle(
-                              fontSize: 24.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
+              if (project?.logoUrl != null &&
+                  !project!.logoUrl!.contains('null')) ...[
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(11.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        spreadRadius: 4,
+                        blurRadius: 8,
+                        offset: const Offset(-2, 2),
                       ),
                     ],
                   ),
-                  const Spacer(),
-                  const StyledCloseButton(),
-                  const SizedBox(width: 8.0),
-                ],
-              ),
-              // const SizedBox(height: 8.0),
-              // const Padding(
-              //   padding: EdgeInsets.only(right: 56.0),
-              //   child: Text(
-              //     'Aşağıdaki yeniliklərdən hansılarını daha əvvəl görmək istərdiniz?',
-              //     style: TextStyle(
-              //       fontSize: 18.0,
-              //       height: 24 / 18,
-              //       fontWeight: FontWeight.w500,
-              //       color: Colors.white,
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(height: 28.0),
-              // Padding(
-              //   padding: const EdgeInsets.only(right: 16.0),
-              //   child: Row(
-              //     children: [
-              //       if (project?.logoUrl != null &&
-              //           !project!.logoUrl!.contains('null'))
-              //         project!.logoUrl!.contains('.svg')
-              //             ? SvgPicture.network(
-              //                 project!.logoUrl!,
-              //                 height: 40.0,
-              //               )
-              //             : Image.network(
-              //                 project!.logoUrl!,
-              //                 height: 40.0,
-              //               ),
-              //       const Spacer(),
-              //       const _RequestButton(),
-              //     ],
-              //   ),
-              // )
+                  padding: const EdgeInsets.all(1.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: project!.logoUrl!.contains('.svg') == false
+                        ? ImageFade(
+                            image: NetworkImage(project!.logoUrl!),
+                          )
+                        : ImageFade(
+                            image: svg.Svg(
+                              project!.logoUrl!,
+                              source: svg.SvgSource.network,
+                              size: const Size(40.0, 40.0),
+                            ),
+                            height: 40.0,
+                            width: 40.0,
+                          ),
+                  ),
+                ),
+                const SizedBox(width: 12.0),
+              ] else
+                const SizedBox(
+                  height: 52.0,
+                  width: 52.0,
+                ),
+              const _Title(),
             ],
           ),
-        );
-      },
+          const Spacer(),
+          const StyledCloseButton(),
+        ],
+      ),
     );
+  }
+}
+
+class _Title extends StatefulWidget {
+  const _Title();
+
+  @override
+  State<_Title> createState() => _TitleState();
+}
+
+class _TitleState extends State<_Title> {
+  String? _newText;
+  User? _user;
+  Project? _project;
+  String _lastText = 'Xoş gəldin, ';
+
+  @override
+  void initState() {
+    super.initState();
+
+    UserOrient.user.addListener(() {
+      setState(() {
+        _user = UserOrient.user.value;
+      });
+    });
+
+    UserOrient.project.addListener(() {
+      setState(() {
+        _project = UserOrient.project.value;
+      });
+    });
+
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_user != null && _project != null) {
+        Future.delayed(const Duration(seconds: 1), () {
+          timer.cancel();
+
+          if (_user?.fullName != null) {
+            setState(() {
+              _newText = '${_user!.fullName} 👋🏻';
+            });
+
+            Future.delayed(const Duration(seconds: 3), () {
+              setState(() {
+                _lastText = _newText!;
+                _newText = _project?.name;
+              });
+            });
+          } else {
+            setState(() {
+              _newText = _project?.name;
+            });
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder(
+        valueListenable: UserOrient.project,
+        builder: (context, Project? project, _) {
+          return ValueListenableBuilder<User?>(
+            valueListenable: UserOrient.user,
+            builder: (context, User? user, _) {
+              return Text(
+                _lastText,
+                style: const TextStyle(
+                  fontSize: 24.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
+              )
+                  .roll(
+                    _newText ?? '',
+                    symbolDistanceMultiplier: 2,
+                    tapeCurve: Curves.easeInOutBack,
+                    widthCurve: Curves.easeInOutQuart,
+                    padding: const EdgeInsets.only(right: 3),
+                  )
+                  .animate(
+                    trigger: _newText,
+                    duration: const Duration(milliseconds: 1500),
+                  );
+            },
+          );
+        });
   }
 }
 
@@ -297,112 +306,55 @@ class _List extends StatelessWidget {
   }
 }
 
-class _RequestButton extends StatelessWidget {
-  const _RequestButton();
+class _RequestFeature extends StatelessWidget {
+  const _RequestFeature();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 56.0,
-      margin: const EdgeInsets.symmetric(horizontal: 0.0),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: const Color(0xff121212),
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: TextButton(
-        onPressed: () {
-          UserOrient.openForm(context);
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.add_circle_rounded,
-              color: Colors.white,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+      child: Column(
+        children: [
+          const Text(
+            'Təklifiniz siyahıda yoxdur?',
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w600,
+              color: Color(0xff121212),
             ),
-            const SizedBox(width: 8.0),
-            const Text(
-              'Təklif et',
-              style: TextStyle(
+          ),
+          const SizedBox(height: 8.0),
+          Text(
+            'Yazılı şəkildə təkliflərinizi bizə bildirin, ən qısa zamanda tətbiq etməyə çalışacağıq.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 14.0,
+              color: const Color(0xff121212).withOpacity(0.6),
+            ),
+          ),
+          const SizedBox(height: 16.0),
+          Align(
+            alignment: Alignment.center,
+            child: FloatingActionButton.extended(
+              backgroundColor: const Color(0xff121212),
+              onPressed: () {
+                UserOrient.openForm(context);
+              },
+              label: const Text(
+                'Təklif et',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              icon: const Icon(
+                Icons.add_circle_rounded,
                 color: Colors.white,
-                fontSize: 16.0,
-                fontWeight: FontWeight.w500,
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _RequestFeature extends StatefulWidget {
-  final ScrollController controller;
-
-  const _RequestFeature({
-    required this.controller,
-  });
-
-  @override
-  State<_RequestFeature> createState() => _RequestFeatureState();
-}
-
-class _RequestFeatureState extends State<_RequestFeature> {
-  bool _isVisible = true;
-
-  @override
-  void initState() {
-    super.initState();
-    widget.controller.addListener(_scrollListener);
-  }
-
-  void _scrollListener() {
-    // hide when scrolling down, show when scrolling up
-    if (widget.controller.position.userScrollDirection ==
-        ScrollDirection.reverse) {
-      if (_isVisible) {
-        setState(() {
-          _isVisible = false;
-        });
-      }
-    } else {
-      if (!_isVisible) {
-        setState(() {
-          _isVisible = true;
-        });
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      duration: kThemeAnimationDuration,
-      opacity: _isVisible ? 1.0 : 0.0,
-      child: AnimatedPadding(
-        duration: kThemeAnimationDuration,
-        padding: EdgeInsets.only(
-          bottom: _isVisible ? 32 : 0,
-        ),
-        child: FloatingActionButton.extended(
-          backgroundColor: const Color(0xff121212),
-          onPressed: () {
-            UserOrient.openForm(context);
-          },
-          label: const Text(
-            'Təklif et',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16.0,
-              fontWeight: FontWeight.w500,
-            ),
           ),
-          icon: const Icon(
-            Icons.add_circle_rounded,
-            color: Colors.white,
-          ),
-        ),
+        ],
       ),
     );
   }

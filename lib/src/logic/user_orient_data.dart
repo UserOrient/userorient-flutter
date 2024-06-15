@@ -57,6 +57,8 @@ class UserOrientData {
       Uri.parse(endpoint.url),
     );
 
+    // TODO: throws user not found when an old project's user has been used, sync user before, check if it exists then continue
+
     final List<Feature> features =
         (jsonDecode(response.body)['features'] as List)
             .map((feature) => Feature.fromJson(feature))
