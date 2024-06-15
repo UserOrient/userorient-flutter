@@ -88,9 +88,17 @@ class UserOrient {
   }
 
   static Future<void> _initialize() async {
-    if (_hardReset) {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final String? cachedProjectId = prefs.getString('user_orient_project_id');
+    final bool projectChanged = cachedProjectId != _apiKey;
+    if (projectChanged) {
+      logUO('Project changed, reinitializing', emoji: '🔄');
+    }
+
+    if (_hardReset || projectChanged) {
       prefs.remove('user_orient_uuid');
+      prefs.remove('user_orient_project_id');
 
       features.value = null;
       project.value = null;
@@ -128,8 +136,12 @@ class UserOrient {
 
       markInitialized();
 
-      logUO('Initialization completed for "${project.value?.name}"',
-          emoji: '✅');
+      logUO(
+        'Initialization completed for "${project.value?.name}"',
+        emoji: '✅',
+      );
+
+      prefs.setString('user_orient_project_id', _apiKey!);
     }
 
     logUO('User UUID: $userUuid', emoji: '🔗');
