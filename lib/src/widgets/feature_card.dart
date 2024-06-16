@@ -116,7 +116,7 @@ class FeatureCard extends StatelessWidget {
           height: 56.0,
           width: 56.0,
           decoration: BoxDecoration(
-            color: const Color(0xffF4F4F6),
+            color: const Color(0xffE9EAEE),
             borderRadius: BorderRadius.circular(12.0),
           ),
         ),
@@ -129,7 +129,7 @@ class FeatureCard extends StatelessWidget {
                 height: 24.0,
                 width: 160.0,
                 decoration: BoxDecoration(
-                  color: const Color(0xffF4F4F6),
+                  color: const Color(0xffE9EAEE),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
@@ -138,7 +138,7 @@ class FeatureCard extends StatelessWidget {
                 height: 20.0,
                 width: 240.0,
                 decoration: BoxDecoration(
-                  color: const Color(0xffF4F4F6),
+                  color: const Color(0xffE9EAEE),
                   borderRadius: BorderRadius.circular(7.0),
                 ),
               ),

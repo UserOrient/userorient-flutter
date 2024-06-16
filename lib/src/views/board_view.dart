@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
-import 'package:hyper_effects/hyper_effects.dart';
 
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/models/project.dart';
@@ -77,7 +74,7 @@ class _BoardViewState extends State<BoardView> {
                     child: ValueListenableBuilder(
                       valueListenable: UserOrient.features,
                       builder: (context, List<Feature>? features, _) {
-                        features ??= List.generate(10, (index) {
+                        features ??= List.generate(7, (index) {
                           return Feature.skeleton();
                         });
 
@@ -162,12 +159,16 @@ class _Header extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12.0),
-              ] else
-                const SizedBox(
-                  height: 40.0,
-                  width: 52.0,
+                Text(
+                  project?.name ?? '',
+                  key: ValueKey(project?.name),
+                  style: const TextStyle(
+                    fontSize: 24.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              const _Title(),
+              ]
             ],
           ),
           const Spacer(),
@@ -175,95 +176,6 @@ class _Header extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class _Title extends StatefulWidget {
-  const _Title();
-
-  @override
-  State<_Title> createState() => _TitleState();
-}
-
-class _TitleState extends State<_Title> {
-  String? _newText;
-  static User? _user;
-  static Project? _project;
-  String _lastText = 'Xoş gəldin, ';
-
-  @override
-  void initState() {
-    super.initState();
-
-    UserOrient.user.addListener(() {
-      setState(() {
-        _user = UserOrient.user.value;
-      });
-    });
-
-    UserOrient.project.addListener(() {
-      setState(() {
-        _project = UserOrient.project.value;
-      });
-    });
-
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (UserOrient.user.value != null && UserOrient.project.value != null) {
-        Future.delayed(const Duration(seconds: 1), () {
-          timer.cancel();
-
-          if (_user?.fullName != null) {
-            setState(() {
-              _newText = '${_user!.fullName} 👋🏻';
-            });
-
-            Future.delayed(const Duration(seconds: 3), () {
-              setState(() {
-                _lastText = _newText!;
-                _newText = _project?.name;
-              });
-            });
-          } else {
-            setState(() {
-              _newText = _project?.name;
-            });
-          }
-        });
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-        valueListenable: UserOrient.project,
-        builder: (context, Project? project, _) {
-          return ValueListenableBuilder<User?>(
-            valueListenable: UserOrient.user,
-            builder: (context, User? user, _) {
-              return Text(
-                _lastText,
-                style: const TextStyle(
-                  fontSize: 24.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                ),
-              )
-                  .roll(
-                    _newText ?? '',
-                    symbolDistanceMultiplier: 1.2,
-                    tapeCurve: Curves.easeInExpo,
-                    widthCurve: Curves.easeInOutQuad,
-                    staggerSoftness: 100,
-                    widthDuration: const Duration(milliseconds: 100),
-                  )
-                  .animate(
-                    trigger: _newText,
-                    duration: const Duration(milliseconds: 1000),
-                  );
-            },
-          );
-        });
   }
 }
 

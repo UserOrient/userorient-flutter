@@ -33,21 +33,14 @@ class _TipCardState extends State<TipCard> {
         child: Container(
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color: const Color(0xffF9FAFB),
+            color: const Color(0xffF4F4F6),
             borderRadius: BorderRadius.circular(12.0),
           ),
           child: const Row(
             children: [
-              // Icon(
-              //   Icons.lightbulb_outline_rounded,
-              //   color: Color(0xff818391),
-              // ),
-              // bulb emoji
-              Text(
-                '💡',
-                style: TextStyle(
-                  fontSize: 24.0,
-                ),
+              Icon(
+                Icons.lightbulb_outline_rounded,
+                color: Color(0xff818391),
               ),
               SizedBox(width: 16.0),
               Expanded(
@@ -57,7 +50,7 @@ class _TipCardState extends State<TipCard> {
                   style: TextStyle(
                     fontSize: 14.0,
                     height: 20 / 14,
-                    color: Color(0xff818391),
+                    color: Color(0xff585A68),
                   ),
                 ),
               ),
