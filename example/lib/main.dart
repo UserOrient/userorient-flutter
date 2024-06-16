@@ -5,7 +5,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   UserOrient.configure(
-    apiKey: 'e7979359-bd33-467e-8eba-19cba2079e90',
+    apiKey: 'YOUR_API_KEY',
   );
 
   UserOrient.setUser(
