@@ -1,30 +1,23 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/models/project.dart';
 import 'package:userorient_flutter/src/logic/user_orient_data.dart';
+import 'package:userorient_flutter/src/models/user.dart';
 import 'package:userorient_flutter/src/utilities/helper_functions.dart';
 import 'package:userorient_flutter/src/views/board_view.dart';
 import 'package:userorient_flutter/src/views/form_view.dart';
-import 'package:userorient_flutter/userorient_flutter.dart';
 
 class UserOrient {
   static final ValueNotifier<List<Feature>?> features = ValueNotifier(null);
   static final ValueNotifier<User?> user = ValueNotifier(null);
   static final ValueNotifier<Project?> project = ValueNotifier(null);
 
-  // Configurations
   static String? _apiKey;
   static User? _user;
   static UserUUID? userUuid;
-  static bool _hardReset = false;
-
   static bool _isInitialized = false;
-  static void markInitialized() {
-    _isInitialized = true;
-  }
 
   /// Open the UserOrient board view
   static Future<void> openBoard(BuildContext context) {
@@ -62,20 +55,35 @@ class UserOrient {
   /// Configure the UserOrient SDK. This method must be called before using the SDK.
   ///
   /// [apiKey] is the API Key from the UserOrient dashboard.
-  /// [user] is the user information. By default, it is an anonymous user.
   /// [hardReset] should be set to true if you use multiple boards in the same app.
   static void configure({
     required String apiKey,
-    User? user = const User.anonymous(),
-    bool hardReset = false,
   }) {
     _apiKey = apiKey;
-    _user = user;
-    _hardReset = hardReset;
   }
 
-  static Future<void> logout() async {
-    await UserOrientData.logout();
+  static void setUser({
+    String? uniqueIdentifier,
+    String? fullName,
+    String? email,
+    String? phoneNumber,
+    String? language,
+    Map<String, dynamic>? extra,
+  }) {
+    final User user = User(
+      uniqueIdentifier: uniqueIdentifier,
+      fullName: fullName,
+      email: email,
+      phoneNumber: phoneNumber,
+      language: language,
+      extra: extra,
+    );
+
+    _user = user;
+  }
+
+  static Future<void> clearCache() async {
+    await UserOrientData.clearCache();
 
     _isInitialized = false;
     _apiKey = null;
@@ -84,28 +92,21 @@ class UserOrient {
 
     features.value = null;
 
-    logUO('Logged out', emoji: '🚪');
+    logUO('Cache cleared', emoji: '🆑');
   }
 
   static Future<void> _initialize() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final String? cachedProjectId = prefs.getString('user_orient_project_id');
-    final bool projectChanged = cachedProjectId != _apiKey;
+    final bool hasProjectId = cachedProjectId != null;
+    final bool projectChanged = hasProjectId && cachedProjectId != _apiKey;
+
     if (projectChanged) {
-      logUO('Project changed, reinitializing', emoji: '🔄');
-    }
+      await prefs.remove('user_orient_project_id');
+      await clearCache();
 
-    if (_hardReset || projectChanged) {
-      prefs.remove('user_orient_uuid');
-      prefs.remove('user_orient_project_id');
-
-      features.value = null;
-      project.value = null;
-
-      _isInitialized = false;
-
-      logUO('Hard reset performed', emoji: '🔥');
+      logUO('Project changed, cache cleared...', emoji: '🔄');
     }
 
     if (_isInitialized) {
@@ -113,7 +114,7 @@ class UserOrient {
     } else {
       logUO('Initializing the SDK', emoji: '🚁');
 
-      if (_user == null || _apiKey == null) {
+      if (_apiKey == null) {
         throw 'Call `UserOrient.configure()` method before using the SDK';
       }
 
@@ -126,7 +127,7 @@ class UserOrient {
 
       final List<dynamic> results = await Future.wait([
         UserOrientData.getProjectDetails(_apiKey!),
-        UserOrientData.getFeedbacks(projectId: _apiKey!, userId: userUuid!),
+        UserOrientData.getFeatures(projectId: _apiKey!, userId: userUuid!),
       ]);
 
       project.value = results[0];
@@ -134,7 +135,7 @@ class UserOrient {
       final List<Feature> features = results[1];
       UserOrient.features.value = features;
 
-      markInitialized();
+      _isInitialized = true;
 
       logUO(
         'Initialization completed for "${project.value?.name}"',
@@ -145,8 +146,10 @@ class UserOrient {
     }
 
     logUO('User UUID: $userUuid', emoji: '🔗');
-    logUO('Project name: ${project.value?.name}, id: ${project.value?.id}',
-        emoji: '📦');
+    logUO(
+      'Project name: ${project.value?.name}, id: ${project.value?.id}',
+      emoji: '📦',
+    );
   }
 
   /// Toggle the upvote status of a feature. Used internally by the SDK.
@@ -190,19 +193,5 @@ class UserOrient {
     );
 
     logUO('Feature request sent', emoji: '🚀');
-  }
-
-  /// Checks if the SDK is launched for the first time
-  static Future<bool> isFirstLaunch() async {
-    final Directory directory = Directory.systemTemp;
-
-    final File file = File('${directory.path}/user_orient_first_launch');
-    if (await file.exists()) {
-      return false;
-    }
-
-    await file.writeAsString('true');
-
-    return true;
   }
 }

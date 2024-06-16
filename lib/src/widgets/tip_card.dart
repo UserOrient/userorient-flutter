@@ -1,26 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:userorient_flutter/src/logic/user_orient.dart';
 
-class TipCard extends StatefulWidget {
+class TipCard extends StatelessWidget {
   const TipCard({super.key});
-
-  @override
-  State<TipCard> createState() => _TipCardState();
-}
-
-class _TipCardState extends State<TipCard> {
-  // bool _isFirstLaunch = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    UserOrient.isFirstLaunch().then((value) {
-      setState(() {
-        // _isFirstLaunch = true;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +9,6 @@ class _TipCardState extends State<TipCard> {
       duration: kThemeAnimationDuration,
       curve: Curves.easeInOut,
       child: Container(
-        // height: _isFirstLaunch ? 96.0 : 0.0,
         padding: const EdgeInsets.only(bottom: 24.0),
         child: Container(
           padding: const EdgeInsets.all(16.0),

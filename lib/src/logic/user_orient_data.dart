@@ -29,7 +29,7 @@ class UserOrientData {
       },
     );
 
-    print(response.body);
+    logUO('Got user: ${response.body}', emoji: '😎');
 
     return jsonDecode(response.body)['id'];
   }
@@ -46,7 +46,7 @@ class UserOrientData {
     );
   }
 
-  static Future<List<Feature>> getFeedbacks({
+  static Future<List<Feature>> getFeatures({
     required String projectId,
     required String userId,
   }) async {
@@ -142,7 +142,7 @@ class UserOrientData {
     return uuid;
   }
 
-  static Future<void> logout() async {
+  static Future<void> clearCache() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('user_orient_uuid');
   }

@@ -49,7 +49,7 @@ class FeatureCard extends StatelessWidget {
             decoration: BoxDecoration(
               color: feature.voted
                   ? stringToColor(UserOrient.project.value?.color)
-                  : const Color(0xffF4F4F6),
+                  : const Color(0xffE9EAEE),
               borderRadius: BorderRadius.circular(12.0),
             ),
             child: Column(

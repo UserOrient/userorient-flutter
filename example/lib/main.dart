@@ -5,18 +5,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   UserOrient.configure(
-    user: const User(
-      uniqueIdentifier: '123456',
-      fullName: 'Nelson',
-      email: 'nelson@bighetti.cc',
-      phoneNumber: '+234 123 456 7890',
-      language: 'en',
-      extra: {
-        'is_premium': true,
-        'subscription_date': '2021-09-01',
-      },
-    ),
-    apiKey: 'a679c29a-671a-4297-8cd8-5297a02527ae',
+    apiKey: 'e7979359-bd33-467e-8eba-19cba2079e90',
+  );
+
+  UserOrient.setUser(
+    fullName: 'Nelson',
+    email: 'nelson@bighetti.cc',
+    language: 'en',
+    extra: {
+      'is_premium': true,
+      'subscription_date': '2021-09-01',
+    },
   );
 
   runApp(const MainApp());
