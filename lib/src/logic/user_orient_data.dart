@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:userorient_flutter/src/models/endpoint.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
@@ -115,35 +114,13 @@ class UserOrientData {
     required String projectId,
     required User? user,
   }) async {
-    UserUUID uuid;
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final UserUUID uuid = await UserOrientData.syncUser(
+      user: user,
+      projectId: projectId,
+    );
 
-    final String? cachedUuid = prefs.getString('user_orient_uuid');
-    logUO('Cached UUID: $cachedUuid', emoji: '🔍');
-
-    if (cachedUuid != null) {
-      uuid = cachedUuid;
-
-      await UserOrientData.syncUser(
-        user: user,
-        projectId: projectId,
-      );
-    } else {
-      uuid = await UserOrientData.syncUser(
-        user: user,
-        projectId: projectId,
-      );
-
-      logUO('Acquired a UUID for user $uuid', emoji: '🆕');
-
-      await prefs.setString('user_orient_uuid', uuid);
-    }
+    logUO('Acquired a UUID for user $uuid', emoji: '🆕');
 
     return uuid;
-  }
-
-  static Future<void> clearCache() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove('user_orient_uuid');
   }
 }

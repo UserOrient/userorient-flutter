@@ -1,3 +1,7 @@
+## 0.0.5
+
+- Seems like the previous bug fix didn't work. Fixed it again.
+
 ## 0.0.4
 
 - Fix bug when projectId changes

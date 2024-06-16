@@ -11,11 +11,10 @@ import 'package:userorient_flutter/src/views/form_view.dart';
 
 class UserOrient {
   static final ValueNotifier<List<Feature>?> features = ValueNotifier(null);
-  static final ValueNotifier<User?> user = ValueNotifier(null);
   static final ValueNotifier<Project?> project = ValueNotifier(null);
 
   static String? _apiKey;
-  static User? _user;
+  static User? user;
   static UserUUID? userUuid;
   static bool _isInitialized = false;
 
@@ -79,14 +78,13 @@ class UserOrient {
       extra: extra,
     );
 
-    _user = user;
+    UserOrient.user = user;
+
+    logUO('Set user', emoji: '👤');
   }
 
-  static Future<void> clearCache() async {
-    await UserOrientData.clearCache();
-
+  static void clearCache() async {
     _isInitialized = false;
-    _user = null;
     userUuid = null;
 
     features.value = null;
@@ -104,7 +102,7 @@ class UserOrient {
 
     if (projectChanged) {
       await prefs.remove('user_orient_project_id');
-      await clearCache();
+      clearCache();
 
       logUO('Project changed, cache cleared...', emoji: '🔄');
     }
@@ -118,12 +116,11 @@ class UserOrient {
         throw 'Call `UserOrient.configure()` method before using the SDK';
       }
 
+      // TODO: if user id is cached, continue do that in the background
       userUuid = await UserOrientData.resolveUserUuid(
         projectId: _apiKey!,
-        user: _user,
+        user: user,
       );
-
-      UserOrient.user.value = _user;
 
       final List<dynamic> results = await Future.wait([
         UserOrientData.getProjectDetails(_apiKey!),
