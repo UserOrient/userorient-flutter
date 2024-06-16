@@ -1,3 +1,7 @@
+## 0.0.4
+
+- Fix bug when projectId changes
+
 ## 0.0.3
 
 - Set user details using `UserOrient.setUser()` method

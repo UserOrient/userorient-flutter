@@ -86,11 +86,11 @@ class UserOrient {
     await UserOrientData.clearCache();
 
     _isInitialized = false;
-    _apiKey = null;
     _user = null;
     userUuid = null;
 
     features.value = null;
+    project.value = null;
 
     logUO('Cache cleared', emoji: '🆑');
   }
@@ -120,7 +120,7 @@ class UserOrient {
 
       userUuid = await UserOrientData.resolveUserUuid(
         projectId: _apiKey!,
-        user: _user!,
+        user: _user,
       );
 
       UserOrient.user.value = _user;

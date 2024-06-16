@@ -80,7 +80,7 @@ class FeatureCard extends StatelessWidget {
             children: [
               Text(
                 feature.titleForLocale(
-                  UserOrient.user.value!.language,
+                  UserOrient.user.value?.language,
                 ),
                 style: const TextStyle(
                   fontSize: 16.0,
@@ -92,7 +92,7 @@ class FeatureCard extends StatelessWidget {
               const SizedBox(height: 2.0),
               Text(
                 feature.descriptionForLocale(
-                  UserOrient.user.value!.language,
+                  UserOrient.user.value?.language,
                 ),
                 style: const TextStyle(
                   fontSize: 14.0,

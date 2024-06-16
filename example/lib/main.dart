@@ -4,6 +4,8 @@ import 'package:userorient_flutter/userorient_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  UserOrient.clearCache();
+
   UserOrient.configure(
     apiKey: 'YOUR_API_KEY',
   );
@@ -44,21 +46,16 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FilledButton.tonal(
-              child: const Text(
-                'Open Features Board',
+            ListTile(
+              leading: const Icon(Icons.feedback),
+              title: const Text(
+                'Feature requests',
               ),
-              onPressed: () {
+              subtitle: const Text(
+                'View and vote on feature requests',
+              ),
+              onTap: () {
                 UserOrient.openBoard(context);
-              },
-            ),
-            const SizedBox(height: 8.0),
-            FilledButton.tonal(
-              child: const Text(
-                'Open Feedback Form',
-              ),
-              onPressed: () {
-                UserOrient.openForm(context);
               },
             ),
           ],

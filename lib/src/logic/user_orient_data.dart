@@ -14,16 +14,16 @@ typedef UserUUID = String;
 
 class UserOrientData {
   static Future<UserUUID> syncUser({
-    required User user,
+    required User? user,
     required String projectId,
   }) async {
     final Endpoint endpoint = RestfulEndpoints.syncUser(projectId);
 
-    logUO('Syncing user: ${user.toJson()}', emoji: '🔄');
+    logUO('Syncing user: ${user?.toJson()}', emoji: '🔄');
 
     final http.Response response = await http.post(
       Uri.parse(endpoint.url),
-      body: jsonEncode(user.toJson()),
+      body: user == null ? null : jsonEncode(user.toJson()),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -113,7 +113,7 @@ class UserOrientData {
 
   static Future<UserUUID> resolveUserUuid({
     required String projectId,
-    required User user,
+    required User? user,
   }) async {
     UserUUID uuid;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
