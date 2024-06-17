@@ -83,12 +83,16 @@ class UserOrient {
     logUO('Set user', emoji: '👤');
   }
 
-  static void clearCache() async {
+  static Future<void> clearCache() async {
     _isInitialized = false;
     userUuid = null;
 
     features.value = null;
     project.value = null;
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('user_orient_project_id');
+    await prefs.remove('user_orient_user_uuid');
 
     logUO('Cache cleared', emoji: '🆑');
   }
@@ -101,15 +105,12 @@ class UserOrient {
     final bool projectChanged = hasProjectId && cachedProjectId != _apiKey;
 
     if (projectChanged) {
-      await prefs.remove('user_orient_project_id');
-      clearCache();
+      await clearCache();
 
       logUO('Project changed, cache cleared...', emoji: '🔄');
     }
 
-    if (_isInitialized) {
-      logUO('SDK already initialized, continue', emoji: '🤓');
-    } else {
+    if (!_isInitialized) {
       logUO('Initializing the SDK', emoji: '🚁');
 
       if (_apiKey == null) {
@@ -132,21 +133,20 @@ class UserOrient {
       final List<Feature> features = results[1];
       UserOrient.features.value = features;
 
-      _isInitialized = true;
-
       logUO(
         'Initialization completed for "${project.value?.name}"',
         emoji: '✅',
       );
 
-      prefs.setString('user_orient_project_id', _apiKey!);
-    }
+      await prefs.setString('user_orient_project_id', _apiKey!);
 
-    logUO('User UUID: $userUuid', emoji: '🔗');
-    logUO(
-      'Project name: ${project.value?.name}, id: ${project.value?.id}',
-      emoji: '📦',
-    );
+      logUO(
+        'Project name: ${project.value?.name}, id: ${project.value?.id}',
+        emoji: '📦',
+      );
+
+      _isInitialized = true;
+    }
   }
 
   /// Toggle the upvote status of a feature. Used internally by the SDK.

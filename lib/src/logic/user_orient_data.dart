@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:userorient_flutter/src/models/endpoint.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
@@ -27,8 +28,6 @@ class UserOrientData {
         'Content-Type': 'application/json',
       },
     );
-
-    logUO('Got user: ${response.body}', emoji: '😎');
 
     return jsonDecode(response.body)['id'];
   }
@@ -114,13 +113,26 @@ class UserOrientData {
     required String projectId,
     required User? user,
   }) async {
-    final UserUUID uuid = await UserOrientData.syncUser(
-      user: user,
-      projectId: projectId,
-    );
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? cachedUuid = prefs.getString('user_orient_user_uuid');
 
-    logUO('Acquired a UUID for user $uuid', emoji: '🆕');
+    if (cachedUuid != null) {
+      logUO('Found cached UUID: $cachedUuid', emoji: '🔍');
 
-    return uuid;
+      UserOrientData.syncUser(user: user, projectId: projectId).ignore();
+
+      return cachedUuid;
+    } else {
+      final UserUUID uuid = await UserOrientData.syncUser(
+        user: user,
+        projectId: projectId,
+      );
+
+      await prefs.setString('user_orient_user_uuid', uuid);
+
+      logUO('Acquired a new UUID: $uuid', emoji: '🆕');
+
+      return uuid;
+    }
   }
 }
