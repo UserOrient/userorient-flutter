@@ -1,3 +1,7 @@
+## 0.0.6
+
+- Cached user UUID to prevent unnecessary API calls on second launch.
+
 ## 0.0.5
 
 - Seems like the previous bug fix didn't work. Fixed it again.
