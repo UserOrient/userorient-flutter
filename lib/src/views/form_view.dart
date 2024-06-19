@@ -66,8 +66,8 @@ class FormViewState extends State<FormView> {
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16.0),
-                    topRight: Radius.circular(16.0),
+                    topLeft: Radius.circular(24.0),
+                    topRight: Radius.circular(24.0),
                   ),
                 ),
                 child: Column(
@@ -77,6 +77,7 @@ class FormViewState extends State<FormView> {
                         padding: const EdgeInsets.all(24.0),
                         child: Column(
                           children: [
+                            const SizedBox(height: 8.0),
                             // TODO: don't submit empty form
                             StyledTextField(
                               minLines: 6,
@@ -127,7 +128,9 @@ class FormViewState extends State<FormView> {
                       margin: const EdgeInsets.symmetric(horizontal: 24.0),
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: const Color(0xff121212),
+                        color: stringToColor(
+                          UserOrient.project.value?.color,
+                        ),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: TextButton(

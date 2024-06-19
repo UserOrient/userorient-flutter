@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
@@ -45,6 +46,9 @@ class _BoardViewState extends State<BoardView> {
           value: SystemUiOverlayStyle.light,
           child: Scaffold(
             backgroundColor: stringToColor(project?.color),
+            floatingActionButton: _PlusButton(
+              controller: _scrollController,
+            ),
             body: Column(
               children: [
                 SvgPicture.network(
@@ -67,8 +71,8 @@ class _BoardViewState extends State<BoardView> {
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(16.0),
-                        topRight: Radius.circular(16.0),
+                        topLeft: Radius.circular(24.0),
+                        topRight: Radius.circular(24.0),
                       ),
                     ),
                     child: ValueListenableBuilder(
@@ -86,14 +90,8 @@ class _BoardViewState extends State<BoardView> {
                             bottom: 80.0,
                           ),
                           controller: _scrollController,
-                          child: Column(
-                            children: [
-                              _List(
-                                features: features,
-                              ),
-                              const SizedBox(height: 64.0),
-                              const _RequestFeature(),
-                            ],
+                          child: _List(
+                            features: features,
                           ),
                         );
                       },
@@ -220,55 +218,70 @@ class _List extends StatelessWidget {
   }
 }
 
-class _RequestFeature extends StatelessWidget {
-  const _RequestFeature();
+class _PlusButton extends StatefulWidget {
+  final ScrollController controller;
+
+  const _PlusButton({
+    required this.controller,
+  });
+
+  @override
+  State<_PlusButton> createState() => _PlusButtonState();
+}
+
+class _PlusButtonState extends State<_PlusButton> {
+  bool _isVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    if (widget.controller.position.userScrollDirection ==
+        ScrollDirection.reverse) {
+      if (_isVisible) {
+        setState(() {
+          _isVisible = false;
+        });
+      }
+    } else {
+      if (!_isVisible) {
+        setState(() {
+          _isVisible = true;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32.0),
-      child: Column(
-        children: [
-          const Text(
-            'Təklifiniz siyahıda yoxdur?',
-            style: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w600,
-              color: Color(0xff121212),
-            ),
+    return AnimatedOpacity(
+      duration: kThemeAnimationDuration,
+      opacity: _isVisible ? 1.0 : 0.0,
+      child: AnimatedPadding(
+        duration: kThemeAnimationDuration,
+        padding: EdgeInsets.only(
+          bottom: _isVisible ? 32 : 0,
+        ),
+        child: FloatingActionButton(
+          elevation: 2.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(120.0),
           ),
-          const SizedBox(height: 8.0),
-          Text(
-            'Yazılı şəkildə təkliflərinizi bizə bildirin, ən qısa zamanda tətbiq etməyə çalışacağıq.',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 14.0,
-              color: const Color(0xff121212).withOpacity(0.6),
-            ),
+          backgroundColor: stringToColor(
+            UserOrient.project.value?.color,
           ),
-          const SizedBox(height: 16.0),
-          Align(
-            alignment: Alignment.center,
-            child: FloatingActionButton.extended(
-              backgroundColor: const Color(0xff121212),
-              onPressed: () {
-                UserOrient.openForm(context);
-              },
-              label: const Text(
-                'Təklif et',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              icon: const Icon(
-                Icons.add_circle_rounded,
-                color: Colors.white,
-              ),
-            ),
+          onPressed: () {
+            UserOrient.openForm(context);
+          },
+          child: const Icon(
+            Icons.add_rounded,
+            size: 32,
+            color: Colors.white,
           ),
-        ],
+        ),
       ),
     );
   }

@@ -10,16 +10,6 @@ void main() async {
     apiKey: 'YOUR_API_KEY',
   );
 
-  UserOrient.setUser(
-    fullName: 'Nelson',
-    email: 'nelson@bighetti.cc',
-    language: 'en',
-    extra: {
-      'is_premium': true,
-      'subscription_date': '2021-09-01',
-    },
-  );
-
   runApp(const MainApp());
 }
 
@@ -55,6 +45,16 @@ class HomePage extends StatelessWidget {
                 'View and vote on feature requests',
               ),
               onTap: () {
+                UserOrient.setUser(
+                  fullName: 'Nelson',
+                  email: 'nelson@bighetti.cc',
+                  language: 'en',
+                  extra: {
+                    'is_premium': true,
+                    'subscription_date': '2021-09-01',
+                  },
+                );
+
                 UserOrient.openBoard(context);
               },
             ),

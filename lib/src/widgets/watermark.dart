@@ -17,12 +17,19 @@ class Watermark extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.only(
-          top: 12.0,
+          top: 16.0,
           bottom: defaultTargetPlatform != TargetPlatform.iOS
               ? MediaQuery.of(context).padding.bottom + 12.0
               : MediaQuery.of(context).padding.bottom,
         ),
         decoration: const BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              offset: Offset(0, 0),
+              blurRadius: 120.0,
+            ),
+          ],
           color: Colors.white,
           border: Border(
             top: BorderSide(
