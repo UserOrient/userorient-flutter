@@ -1,3 +1,7 @@
+## 0.0.8
+
+- Improved the board for better user experience.
+
 ## 0.0.7
 
 - Improved documentation and board UI.
