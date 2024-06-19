@@ -1,3 +1,7 @@
+## 0.0.7
+
+- Improved documentation and board UI.
+
 ## 0.0.6
 
 - Cached user UUID to prevent unnecessary API calls on second launch.

@@ -25,7 +25,7 @@ dependencies:
 
 ### 📱 Add to your app
 
-Initialize UserOrient before using it:
+Before using, configure UserOrient with your API key:
 
 
 ```dart
@@ -39,7 +39,7 @@ void main() {
 
 ### 🎬 Show the board
 
-Now you can show the board by calling the `showBoard` method. Before that, call `setUser` method with the user's details.
+Now you can show the board by calling `UserOrient.showBoard(context)`:
 
 ```dart
 import 'package:userorient_flutter/userorient_flutter.dart';
@@ -67,3 +67,13 @@ void showBoard() {
   UserOrient.showBoard(context);
 }
 ```
+
+We recommend calling `UserOrient.setUser` before every launch of the board to ensure the user information is up-to-date.
+
+## 📝 User identification
+
+UserOrient takes a unique identifier (`uniqueIdentifier`) for each user. This identifier can be anything that uniquely identifies the user, such as an email address, phone number, or a custom ID. When not provided, UserOrient will generate a random identifier for the user.
+
+## 📧 Contact
+
+If you have any questions, feel free to reach out to us at [support@userorient.com](mailto:support@userorient.com) or on live chat at [userorient.com](https://userorient.com).
