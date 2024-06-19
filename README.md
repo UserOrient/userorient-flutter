@@ -10,7 +10,7 @@ UserOrient is a feature request board that helps you collect feedback from your 
 
 ### 🔓 Join closed-beta
 
-![UserOrient](https://userorient.com/logos/cover.jpg)(https://scolpshz3d6.typeform.com/to/EXb0XM52)
+<a href="https://scolpshz3d6.typeform.com/to/EXb0XM52" target="_blank"><img src="https://userorient.com/logos/cover.jpg" alt="UserOrient" width="100%"/></a>
 
 Right now, UserOrient is in closed-beta. If you want to join, for which I would be very grateful, please fill out this [form](https://scolpshz3d6.typeform.com/to/EXb0XM52) and I will get back to you as soon as possible.
 
