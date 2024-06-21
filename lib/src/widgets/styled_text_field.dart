@@ -2,6 +2,8 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:userorient_flutter/src/utilities/helper_functions.dart';
+import 'package:userorient_flutter/userorient_flutter.dart';
 
 class StyledTextField extends StatelessWidget {
   final String? label;
@@ -37,6 +39,11 @@ class StyledTextField extends StatelessWidget {
       autofocus: autoFocus,
       maxLength: maxLength,
       controller: controller,
+      cursorColor: stringToColor(UserOrient.project.value?.color),
+      style: const TextStyle(
+        fontSize: 18.0,
+        color: Color(0xff2A2A2A),
+      ),
       decoration: InputDecoration(
         hintText: hintText,
         prefixText: prefixText,
@@ -48,34 +55,20 @@ class StyledTextField extends StatelessWidget {
             child: suffix,
           ),
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE4E4E4),
-          ),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide.none,
         ),
-        focusedBorder: GradientOutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          gradient: const LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [
-              Color(0xffFFF59F),
-              Color(0xffFF9B63),
-              Color(0xffD183AD),
-            ],
-          ),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide.none,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Color(0xffE4E4E4),
-          ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide.none,
         ),
         labelText: label,
         hintStyle: const TextStyle(
           fontSize: 16.0,
-          color: Color(0xffBBBBBB),
+          fontWeight: FontWeight.w400,
+          color: Color(0xffCDCDCD),
         ),
         labelStyle: const TextStyle(
           fontSize: 14.0,

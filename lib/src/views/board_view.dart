@@ -118,7 +118,7 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
         children: [
           Row(
@@ -127,18 +127,18 @@ class _Header extends StatelessWidget {
                 Container(
                   height: 40.0,
                   width: 40.0,
+                  padding: const EdgeInsets.all(1.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(11.0),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        spreadRadius: 4,
-                        blurRadius: 8,
-                        offset: const Offset(-2, 2),
+                        color: Colors.black.withOpacity(0.05),
+                        spreadRadius: 12,
+                        blurRadius: 12,
+                        offset: const Offset(0, 0),
                       ),
                     ],
                   ),
-                  padding: const EdgeInsets.all(1.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: project!.logoUrl!.contains('.svg') == false
@@ -266,7 +266,7 @@ class _PlusButtonState extends State<_PlusButton> {
           bottom: _isVisible ? 32 : 0,
         ),
         child: FloatingActionButton(
-          elevation: 2.0,
+          elevation: 0.0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(120.0),
           ),
