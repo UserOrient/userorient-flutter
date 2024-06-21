@@ -45,60 +45,71 @@ class _BoardViewState extends State<BoardView> {
         return AnnotatedRegion(
           value: SystemUiOverlayStyle.light,
           child: Scaffold(
-            backgroundColor: stringToColor(project?.color),
             floatingActionButton: _PlusButton(
               controller: _scrollController,
             ),
-            body: Column(
+            body: Stack(
               children: [
-                SvgPicture.network(
-                  // TODO: add upvote icon from assets
-                  'https://kamranbekirov.com/upvote.svg',
-                  width: .1,
-                  height: .1,
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).padding.top + 8.0,
-                ),
-                if (defaultTargetPlatform != TargetPlatform.iOS)
-                  const SizedBox(height: 12.0),
-                _Header(
-                  project: project,
-                ),
-                const SizedBox(height: 20.0),
-                Expanded(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24.0),
-                        topRight: Radius.circular(24.0),
-                      ),
-                    ),
-                    child: ValueListenableBuilder(
-                      valueListenable: UserOrient.features,
-                      builder: (context, List<Feature>? features, _) {
-                        features ??= List.generate(7, (index) {
-                          return Feature.skeleton();
-                        });
-
-                        return SingleChildScrollView(
-                          padding: const EdgeInsets.only(
-                            left: 16.0,
-                            right: 16.0,
-                            top: 20.0,
-                            bottom: 80.0,
-                          ),
-                          controller: _scrollController,
-                          child: _List(
-                            features: features,
-                          ),
-                        );
-                      },
+                AnimatedContainer(
+                  duration: kThemeAnimationDuration,
+                  height: MediaQuery.of(context).size.height / 5,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        stringToColor(project?.color),
+                        stringToColor(project?.color).withOpacity(0.8),
+                      ],
                     ),
                   ),
                 ),
-                const Watermark(),
+                Column(
+                  children: [
+                    SvgPicture.network(
+                      // TODO: add upvote icon from assets
+                      'https://kamranbekirov.com/upvote.svg',
+                      width: .1,
+                      height: .1,
+                    ),
+                    _Header(
+                      project: project,
+                    ),
+                    Expanded(
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(18.0),
+                            topRight: Radius.circular(18.0),
+                          ),
+                        ),
+                        child: ValueListenableBuilder(
+                          valueListenable: UserOrient.features,
+                          builder: (context, List<Feature>? features, _) {
+                            features ??= List.generate(7, (index) {
+                              return Feature.skeleton();
+                            });
+
+                            return SingleChildScrollView(
+                              padding: const EdgeInsets.only(
+                                left: 16.0,
+                                right: 16.0,
+                                top: 20.0,
+                                bottom: 80.0,
+                              ),
+                              controller: _scrollController,
+                              child: _List(
+                                features: features,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    const Watermark(),
+                  ],
+                ),
               ],
             ),
           ),
@@ -117,60 +128,72 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
+      child: Column(
         children: [
+          SizedBox(
+            height: MediaQuery.of(context).padding.top + 8.0,
+          ),
+          if (defaultTargetPlatform != TargetPlatform.iOS)
+            const SizedBox(height: 12.0),
           Row(
             children: [
-              if (project?.logoUrl != null) ...[
-                Container(
-                  height: 40.0,
-                  width: 40.0,
-                  padding: const EdgeInsets.all(1.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(11.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        spreadRadius: 12,
-                        blurRadius: 12,
-                        offset: const Offset(0, 0),
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: project!.logoUrl!.contains('.svg') == false
-                        ? ImageFade(
-                            image: NetworkImage(project!.logoUrl!),
-                          )
-                        : ImageFade(
-                            image: svg.Svg(
-                              project!.logoUrl!,
-                              source: svg.SvgSource.network,
-                              size: const Size(40.0, 40.0),
-                            ),
-                            height: 40.0,
-                            width: 40.0,
+              Row(
+                children: [
+                  if (project?.logoUrl != null) ...[
+                    Container(
+                      height: 32.0,
+                      width: 32.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.05),
+                            spreadRadius: 12,
+                            blurRadius: 12,
+                            offset: const Offset(0, 0),
                           ),
-                  ),
-                ),
-                const SizedBox(width: 12.0),
-                Text(
-                  project?.name ?? '',
-                  key: ValueKey(project?.name),
-                  style: const TextStyle(
-                    fontSize: 24.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ]
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(9.0),
+                        child: project!.logoUrl!.contains('.svg') == false
+                            ? ImageFade(
+                                image: NetworkImage(project!.logoUrl!),
+                              )
+                            : ImageFade(
+                                image: svg.Svg(
+                                  project!.logoUrl!,
+                                  source: svg.SvgSource.network,
+                                  size: const Size(40.0, 40.0),
+                                ),
+                                height: 40.0,
+                                width: 40.0,
+                              ),
+                      ),
+                    ),
+                    const SizedBox(width: 8.0),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 2.0),
+                      child: Text(
+                        project?.name ?? '',
+                        key: ValueKey(project?.name),
+                        style: const TextStyle(
+                          fontSize: 24.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ]
+                ],
+              ),
+              const Spacer(),
+              const StyledCloseButton(),
             ],
           ),
-          const Spacer(),
-          const StyledCloseButton(),
+          const SizedBox(height: 16.0),
         ],
       ),
     );
