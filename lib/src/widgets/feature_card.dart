@@ -58,7 +58,16 @@ class FeatureCard extends StatelessWidget {
                 SvgPicture.network(
                   // TODO: add upvote icon from assets
                   'https://kamranbekirov.com/upvote.svg',
-                  color: feature.voted ? Colors.white : const Color(0xffA9ABB9),
+                  // colorFilter: feature.voted ? Colors.white : const Color(0xffA9ABB9),
+                  colorFilter: feature.voted
+                      ? const ColorFilter.mode(
+                          Colors.white,
+                          BlendMode.srcIn,
+                        )
+                      : const ColorFilter.mode(
+                          Color(0xffA9ABB9),
+                          BlendMode.srcIn,
+                        ),
                 ),
                 Text(
                   feature.voteCount.toString(),

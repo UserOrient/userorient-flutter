@@ -39,16 +39,16 @@ class FormViewState extends State<FormView> {
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             'Təklif göndər',
             style: TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.w600,
             ),
           ),
-          actions: [
+          actions: const [
             StyledCloseButton.black(),
-            const SizedBox(width: 16.0),
+            SizedBox(width: 16.0),
           ],
         ),
         body: Column(

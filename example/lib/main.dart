@@ -4,10 +4,8 @@ import 'package:userorient_flutter/userorient_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  UserOrient.clearCache();
-
   UserOrient.configure(
-    apiKey: 'YOUR_API_KEY',
+    apiKey: '5622d170-03dd-4c15-9b72-8f52b138faab',
   );
 
   runApp(const MainApp());
@@ -46,16 +44,29 @@ class HomePage extends StatelessWidget {
               ),
               onTap: () {
                 UserOrient.setUser(
-                  fullName: 'Nelson',
-                  email: 'nelson@bighetti.cc',
-                  language: 'en',
-                  extra: {
-                    'is_premium': true,
-                    'subscription_date': '2021-09-01',
-                  },
-                );
+                    // uniqueIdentifier: '123123',
+                    // fullName: 'Kamran',
+                    // phoneNumber: '+994501234567',
+                    // email: 'kamran@userorient.com',
+                    // language: 'az',
+                    // extra: {
+                    //   'is_premium': true,
+                    //   'is_azerbaijani': true,
+                    //   'online_session_count': 17,
+                    //   'subscription_date': '2021-09-01',
+                    // },
+                    );
 
                 UserOrient.openBoard(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.feedback),
+              title: const Text(
+                'Logout',
+              ),
+              onTap: () {
+                UserOrient.clearCache();
               },
             ),
           ],

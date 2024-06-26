@@ -15,15 +15,17 @@ typedef UserUUID = String;
 class UserOrientData {
   static Future<UserUUID> syncUser({
     required User? user,
+    required String? cachedId,
     required String projectId,
   }) async {
+    user ??= const User.anonymous();
     final Endpoint endpoint = RestfulEndpoints.syncUser(projectId);
 
-    logUO('Syncing user: ${user?.toJson()}', emoji: '🔄');
+    logUO('Syncing user: ${user.toJson(cachedId)}', emoji: '🔄');
 
     final http.Response response = await http.post(
       Uri.parse(endpoint.url),
-      body: user == null ? null : jsonEncode(user.toJson()),
+      body: jsonEncode(user.toJson(cachedId)),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -119,12 +121,17 @@ class UserOrientData {
     if (cachedUuid != null) {
       logUO('Found cached UUID: $cachedUuid', emoji: '🔍');
 
-      UserOrientData.syncUser(user: user, projectId: projectId).ignore();
+      UserOrientData.syncUser(
+        user: user,
+        projectId: projectId,
+        cachedId: cachedUuid,
+      ).ignore();
 
       return cachedUuid;
     } else {
       final UserUUID uuid = await UserOrientData.syncUser(
         user: user,
+        cachedId: null,
         projectId: projectId,
       );
 

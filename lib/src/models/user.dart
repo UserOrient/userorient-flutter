@@ -25,8 +25,9 @@ class User {
         language = null,
         extra = null;
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson(String? id) {
     return {
+      'id': id,
       'uniqueIdentifier': uniqueIdentifier,
       'fullName': fullName,
       'email': email,
