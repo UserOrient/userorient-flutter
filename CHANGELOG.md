@@ -1,3 +1,7 @@
+## 0.1.1
+
+- Fixed a bug where multiple users were being created on the server.
+
 ## 0.1.0
 
 - Improved the board for better user experience.
