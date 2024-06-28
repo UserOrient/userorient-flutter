@@ -1,3 +1,7 @@
+## 0.1.2
+
+- Seems like the previous bug fix didn't work. Fixed it again.
+
 ## 0.1.1
 
 - Fixed a bug where multiple users were being created on the server.
