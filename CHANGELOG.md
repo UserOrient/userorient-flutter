@@ -1,3 +1,7 @@
+## 0.1.3
+
+- Add English language support.
+
 ## 0.1.2
 
 - Seems like the previous bug fix didn't work. Fixed it again.

@@ -27,7 +27,7 @@ dependencies:
 
 ### 📱 Add to your app
 
-Before using, configure UserOrient with your API key:
+Before using, configure UserOrient with your API key and langauge:
 
 
 ```dart
@@ -36,6 +36,7 @@ import 'package:userorient_flutter/userorient_flutter.dart';
 void main() {
   UserOrient.configure(
     apiKey: 'YOUR_API_KEY',
+    languageCode: 'en',
   );
 ```
 
