@@ -6,6 +6,7 @@ void main() async {
 
   UserOrient.configure(
     apiKey: 'YOUR_API_KEY',
+    languageCode: 'en',
   );
 
   runApp(const MainApp());

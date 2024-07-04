@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:userorient_flutter/src/logic/l10n.dart';
 
 class TipCard extends StatelessWidget {
   const TipCard({super.key});
@@ -16,18 +17,17 @@ class TipCard extends StatelessWidget {
             color: const Color(0xffF4F4F6),
             borderRadius: BorderRadius.circular(12.0),
           ),
-          child: const Row(
+          child: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.lightbulb_outline_rounded,
                 color: Color(0xff818391),
               ),
-              SizedBox(width: 16.0),
+              const SizedBox(width: 16.0),
               Expanded(
                 child: Text(
-                  'Sizin üçün daha önəmli olan yeniliklərə səs verin ki, onları daha tez tətbiq edək.',
-                  // 'Vote for the features that matter most to you so we can implement them faster.',
-                  style: TextStyle(
+                  L10n.tip,
+                  style: const TextStyle(
                     fontSize: 14.0,
                     height: 20 / 14,
                     color: Color(0xff585A68),

@@ -68,7 +68,7 @@ class _BoardViewState extends State<BoardView> {
                   children: [
                     SvgPicture.network(
                       // TODO: add upvote icon from assets
-                      'https://kamranbekirov.com/upvote.svg',
+                      'https://userorient.com/assets/upvote.svg',
                       width: .1,
                       height: .1,
                     ),

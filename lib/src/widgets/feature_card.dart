@@ -57,7 +57,7 @@ class FeatureCard extends StatelessWidget {
               children: [
                 SvgPicture.network(
                   // TODO: add upvote icon from assets
-                  'https://kamranbekirov.com/upvote.svg',
+                  'https://userorient.com/assets/upvote.svg',
                   // colorFilter: feature.voted ? Colors.white : const Color(0xffA9ABB9),
                   colorFilter: feature.voted
                       ? const ColorFilter.mode(

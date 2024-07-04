@@ -17,6 +17,7 @@ class UserOrient {
   static User? user;
   static UserUUID? userUuid;
   static bool _isInitialized = false;
+  static String languageCode = 'az';
 
   /// Open the UserOrient board view
   static Future<void> openBoard(BuildContext context) {
@@ -54,10 +55,16 @@ class UserOrient {
   /// Configure the UserOrient SDK. This method must be called before using the SDK.
   ///
   /// [apiKey] is the API Key from the UserOrient dashboard.
-  /// [hardReset] should be set to true if you use multiple boards in the same app.
+  /// [languageCode] is the language code for the user's language.
   static void configure({
     required String apiKey,
+    required String languageCode,
   }) {
+    /// Ignore the language code if it's not English
+    if (languageCode.toLowerCase() == 'en') {
+      UserOrient.languageCode = languageCode.toLowerCase();
+    }
+
     _apiKey = apiKey;
   }
 
