@@ -31,6 +31,8 @@ class UserOrientData {
       },
     );
 
+    logUO(response.toString(), emoji: '👀');
+
     return jsonDecode(response.body)['id'];
   }
 
