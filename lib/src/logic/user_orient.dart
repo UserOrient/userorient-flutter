@@ -38,10 +38,10 @@ class UserOrient {
   static Future<void> _open({
     required BuildContext context,
     required Widget child,
-  }) async {
+  }) {
     _initialize();
 
-    showGeneralDialog(
+    return showGeneralDialog(
       context: context,
       barrierDismissible: true,
       barrierLabel: 'UserOrient',
