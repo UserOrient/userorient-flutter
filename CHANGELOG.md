@@ -1,3 +1,8 @@
+## 0.1.4
+
+- Improve documentation.
+- Make `UserOrient.openBoard(...)` method a `Future`.
+
 ## 0.1.3
 
 - Add English language support.
