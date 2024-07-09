@@ -67,7 +67,7 @@ void showBoard() {
   }
 
   // Show the board
-  UserOrient.showBoard(context);
+  UserOrient.openBoard(context);
 }
 ```
 
@@ -76,6 +76,14 @@ We recommend calling `UserOrient.setUser` before every launch of the board to en
 ## 📝 User identification
 
 UserOrient takes a unique identifier (`uniqueIdentifier`) for each user. This identifier can be anything that uniquely identifies the user, such as an email address, phone number, or a custom ID. When not provided, UserOrient will generate a random identifier for the user.
+
+## 🚪 Logging out
+
+When the user logs out from the account on your mobile app, you must call `UserOrient.clearCache()` to avoid issues:
+
+```dart
+await UserOrient.clearCache();
+```
 
 ## 📧 Contact
 
