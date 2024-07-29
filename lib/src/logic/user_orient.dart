@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:userorient_flutter/src/models/feature.dart';
-import 'package:userorient_flutter/src/models/project.dart';
 import 'package:userorient_flutter/src/logic/user_orient_data.dart';
 import 'package:userorient_flutter/src/models/user.dart';
 import 'package:userorient_flutter/src/utilities/helper_functions.dart';
@@ -11,7 +10,6 @@ import 'package:userorient_flutter/src/views/form_view.dart';
 
 class UserOrient {
   static final ValueNotifier<List<Feature>?> features = ValueNotifier(null);
-  static final ValueNotifier<Project?> project = ValueNotifier(null);
 
   static String? _apiKey;
   static User? user;
@@ -95,7 +93,6 @@ class UserOrient {
     userUuid = null;
 
     features.value = null;
-    project.value = null;
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('user_orient_project_id');
@@ -131,26 +128,18 @@ class UserOrient {
       );
 
       final List<dynamic> results = await Future.wait([
-        UserOrientData.getProjectDetails(_apiKey!),
         UserOrientData.getFeatures(projectId: _apiKey!, userId: userUuid!),
       ]);
 
-      project.value = results[0];
-
-      final List<Feature> features = results[1];
+      final List<Feature> features = results[0];
       UserOrient.features.value = features;
 
       logUO(
-        'Initialization completed for "${project.value?.name}"',
+        'Initialization completed for project $_apiKey',
         emoji: '✅',
       );
 
       await prefs.setString('user_orient_project_id', _apiKey!);
-
-      logUO(
-        'Project name: ${project.value?.name}, id: ${project.value?.id}',
-        emoji: '📦',
-      );
 
       _isInitialized = true;
     }

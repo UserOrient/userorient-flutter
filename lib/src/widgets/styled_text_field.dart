@@ -39,7 +39,6 @@ class StyledTextField extends StatelessWidget {
       autofocus: autoFocus,
       maxLength: maxLength,
       controller: controller,
-      cursorColor: stringToColor(UserOrient.project.value?.color),
       style: const TextStyle(
         fontSize: 18.0,
         color: Color(0xff2A2A2A),

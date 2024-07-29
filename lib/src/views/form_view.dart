@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/logic/user_orient.dart';
-import 'package:userorient_flutter/src/utilities/helper_functions.dart';
 import 'package:userorient_flutter/src/views/sent_view.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
 import 'package:userorient_flutter/src/widgets/styled_close_button.dart';
@@ -77,12 +76,6 @@ class FormViewState extends State<FormView> {
               height: 56.0,
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
               width: double.infinity,
-              decoration: BoxDecoration(
-                color: stringToColor(
-                  UserOrient.project.value?.color,
-                ),
-                borderRadius: BorderRadius.circular(16.0),
-              ),
               child: TextButton(
                 onPressed: () {
                   setState(() {

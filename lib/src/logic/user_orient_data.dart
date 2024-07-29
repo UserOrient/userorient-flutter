@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:userorient_flutter/src/models/endpoint.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
-import 'package:userorient_flutter/src/models/project.dart';
 import 'package:userorient_flutter/src/models/user.dart';
 import 'package:userorient_flutter/src/utilities/helper_functions.dart';
 import 'package:userorient_flutter/src/utilities/restful_endpoints.dart';
@@ -34,18 +33,6 @@ class UserOrientData {
     logUO(response.body.toString(), emoji: '👀');
 
     return jsonDecode(response.body)['id'];
-  }
-
-  static Future<Project> getProjectDetails(String projectId) async {
-    final Endpoint endpoint = RestfulEndpoints.projectDetails(projectId);
-
-    final http.Response response = await http.get(
-      Uri.parse(endpoint.url),
-    );
-
-    return Project.fromJson(
-      jsonDecode(response.body)['project'],
-    );
   }
 
   static Future<List<Feature>> getFeatures({

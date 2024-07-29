@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
-import 'package:userorient_flutter/src/logic/user_orient.dart';
-import 'package:userorient_flutter/src/utilities/helper_functions.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
 import 'package:userorient_flutter/src/widgets/styled_close_button.dart';
 
@@ -12,9 +10,9 @@ class SentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion(
+    return const AnnotatedRegion(
       value: SystemUiOverlayStyle.dark,
-      child: const Scaffold(
+      child: Scaffold(
         backgroundColor: Colors.white,
         body: _Body(),
       ),
@@ -81,17 +79,11 @@ class _Body extends StatelessWidget {
               width: double.infinity,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: stringToColor(
-                  UserOrient.project.value?.color,
-                ).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: Text(
                 L10n.goBack,
-                style: TextStyle(
-                  color: stringToColor(
-                    UserOrient.project.value?.color,
-                  ),
+                style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w500,
                 ),

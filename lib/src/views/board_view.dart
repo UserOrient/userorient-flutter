@@ -1,15 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg;
 
 import 'package:userorient_flutter/src/models/feature.dart';
-import 'package:userorient_flutter/src/models/project.dart';
-import 'package:userorient_flutter/src/utilities/helper_functions.dart';
 import 'package:userorient_flutter/src/widgets/feature_card.dart';
-import 'package:userorient_flutter/src/widgets/image_fade.dart';
 import 'package:userorient_flutter/src/widgets/styled_close_button.dart';
 import 'package:userorient_flutter/src/widgets/tip_card.dart';
 import 'package:userorient_flutter/src/widgets/watermark.dart';
@@ -39,161 +32,60 @@ class _BoardViewState extends State<BoardView> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<Project?>(
-      valueListenable: UserOrient.project,
-      builder: (context, Project? project, _) {
-        return AnnotatedRegion(
-          value: SystemUiOverlayStyle.light,
-          child: Scaffold(
-            floatingActionButton: _PlusButton(
-              controller: _scrollController,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        automaticallyImplyLeading: false,
+        surfaceTintColor: Colors.transparent,
+        title: const Padding(
+          padding: EdgeInsets.only(left: 4.0),
+          child: Text(
+            'Features',
+            style: TextStyle(
+              fontSize: 20.0,
+              height: 28 / 20,
+              fontWeight: FontWeight.bold,
+              color: Color(0xff2A2A2A),
             ),
-            body: Stack(
-              children: [
-                AnimatedContainer(
-                  duration: kThemeAnimationDuration,
-                  height: MediaQuery.of(context).size.height / 5,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        stringToColor(project?.color),
-                        stringToColor(project?.color).withOpacity(0.8),
-                      ],
+          ),
+        ),
+        centerTitle: false,
+        actions: const [
+          StyledCloseButton.black(),
+          SizedBox(width: 12.0),
+        ],
+      ),
+      body: Column(
+        children: [
+          SvgPicture.network(
+            // TODO: add upvote icon from assets
+            'https://userorient.com/assets/upvote.svg',
+            width: .1,
+            height: .1,
+          ),
+          Expanded(
+            child: ValueListenableBuilder(
+              valueListenable: UserOrient.features,
+              builder: (context, List<Feature>? features, _) {
+                features ??= List.generate(7, (index) {
+                  return Feature.skeleton();
+                });
+
+                return MediaQuery.removePadding(
+                  context: context,
+                  removeBottom: true,
+                  child: Scrollbar(
+                    child: _List(
+                      features: features,
                     ),
                   ),
-                ),
-                Column(
-                  children: [
-                    SvgPicture.network(
-                      // TODO: add upvote icon from assets
-                      'https://userorient.com/assets/upvote.svg',
-                      width: .1,
-                      height: .1,
-                    ),
-                    _Header(
-                      project: project,
-                    ),
-                    Expanded(
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(18.0),
-                            topRight: Radius.circular(18.0),
-                          ),
-                        ),
-                        child: ValueListenableBuilder(
-                          valueListenable: UserOrient.features,
-                          builder: (context, List<Feature>? features, _) {
-                            features ??= List.generate(7, (index) {
-                              return Feature.skeleton();
-                            });
-
-                            return SingleChildScrollView(
-                              padding: const EdgeInsets.only(
-                                left: 16.0,
-                                right: 16.0,
-                                top: 20.0,
-                                bottom: 80.0,
-                              ),
-                              controller: _scrollController,
-                              child: _List(
-                                features: features,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    const Watermark(),
-                  ],
-                ),
-              ],
+                );
+              },
             ),
           ),
-        );
-      },
-    );
-  }
-}
-
-class _Header extends StatelessWidget {
-  final Project? project;
-
-  const _Header({
-    required this.project,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).padding.top + 8.0,
-          ),
-          if (defaultTargetPlatform != TargetPlatform.iOS)
-            const SizedBox(height: 12.0),
-          Row(
-            children: [
-              Row(
-                children: [
-                  if (project?.logoUrl != null) ...[
-                    Container(
-                      height: 32.0,
-                      width: 32.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            spreadRadius: 12,
-                            blurRadius: 12,
-                            offset: const Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(9.0),
-                        child: project!.logoUrl!.contains('.svg') == false
-                            ? ImageFade(
-                                image: NetworkImage(project!.logoUrl!),
-                              )
-                            : ImageFade(
-                                image: svg.Svg(
-                                  project!.logoUrl!,
-                                  source: svg.SvgSource.network,
-                                  size: const Size(40.0, 40.0),
-                                ),
-                                height: 40.0,
-                                width: 40.0,
-                              ),
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 2.0),
-                      child: Text(
-                        project?.name ?? '',
-                        key: ValueKey(project?.name),
-                        style: const TextStyle(
-                          fontSize: 24.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ]
-                ],
-              ),
-              const Spacer(),
-              const StyledCloseButton(),
-            ],
-          ),
-          const SizedBox(height: 16.0),
+          const Watermark(),
         ],
       ),
     );
@@ -210,9 +102,12 @@ class _List extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.only(
+        left: 16.0,
+        right: 16.0,
+        top: 8.0,
+        bottom: 16.0,
+      ),
       itemCount: features.length + 1,
       itemBuilder: (context, index) {
         if (index == 0) {
@@ -228,84 +123,11 @@ class _List extends StatelessWidget {
       },
       separatorBuilder: (context, index) {
         if (index == 0) {
-          return const SizedBox(height: 0.0);
+          return const SizedBox(height: 12.0);
         }
 
-        return const Divider(
-          height: 32.0,
-          thickness: 1.0,
-          color: Color(0xffF4F4F6),
-        );
+        return const SizedBox(height: 4.0);
       },
-    );
-  }
-}
-
-class _PlusButton extends StatefulWidget {
-  final ScrollController controller;
-
-  const _PlusButton({
-    required this.controller,
-  });
-
-  @override
-  State<_PlusButton> createState() => _PlusButtonState();
-}
-
-class _PlusButtonState extends State<_PlusButton> {
-  bool _isVisible = true;
-
-  @override
-  void initState() {
-    super.initState();
-    widget.controller.addListener(_scrollListener);
-  }
-
-  void _scrollListener() {
-    if (widget.controller.position.userScrollDirection ==
-        ScrollDirection.reverse) {
-      if (_isVisible) {
-        setState(() {
-          _isVisible = false;
-        });
-      }
-    } else {
-      if (!_isVisible) {
-        setState(() {
-          _isVisible = true;
-        });
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      duration: kThemeAnimationDuration,
-      opacity: _isVisible ? 1.0 : 0.0,
-      child: AnimatedPadding(
-        duration: kThemeAnimationDuration,
-        padding: EdgeInsets.only(
-          bottom: _isVisible ? 32 : 0,
-        ),
-        child: FloatingActionButton(
-          elevation: 0.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(120.0),
-          ),
-          backgroundColor: stringToColor(
-            UserOrient.project.value?.color,
-          ),
-          onPressed: () {
-            UserOrient.openForm(context);
-          },
-          child: const Icon(
-            Icons.add_rounded,
-            size: 32,
-            color: Colors.white,
-          ),
-        ),
-      ),
     );
   }
 }

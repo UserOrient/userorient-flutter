@@ -49,14 +49,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-  equatable:
-    dependency: transitive
-    description:
-      name: equatable
-      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.5"
   fake_async:
     dependency: transitive
     description:
@@ -136,14 +128,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  hyper_effects:
-    dependency: transitive
-    description:
-      name: hyper_effects
-      sha256: "121c31daf7ea38364c5b2c29eac3371c2cfa55930db59769d9095c76d8d6d308"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.3"
   leak_tracker:
     dependency: transitive
     description:
@@ -381,14 +365,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.2"
-  unicode_emojis:
-    dependency: transitive
-    description:
-      name: unicode_emojis
-      sha256: "365a36a29924ac9b9d88e934215b23f318620033dc4a6f6b9499af37ceb99375"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.0"
   url_launcher:
     dependency: transitive
     description:
@@ -459,7 +435,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.2"
+    version: "0.1.4"
   vector_graphics:
     dependency: transitive
     description:

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:userorient_flutter/src/models/feature.dart';
-import 'package:userorient_flutter/src/utilities/helper_functions.dart';
 import 'package:userorient_flutter/userorient_flutter.dart';
 
 class FeatureCard extends StatelessWidget {
@@ -22,14 +21,24 @@ class FeatureCard extends StatelessWidget {
       duration: kThemeAnimationDuration,
       child: SizedBox(
         key: ValueKey(feature.id),
-        child: isShimmer ? _buildShimmer() : _buildWidget(),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: const Color(0xffF2F2F2),
+              width: 1.0,
+            ),
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: isShimmer ? _buildShimmer() : _buildWidget(),
+        ),
       ),
     );
   }
 
   Row _buildWidget() {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         GestureDetector(
           onTap: () {
@@ -48,7 +57,7 @@ class FeatureCard extends StatelessWidget {
             width: 56.0,
             decoration: BoxDecoration(
               color: feature.voted
-                  ? stringToColor(UserOrient.project.value?.color)
+                  ? const Color(0xff2F313F)
                   : const Color(0xffE9EAEE),
               borderRadius: BorderRadius.circular(12.0),
             ),
@@ -75,7 +84,7 @@ class FeatureCard extends StatelessWidget {
                     fontSize: 16.0,
                     height: 24 / 16,
                     color: feature.voted ? Colors.white : Colors.black,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
@@ -106,7 +115,7 @@ class FeatureCard extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 14.0,
                   height: 20 / 14,
-                  color: Color(0xff818391),
+                  color: Color(0xffACAEAF),
                 ),
               ),
             ],
