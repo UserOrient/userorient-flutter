@@ -3,6 +3,7 @@ import 'package:userorient_flutter/userorient_flutter.dart';
 class L10n {
   static const Map<String, dynamic> _content = {
     'az': {
+      'title': 'Təkliflər',
       'tip':
           'Sizin üçün daha önəmli olan yeniliklərə səs verin ki, onları daha tez tətbiq edək.',
       'form_title': 'Təklif göndər',
@@ -12,17 +13,20 @@ class L10n {
       'sent_description':
           'Təklifinizi nəzərdən keçirəcəyik və əgər bizim yol xəritəmizə uyğun gələrsə, onu siyahıya əlavə edəcəyik. Gözləmədə qalın!',
       'go_back': 'Geri qayıt',
+      'add_feature': 'Təklif Göndər',
     },
     'en': {
+      'title': 'Features',
       'tip':
           'Vote on the features that matter most to you so we can implement them faster.',
-      'form_title': 'Submit a feature request',
+      'form_title': 'Submit a request',
       'form_hint': 'Describe your idea...',
       'submit_form': 'Submit',
       'sent_title': 'Feature request sent!',
       'sent_description':
           'We will review your request and if it fits our roadmap, we will add it to our list of features to build. Stay tuned!',
       'go_back': 'Go back',
+      'add_feature': 'Add Feature',
     },
   };
 
@@ -39,4 +43,8 @@ class L10n {
   static String get sentDescription =>
       _content[_languageCode]!['sent_description'] ?? 'N/A';
   static String get goBack => _content[_languageCode]!['go_back'] ?? 'N/A';
+
+  static String get addFeature =>
+      _content[_languageCode]!['add_feature'] ?? 'N/A';
+  static String get title => _content[_languageCode]!['title'] ?? 'N/A';
 }

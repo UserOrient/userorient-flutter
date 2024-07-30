@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
-import 'package:userorient_flutter/src/widgets/styled_close_button.dart';
+import 'package:userorient_flutter/src/widgets/button.dart';
 
 class SentView extends StatelessWidget {
   const SentView({super.key});
@@ -38,8 +38,9 @@ class _Body extends StatelessWidget {
                   SizedBox(
                     height: 80.0,
                     width: 80.0,
-                    child: SvgPicture.network(
-                      'https://userorient.com/assets/sent.svg',
+                    child: SvgPicture.asset(
+                      'assets/check.svg',
+                      package: 'userorient_flutter',
                     ),
                   ),
                   const SizedBox(height: 24.0),
@@ -68,50 +69,15 @@ class _Body extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24.0),
-          GestureDetector(
-            onTap: () {
+          Button(
+            onPressed: () {
               Navigator.of(context).pop();
             },
-            behavior: HitTestBehavior.translucent,
-            child: Container(
-              height: 56.0,
-              margin: const EdgeInsets.symmetric(horizontal: 16.0),
-              width: double.infinity,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              child: Text(
-                L10n.goBack,
-                style: const TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
+            label: L10n.goBack,
           ),
           const BottomPadding(),
         ],
       ),
     );
   }
-}
-
-class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar();
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      backgroundColor: Colors.white,
-      actions: const [
-        StyledCloseButton.black(),
-        SizedBox(width: 16.0),
-      ],
-    );
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(56.0);
 }

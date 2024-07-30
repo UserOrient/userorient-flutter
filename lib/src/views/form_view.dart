@@ -3,6 +3,7 @@ import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/logic/user_orient.dart';
 import 'package:userorient_flutter/src/views/sent_view.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
+import 'package:userorient_flutter/src/widgets/button.dart';
 import 'package:userorient_flutter/src/widgets/styled_close_button.dart';
 import 'package:userorient_flutter/src/widgets/styled_text_field.dart';
 
@@ -49,7 +50,7 @@ class FormViewState extends State<FormView> {
           ),
           actions: const [
             StyledCloseButton.black(),
-            SizedBox(width: 16.0),
+            SizedBox(width: 12.0),
           ],
         ),
         body: Column(
@@ -62,7 +63,7 @@ class FormViewState extends State<FormView> {
                     const SizedBox(height: 8.0),
                     // TODO: don't submit empty form
                     StyledTextField(
-                      minLines: 6,
+                      minLines: 10,
                       controller: _controller,
                       hintText: L10n.formHint,
                       autoFocus: true,
@@ -72,51 +73,32 @@ class FormViewState extends State<FormView> {
               ),
             ),
             const SizedBox(height: 24.0),
-            Container(
-              height: 56.0,
-              margin: const EdgeInsets.symmetric(horizontal: 16.0),
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {
+            Button(
+              onPressed: () {
+                final String content = _controller.text.trim();
+
+                setState(() {
+                  _isLoading = true;
+                });
+
+                UserOrient.submitForm(content: content).then((_) {
                   setState(() {
-                    _isLoading = true;
-                  });
+                    Navigator.pop(context);
 
-                  UserOrient.submitForm(
-                    content: _controller.text,
-                  ).then((_) {
-                    setState(() {
-                      Navigator.pop(context);
-
-                      showGeneralDialog(
-                        context: context,
-                        barrierDismissible: true,
-                        barrierLabel: 'UserOrient',
-                        transitionDuration: kThemeAnimationDuration,
-                        pageBuilder: (context, animation, secondaryAnimation) {
-                          return const SentView();
-                        },
-                      );
-                    });
+                    showGeneralDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      barrierLabel: 'UserOrient',
+                      transitionDuration: kThemeAnimationDuration,
+                      pageBuilder: (context, animation, secondaryAnimation) {
+                        return const SentView();
+                      },
+                    );
                   });
-                },
-                child: _isLoading
-                    ? const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 24.0),
-                        child: LinearProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation(Colors.white),
-                          backgroundColor: Colors.transparent,
-                        ),
-                      )
-                    : Text(
-                        L10n.submitForm,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-              ),
+                });
+              },
+              busy: _isLoading,
+              label: L10n.submitForm,
             ),
             const BottomPadding(),
           ],

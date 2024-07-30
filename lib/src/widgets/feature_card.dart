@@ -22,7 +22,7 @@ class FeatureCard extends StatelessWidget {
       child: SizedBox(
         key: ValueKey(feature.id),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
           decoration: BoxDecoration(
             border: Border.all(
               color: const Color(0xffF2F2F2),
@@ -58,7 +58,7 @@ class FeatureCard extends StatelessWidget {
             decoration: BoxDecoration(
               color: feature.voted
                   ? const Color(0xff2F313F)
-                  : const Color(0xffE9EAEE),
+                  : const Color(0xffE9EAEE).withOpacity(.75),
               borderRadius: BorderRadius.circular(12.0),
             ),
             child: Column(

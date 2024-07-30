@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:userorient_flutter/src/logic/l10n.dart';
 
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/widgets/feature_card.dart';
@@ -39,11 +40,11 @@ class _BoardViewState extends State<BoardView> {
         elevation: 0.0,
         automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
-        title: const Padding(
-          padding: EdgeInsets.only(left: 4.0),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 4.0),
           child: Text(
-            'Features',
-            style: TextStyle(
+            L10n.title,
+            style: const TextStyle(
               fontSize: 20.0,
               height: 28 / 20,
               fontWeight: FontWeight.bold,
