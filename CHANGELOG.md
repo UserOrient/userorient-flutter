@@ -1,3 +1,7 @@
+## 0.1.5
+
+- Redesigned the board with minimalistic design.
+
 ## 0.1.4
 
 - Improve documentation.
