@@ -48,6 +48,8 @@ class FeatureCard extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
+            if (isCompleted) return;
+
             UserOrient.toggleUpvote(feature);
 
             if (feature.voted) {
