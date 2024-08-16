@@ -1,3 +1,5 @@
+import 'package:userorient_flutter/src/models/label.dart';
+
 class Feature {
   final String id;
   final String status;
@@ -10,6 +12,7 @@ class Feature {
   final bool voted;
   final Map<String, dynamic> title;
   final Map<String, dynamic> description;
+  final List<Label>? labels;
 
   String titleForLocale(String? locale) {
     return title[locale] ?? title['en'] ?? 'N/A';
@@ -34,6 +37,7 @@ class Feature {
       voted: false,
       title: {},
       description: {},
+      labels: [],
     );
   }
 
@@ -49,6 +53,7 @@ class Feature {
     required this.voted,
     required this.title,
     required this.description,
+    required this.labels,
   });
 
   Feature copyWith({
@@ -63,6 +68,7 @@ class Feature {
     bool? voted,
     Map<String, String?>? title,
     Map<String, String?>? description,
+    List<Label>? labels,
   }) {
     return Feature(
       id: id ?? this.id,
@@ -76,6 +82,7 @@ class Feature {
       voted: voted ?? this.voted,
       title: title ?? this.title,
       description: description ?? this.description,
+      labels: labels ?? this.labels,
     );
   }
 
@@ -92,6 +99,9 @@ class Feature {
       voted: json['voted'],
       title: json['title'],
       description: json['description'],
+      labels: json['labels'] != null
+          ? List<Label>.from(json['labels'].map((x) => Label.fromJson(x)))
+          : [],
     );
   }
 }

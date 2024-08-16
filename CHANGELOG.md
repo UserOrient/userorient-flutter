@@ -1,3 +1,7 @@
+## 0.1.6
+
+- Display tags of the features.
+
 ## 0.1.5
 
 - Redesigned the board with minimalistic design.
