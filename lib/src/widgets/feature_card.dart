@@ -66,58 +66,57 @@ class FeatureCard extends StatelessWidget {
             margin: const EdgeInsets.only(top: 4.0),
             decoration: BoxDecoration(
               color: isCompleted
-                  ? Color(
-                      int.parse('0xff${feature.labels!.firstWhere((label) {
-                            return label.isCompleted;
-                          }).color.replaceAll('#', '')}'),
-                    ).withOpacity(.20)
+                  ? const Color(0xffEEFCF2)
                   : feature.voted
                       ? const Color(0xff2F313F)
                       : const Color(0xffE9EAEE).withOpacity(.75),
               borderRadius: BorderRadius.circular(12.0),
             ),
+            alignment: Alignment.center,
             child: isCompleted
-                ? Icon(
-                    Icons.check,
-                    color: Color(
-                      int.parse(
-                        '0xff${feature.labels!.firstWhere((label) {
-                              return label.isCompleted;
-                            }).color.replaceAll('#', '')}',
-                      ),
+                ? Transform.scale(
+                    scale: 56 / 48,
+                    child: SvgPicture.asset(
+                      'assets/completed-mark.svg',
+                      package: 'userorient_flutter',
                     ),
                   )
                 : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgPicture.network(
-                        // TODO: add upvote icon from assets
-                        'https://userorient.com/assets/upvote.svg',
-                        // colorFilter: feature.voted ? Colors.white : const Color(0xffA9ABB9),
-                        colorFilter: feature.voted
-                            ? const ColorFilter.mode(
-                                Colors.white,
-                                BlendMode.srcIn,
-                              )
-                            : const ColorFilter.mode(
-                                Color(0xffA9ABB9),
-                                BlendMode.srcIn,
-                              ),
+                      const SizedBox(height: 5.0),
+                      Transform.scale(
+                        scale: 56 / 48,
+                        child: SvgPicture.asset(
+                          feature.voted
+                              ? 'assets/upvote-on.svg'
+                              : 'assets/upvote-off.svg',
+                          package: 'userorient_flutter',
+                          colorFilter: feature.voted
+                              ? const ColorFilter.mode(
+                                  Colors.white,
+                                  BlendMode.srcIn,
+                                )
+                              : const ColorFilter.mode(
+                                  Color(0xffA9ABB9),
+                                  BlendMode.srcIn,
+                                ),
+                        ),
                       ),
                       Text(
                         feature.voteCount.toString(),
                         style: TextStyle(
-                          fontSize: 16.0,
-                          height: 24 / 16,
+                          fontSize: 14.0,
+                          height: 20 / 14,
                           color: feature.voted ? Colors.white : Colors.black,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ],
                   ),
           ),
         ),
-        const SizedBox(width: 16.0),
+        const SizedBox(width: 12.0),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,19 +215,20 @@ class _LabelRow extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(right: 8.0, top: 8.0),
               padding: const EdgeInsets.symmetric(
-                horizontal: 8.0,
+                horizontal: 6.0,
                 vertical: 4.0,
               ),
               decoration: BoxDecoration(
                 color: Color(
                   int.parse('0xff${label.color.replaceAll('#', '')}'),
-                ).withOpacity(.20),
+                ).withOpacity(.1),
                 borderRadius: BorderRadius.circular(6.0),
               ),
               child: Text(
                 label.name[UserOrient.languageCode],
                 style: TextStyle(
                   fontSize: 12.0,
+                  height: 16 / 12,
                   color: Color(
                     int.parse('0xff${label.color.replaceAll('#', '')}'),
                   ),
