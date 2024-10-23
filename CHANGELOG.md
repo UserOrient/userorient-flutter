@@ -1,3 +1,7 @@
+## 0.1.8
+
+- Fix issue where all first letters of words in request message were being capitalized.
+
 ## 0.1.7
 
 - Update design of the board.
