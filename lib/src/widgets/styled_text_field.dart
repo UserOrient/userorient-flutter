@@ -30,8 +30,8 @@ class StyledTextField extends StatelessWidget {
       maxLength: maxLength,
       controller: controller,
       textCapitalization: TextCapitalization.sentences,
-      inputFormatters: [
-        CapitalLetterInputFormatter(),
+      inputFormatters: const [
+        CapitalizeFirstLetterFormatter(),
       ],
       style: const TextStyle(
         fontSize: 18.0,
@@ -63,33 +63,22 @@ class StyledTextField extends StatelessWidget {
   }
 }
 
-class CapitalLetterInputFormatter extends TextInputFormatter {
+class CapitalizeFirstLetterFormatter extends TextInputFormatter {
+  const CapitalizeFirstLetterFormatter();
+
   @override
   TextEditingValue formatEditUpdate(
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    final StringBuffer newText = StringBuffer();
-    final List<String> words = newValue.text.split(' ');
-
-    for (int i = 0; i < words.length; i++) {
-      final String word = words[i];
-
-      if (word.isNotEmpty) {
-        newText.write(word[0].toUpperCase());
-
-        if (word.length > 1) {
-          newText.write(word.substring(1).toLowerCase());
-        }
-      }
-
-      if (i < words.length - 1) {
-        newText.write(' ');
-      }
+    if (newValue.text.isEmpty) {
+      return newValue;
     }
 
-    return TextEditingValue(
-      text: newText.toString(),
+    String newText =
+        newValue.text[0].toUpperCase() + newValue.text.substring(1);
+    return newValue.copyWith(
+      text: newText,
       selection: newValue.selection,
     );
   }
