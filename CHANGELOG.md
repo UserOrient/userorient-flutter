@@ -1,3 +1,7 @@
+## 0.1.7
+
+- Update design of the board.
+
 ## 0.1.6
 
 - Display tags of the features.

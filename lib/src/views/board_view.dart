@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 
 import 'package:userorient_flutter/src/models/feature.dart';
@@ -60,12 +59,6 @@ class _BoardViewState extends State<BoardView> {
       ),
       body: Column(
         children: [
-          SvgPicture.network(
-            // TODO: add upvote icon from assets
-            'https://userorient.com/assets/upvote.svg',
-            width: .1,
-            height: .1,
-          ),
           Expanded(
             child: ValueListenableBuilder(
               valueListenable: UserOrient.features,
