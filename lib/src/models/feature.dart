@@ -8,7 +8,7 @@ class Feature {
   final String? ownerFirstName;
   final String? ownerLastName;
   final int voteCount;
-  final DateTime createdAt;
+  final DateTime? createdAt;
   final bool voted;
   final Map<String, dynamic> title;
   final Map<String, dynamic> description;
@@ -95,7 +95,8 @@ class Feature {
       ownerFirstName: json['ownerFirstName'],
       ownerLastName: json['ownerLastName'],
       voteCount: json['voteCount'],
-      createdAt: DateTime.parse(json['createdAt']),
+      createdAt:
+          json['createdAt'] == null ? null : DateTime.parse(json['createdAt']),
       voted: json['voted'],
       title: json['title'],
       description: json['description'],
