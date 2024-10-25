@@ -86,5 +86,5 @@ For any questions or support, please reach out to us:
 ---
 
 <p align="center">
-  Made with ❤️ by the UserOrient team
+  Made with 💙 by the UserOrient team
 </p>
