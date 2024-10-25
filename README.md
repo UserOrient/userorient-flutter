@@ -5,7 +5,7 @@
 UserOrient is a feature voting board that helps you collect feedback from your users and prioritize your development roadmap in your Flutter projects.
 
 <p align="center">
-  <img src="https://userorient.com/images/banner.png" alt="UserOrient" width="600"/>
+  <img src="https://raw.githubusercontent.com/UserOrient/userorient-flutter/8185cdeb3916ffc7efc9638eccb81246744d06e0/assets/cover.png" alt="UserOrient Cover" width="100%"/>
 </p>
 
 ## Getting Started
