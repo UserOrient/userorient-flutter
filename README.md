@@ -1,34 +1,29 @@
-# UserOrient SDK for Flutter
+# [UserOrient.com](https://userorient.com)
 
-## 🚀 Introduction
+**Feature Voting Board for Flutter**
 
-Discover what your users really want and stop building wrong features. 
+UserOrient is a feature voting board that helps you collect feedback from your users and prioritize your development roadmap in your Flutter projects.
 
-UserOrient is a feature request board that helps you collect feedback from your users and prioritize what to build next.
+<p align="center">
+  <img src="https://userorient.com/images/banner.png" alt="UserOrient" width="600"/>
+</p>
 
-## 🤓 Getting Started
+## 🚀 Getting Started
 
-### 🔓 Join closed-beta
+Considering that you have already created a project on [UserOrient.com](https://userorient.com) and received an API key, follow these steps to integrate the SDK into your Flutter app.
 
-<a href="https://scolpshz3d6.typeform.com/to/EXb0XM52" target="_blank"><img src="https://userorient.com/logos/cover.jpg" alt="UserOrient" width="100%"/></a>
-
-Right now, UserOrient is in closed-beta. If you want to join, for which I would be very grateful, please fill out this [form](https://scolpshz3d6.typeform.com/to/EXb0XM52) and I will get back to you as soon as possible.
-
-Supposing you have been accepted, you will receive an API key which you will use to configure UserOrient. 
-
-### ⛓️ Add the dependency
+### 📦 Add the dependency
 
 Add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  userorient_flutter: ^0.0.3
+  userorient_flutter: <latest-version>
 ```
 
-### 📱 Add to your app
+### 🔧 Initialize the SDK
 
-Before using, configure UserOrient with your API key and langauge:
-
+Initialize the SDK with your project's API key and preferred language:
 
 ```dart
 import 'package:userorient_flutter/userorient_flutter.dart';
@@ -40,51 +35,56 @@ void main() {
   );
 ```
 
-### 🎬 Show the board
+### 🖥️ Display the board
 
-Now you can show the board by calling `UserOrient.showBoard(context)`:
+To show the UserOrient board, call `UserOrient.showBoard(context)`:
 
 ```dart
 import 'package:userorient_flutter/userorient_flutter.dart';
 
 void showBoard() {
-  // Call before every launch of the board
+  // Set user information
   UserOrient.setUser(
-    // Any unique identifier for the user
     uniqueIdentifier: '123456',
-
-    // User information
-    fullName: 'John Doe',
-    email: 'bighead@bighetti.me',
+    fullName: 'Kamran Bekirov',
+    email: 'kamran@userorient.com',
     phoneNumber: '+1234567890',
     language: 'en',
-
-    // Extra dynamic information about the user
     extra: {
-      'age': 30,
-      'isPremium': true,
+      'age': 27,
+      'is_premium': true,
     }
-  }
+  );
 
-  // Show the board
+  // Display the board
   UserOrient.openBoard(context);
 }
 ```
 
-We recommend calling `UserOrient.setUser` before every launch of the board to ensure the user information is up-to-date.
+> **Note:** It's recommended to call `UserOrient.setUser` before each board launch to ensure up-to-date user information.
 
-## 📝 User identification
+## 👤 User Identification
 
-UserOrient takes a unique identifier (`uniqueIdentifier`) for each user. This identifier can be anything that uniquely identifies the user, such as an email address, phone number, or a custom ID. When not provided, UserOrient will generate a random identifier for the user.
+UserOrient requires a unique identifier (`uniqueIdentifier`) for each user. This can be an email address, phone number, or custom ID. If not provided, UserOrient will generate a random identifier.
 
-## 🚪 Logging out
+## 🚪 Logging Out
 
-When the user logs out from the account on your mobile app, you must call `UserOrient.clearCache()` to avoid issues:
+When a user logs out of your app, call `UserOrient.clearCache()` to prevent potential issues:
 
 ```dart
 await UserOrient.clearCache();
 ```
 
-## 📧 Contact
+## 📞 Contact
 
-If you have any questions, feel free to reach out to us at [support@userorient.com](mailto:support@userorient.com) or on live chat at [userorient.com](https://userorient.com).
+For any questions or support, please reach out to us:
+
+- 📧 Email: [support@userorient.com](mailto:support@userorient.com)
+- 🐦 Twitter: [@userorient](https://twitter.com/userorient)
+- 💬 Live Chat: [userorient.com](https://userorient.com)
+
+---
+
+<p align="center">
+  Made with ❤️ by the UserOrient team
+</p>
