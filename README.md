@@ -37,12 +37,12 @@ void main() {
 
 ### Display the board
 
-To show the UserOrient board, call `UserOrient.showBoard(context)`:
+To show the UserOrient board, call `UserOrient.openBoard(context)`:
 
 ```dart
 import 'package:userorient_flutter/userorient_flutter.dart';
 
-void showBoard() {
+void openBoard() {
   // Set user information
   UserOrient.setUser(
     uniqueIdentifier: '123456',
