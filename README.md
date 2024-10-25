@@ -63,7 +63,7 @@ void showBoard() {
 
 > **Note:** It's recommended to call `UserOrient.setUser` before each board launch to ensure up-to-date user information.
 
-## 👤 User Identification
+## User Identification
 
 UserOrient requires a unique identifier (`uniqueIdentifier`) for each user. This can be an email address, phone number, or custom ID. If not provided, UserOrient will generate a random identifier.
 
