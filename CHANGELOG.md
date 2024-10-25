@@ -1,3 +1,7 @@
+## 0.2.0
+
+- Fix pub.dev score issues and update documentation.
+
 ## 0.1.9
 
 - Update documentation.

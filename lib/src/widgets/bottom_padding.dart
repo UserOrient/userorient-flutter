@@ -1,4 +1,4 @@
-import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class BottomPadding extends StatelessWidget {
@@ -13,7 +13,7 @@ class BottomPadding extends StatelessWidget {
     BuildContext context, {
     double defaultHeight = 16.0,
   }) {
-    final isAndroid = Platform.isAndroid;
+    final isAndroid = defaultTargetPlatform == TargetPlatform.android;
     final bottomPadding =
         isAndroid ? defaultHeight : MediaQuery.of(context).padding.bottom;
     final height = bottomPadding > 0 ? bottomPadding : defaultHeight;

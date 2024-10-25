@@ -1,5 +1,10 @@
 # [UserOrient.com](https://userorient.com)
 
+[![Pub](https://img.shields.io/pub/v/userorient_flutter.svg)](https://pub.dartlang.org/packages/userorient_flutter)
+[![Pub Likes](https://img.shields.io/pub/likes/userorient_flutter)](https://pub.dev/packages/userorient_flutter/score)
+[![Popularity](https://img.shields.io/pub/popularity/userorient_flutter)](https://pub.dev/packages/userorient_flutter/score)
+[![Pub points](https://img.shields.io/pub/points/userorient_flutter)](https://pub.dev/packages/userorient_flutter/score)
+
 **Feature Voting Board for Flutter**
 
 UserOrient is a feature voting board that helps you collect feedback from your users and prioritize your development roadmap in your Flutter projects.

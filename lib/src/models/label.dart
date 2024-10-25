@@ -25,4 +25,7 @@ class Label {
 
     return other is Label && other.id == id;
   }
+
+  @override
+  int get hashCode => id.hashCode;
 }
