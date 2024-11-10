@@ -28,6 +28,45 @@ class L10n {
       'go_back': 'Go back',
       'add_feature': 'Add Feature',
     },
+    'es': {
+      'title': 'Sugerencias',
+      'tip':
+          'Vota por la sugerencia que más te importe para que podamos implementarla más rápido.',
+      'form_title': 'Enviar una sugerencia',
+      'form_hint': 'Describe tu idea...',
+      'submit_form': 'Enviar',
+      'sent_title': '¡Solicitud de sugerencia enviada!',
+      'sent_description':
+          'Revisaremos tu solicitud y, si encaja en nuestra hoja de ruta, la añadiremos a nuestra lista de características por desarrollar. ¡Mantente atento!',
+      'go_back': 'Volver',
+      'add_feature': 'Agregar Sugerencia',
+    },
+    'it': {
+      'title': 'Suggerimenti',
+      'tip':
+          'Vota le funzionalità che più ti interessano, così potremo implementarle più velocemente.',
+      'form_title': 'Invia una richiesta',
+      'form_hint': 'Descrivi la tua idea...',
+      'submit_form': 'Invia',
+      'sent_title': 'Richiesta di funzionalità inviata!',
+      'sent_description':
+          'Esamineremo la tua richiesta e, se si adatta alla nostra roadmap, la aggiungeremo alla nostra lista di funzionalità da sviluppare. Resta sintonizzato!',
+      'go_back': 'Torna indietro',
+      'add_feature': 'Aggiungi Funzionalità',
+    },
+    'tr': {
+      'title': 'Öneriler',
+      'tip':
+          'En çok önem verdiğiniz öneriye oy verin ki onları daha hızlı hayata geçirelim.',
+      'form_title': 'Bir öneri gönderin',
+      'form_hint': 'Fikrinizi tanımlayın...',
+      'submit_form': 'Gönder',
+      'sent_title': 'Öneri isteği gönderildi!',
+      'sent_description':
+          'Talebinizi inceleyeceğiz ve yol haritamıza uyuyorsa, geliştirilecek özellikler listemize ekleyeceğiz. Takipte kalın!',
+      'go_back': 'Geri dön',
+      'add_feature': 'Öneri Ekle',
+    },
   };
 
   static String get _languageCode => UserOrient.languageCode;
