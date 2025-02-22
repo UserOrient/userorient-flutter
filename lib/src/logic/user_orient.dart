@@ -15,7 +15,7 @@ class UserOrient {
   static User? user;
   static UserUUID? userUuid;
   static bool _isInitialized = false;
-  static String languageCode = 'az';
+  static String languageCode = 'en';
 
   /// Open the UserOrient board view
   static Future<void> openBoard(BuildContext context) {
