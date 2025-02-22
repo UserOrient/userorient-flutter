@@ -1,3 +1,9 @@
+## 0.2.1
+
+- Make English the default language in case the language is not supported.
+- Refresh the features list when the board is re-opened.
+- Upgrade dependencies.
+
 ## 0.2.0
 
 - Fix pub.dev score issues and update documentation.
