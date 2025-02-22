@@ -127,12 +127,7 @@ class UserOrient {
         user: user,
       );
 
-      final List<dynamic> results = await Future.wait([
-        UserOrientData.getFeatures(projectId: _apiKey!, userId: userUuid!),
-      ]);
-
-      final List<Feature> features = results[0];
-      UserOrient.features.value = features;
+      await _fetchAndSetFeatures();
 
       logUO(
         'Initialization completed for project $_apiKey',
@@ -142,7 +137,18 @@ class UserOrient {
       await prefs.setString('user_orient_project_id', _apiKey!);
 
       _isInitialized = true;
+    } else {
+      await _fetchAndSetFeatures();
     }
+  }
+
+  static Future<void> _fetchAndSetFeatures() async {
+    final List<dynamic> results = await Future.wait([
+      UserOrientData.getFeatures(projectId: _apiKey!, userId: userUuid!),
+    ]);
+
+    final List<Feature> features = results[0];
+    UserOrient.features.value = features;
   }
 
   /// Toggle the upvote status of a feature. Used internally by the SDK.
