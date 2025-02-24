@@ -1,6 +1,10 @@
 import 'package:userorient_flutter/userorient_flutter.dart';
 
 class L10n {
+  static bool isSupportedLanguage(String languageCode) {
+    return _content.containsKey(languageCode);
+  }
+
   static const Map<String, dynamic> _content = {
     'az': {
       'title': 'Təkliflər',
