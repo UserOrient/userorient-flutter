@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
+import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
 import 'package:userorient_flutter/src/widgets/button.dart';
 
@@ -10,12 +11,9 @@ class SentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AnnotatedRegion(
-      value: SystemUiOverlayStyle.dark,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: _Body(),
-      ),
+    return Scaffold(
+      backgroundColor: context.backgroundColor,
+      body: const _Body(),
     );
   }
 }
@@ -46,9 +44,10 @@ class _Body extends StatelessWidget {
                   const SizedBox(height: 24.0),
                   Text(
                     L10n.sentTitle,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 20.0,
                       height: 28 / 20,
+                      color: context.textColor,
                     ),
                   ),
                   const SizedBox(height: 16.0),
@@ -57,10 +56,10 @@ class _Body extends StatelessWidget {
                     child: Text(
                       L10n.sentDescription,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14.0,
                         height: 20 / 14,
-                        color: Color(0xffACAEAF),
+                        color: context.secondaryTextColor,
                       ),
                     ),
                   ),

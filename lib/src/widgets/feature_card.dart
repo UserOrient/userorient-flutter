@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/models/label.dart';
+import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/userorient_flutter.dart';
 
 class FeatureCard extends StatelessWidget {
@@ -18,26 +19,23 @@ class FeatureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      duration: kThemeAnimationDuration,
-      child: SizedBox(
-        key: ValueKey(feature.id),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: const Color(0xffF2F2F2),
-              width: 1.0,
-            ),
-            borderRadius: BorderRadius.circular(16.0),
+    return SizedBox(
+      key: ValueKey(feature.id),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: context.borderColor,
+            width: 1.0,
           ),
-          child: isShimmer ? _buildShimmer() : _buildWidget(),
+          borderRadius: BorderRadius.circular(16.0),
         ),
+        child: isShimmer ? _buildShimmer() : _buildWidget(context),
       ),
     );
   }
 
-  Row _buildWidget() {
+  Row _buildWidget(BuildContext context) {
     final bool isCompleted = feature.labels?.any(
           (label) => label.id == '07d82cf0-51ea-45d5-b274-59edb1b11a20',
         ) ??
@@ -60,16 +58,16 @@ class FeatureCard extends StatelessWidget {
           },
           behavior: HitTestBehavior.translucent,
           child: AnimatedContainer(
-            duration: kThemeAnimationDuration,
+            duration: const Duration(milliseconds: 100),
             height: 56.0,
             width: 56.0,
             margin: const EdgeInsets.only(top: 4.0),
             decoration: BoxDecoration(
               color: isCompleted
-                  ? const Color(0xffEEFCF2)
+                  ? context.completedContainerColor
                   : feature.voted
-                      ? const Color(0xff2F313F)
-                      : const Color(0xffE9EAEE).withOpacity(.75),
+                      ? context.votedContainerColor
+                      : context.unvotedContainerColor,
               borderRadius: BorderRadius.circular(12.0),
             ),
             alignment: Alignment.center,
@@ -82,7 +80,6 @@ class FeatureCard extends StatelessWidget {
                     ),
                   )
                 : Column(
-                    // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(height: 5.0),
                       Transform.scale(
@@ -93,8 +90,8 @@ class FeatureCard extends StatelessWidget {
                               : 'assets/upvote-off.svg',
                           package: 'userorient_flutter',
                           colorFilter: feature.voted
-                              ? const ColorFilter.mode(
-                                  Colors.white,
+                              ? ColorFilter.mode(
+                                  context.buttonTextColor,
                                   BlendMode.srcIn,
                                 )
                               : const ColorFilter.mode(
@@ -108,7 +105,9 @@ class FeatureCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14.0,
                           height: 20 / 14,
-                          color: feature.voted ? Colors.white : Colors.black,
+                          color: feature.voted
+                              ? context.buttonTextColor
+                              : context.textColor,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -122,28 +121,26 @@ class FeatureCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                feature.titleForLocale(
-                  UserOrient.user?.language,
-                ),
-                style: const TextStyle(
+                feature.titleForLocale(UserOrient.user?.language),
+                style: TextStyle(
                   fontSize: 16.0,
                   height: 24 / 16,
-                  color: Color(0xff2F313F),
+                  color: context.textColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 2.0),
               Text(
-                feature.descriptionForLocale(
-                  UserOrient.user?.language,
-                ),
-                style: const TextStyle(
+                feature.descriptionForLocale(UserOrient.user?.language),
+                style: TextStyle(
                   fontSize: 14.0,
                   height: 20 / 14,
-                  color: Color(0xffACAEAF),
+                  color: context.secondaryTextColor,
                 ),
               ),
-              _LabelRow(labels: feature.labels),
+              _LabelRow(
+                labels: feature.labels,
+              ),
             ],
           ),
         ),

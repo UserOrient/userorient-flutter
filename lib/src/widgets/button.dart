@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 
 class Button extends StatelessWidget {
   final String label;
@@ -30,15 +31,17 @@ class Button extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: const Color(0xff2A2A2A),
+          color: context.buttonColor,
         ),
         child: busy
             ? Container(
                 alignment: Alignment.center,
                 width: 24.0,
                 height: 24.0,
-                child: const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    context.buttonTextColor,
+                  ),
                   strokeWidth: 3.0,
                 ),
               )
@@ -51,8 +54,8 @@ class Button extends StatelessWidget {
                   ],
                   Text(
                     label,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: context.buttonTextColor,
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500,
                     ),

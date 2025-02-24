@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/logic/user_orient.dart';
+import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/views/sent_view.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
 import 'package:userorient_flutter/src/widgets/button.dart';
@@ -32,77 +33,74 @@ class FormViewState extends State<FormView> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData.light(),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: Text(
-            L10n.formTitle,
-            style: const TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w700,
-            ),
+    return Scaffold(
+      backgroundColor: context.backgroundColor,
+      appBar: AppBar(
+        backgroundColor: context.backgroundColor,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Text(
+          L10n.addFeature,
+          style: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.w700,
+            color: context.textColor,
           ),
-          actions: const [
-            StyledCloseButton.black(),
-            SizedBox(width: 12.0),
-          ],
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 8.0),
-                    // TODO: don't submit empty form
-                    StyledTextField(
-                      minLines: 10,
-                      controller: _controller,
-                      hintText: L10n.formHint,
-                      autoFocus: true,
-                    ),
-                  ],
-                ),
+        actions: const [
+          StyledCloseButton(),
+          SizedBox(width: 12.0),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 8.0),
+                  // TODO: don't submit empty form
+                  StyledTextField(
+                    minLines: 10,
+                    controller: _controller,
+                    hintText: L10n.formHint,
+                    autoFocus: true,
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 24.0),
-            Button(
-              onPressed: () {
-                final String content = _controller.text.trim();
+          ),
+          const SizedBox(height: 24.0),
+          Button(
+            onPressed: () {
+              final String content = _controller.text.trim();
 
+              setState(() {
+                _isLoading = true;
+              });
+
+              UserOrient.submitForm(content: content).then((_) {
                 setState(() {
-                  _isLoading = true;
-                });
+                  Navigator.pop(context);
 
-                UserOrient.submitForm(content: content).then((_) {
-                  setState(() {
-                    Navigator.pop(context);
-
-                    showGeneralDialog(
-                      context: context,
-                      barrierDismissible: true,
-                      barrierLabel: 'UserOrient',
-                      transitionDuration: kThemeAnimationDuration,
-                      pageBuilder: (context, animation, secondaryAnimation) {
-                        return const SentView();
-                      },
-                    );
-                  });
+                  showGeneralDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    barrierLabel: 'UserOrient',
+                    transitionDuration: kThemeAnimationDuration,
+                    pageBuilder: (context, animation, secondaryAnimation) {
+                      return const SentView();
+                    },
+                  );
                 });
-              },
-              busy: _isLoading,
-              label: L10n.submitForm,
-            ),
-            const BottomPadding(),
-          ],
-        ),
+              });
+            },
+            busy: _isLoading,
+            label: L10n.submitForm,
+          ),
+          const BottomPadding(),
+        ],
       ),
     );
   }

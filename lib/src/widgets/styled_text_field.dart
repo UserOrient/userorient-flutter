@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 
 class StyledTextField extends StatelessWidget {
   final String? label;
@@ -33,10 +34,11 @@ class StyledTextField extends StatelessWidget {
       inputFormatters: const [
         CapitalizeFirstLetterFormatter(),
       ],
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 18.0,
-        color: Color(0xff2A2A2A),
+        color: context.textColor,
       ),
+      cursorColor: context.textColor,
       decoration: InputDecoration(
         hintText: hintText,
         border: const OutlineInputBorder(
@@ -49,14 +51,14 @@ class StyledTextField extends StatelessWidget {
           borderSide: BorderSide.none,
         ),
         labelText: label,
-        hintStyle: const TextStyle(
+        hintStyle: TextStyle(
           fontSize: 18.0,
           fontWeight: FontWeight.w400,
-          color: Color(0xffCDCDCD),
+          color: context.secondaryTextColor,
         ),
-        labelStyle: const TextStyle(
+        labelStyle: TextStyle(
           fontSize: 14.0,
-          color: Color(0xffBBBBBB),
+          color: context.textColor,
         ),
       ),
     );

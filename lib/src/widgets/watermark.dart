@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
+import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/widgets/button.dart';
 import 'package:userorient_flutter/userorient_flutter.dart';
 
@@ -26,18 +27,18 @@ class Watermark extends StatelessWidget {
               ? MediaQuery.of(context).padding.bottom + 12.0
               : MediaQuery.of(context).padding.bottom,
         ),
-        decoration: const BoxDecoration(
-          boxShadow: [
+        decoration: BoxDecoration(
+          boxShadow: const [
             BoxShadow(
               color: Colors.black12,
               offset: Offset(0, 0),
               blurRadius: 120.0,
             ),
           ],
-          color: Colors.white,
+          color: context.backgroundColor,
           border: Border(
             top: BorderSide(
-              color: Color(0xffF4F4F6),
+              color: context.borderColor,
               width: 1.0,
             ),
           ),
@@ -51,6 +52,10 @@ class Watermark extends StatelessWidget {
               icon: SvgPicture.asset(
                 'assets/add.svg',
                 package: 'userorient_flutter',
+                colorFilter: ColorFilter.mode(
+                  context.buttonTextColor,
+                  BlendMode.srcIn,
+                ),
               ),
               label: L10n.addFeature,
             ),
@@ -59,7 +64,7 @@ class Watermark extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  'assets/uo.svg',
+                  'assets/uo${context.isDark ? '-dark' : ''}.svg',
                   package: 'userorient_flutter',
                 ),
                 const SizedBox(width: 4.0),
