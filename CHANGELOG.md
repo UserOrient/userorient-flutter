@@ -1,3 +1,9 @@
+## 0.3.0
+
+- Add support for dark mode.
+- Add "Roadmap" and "Implemented" tabs to better organize the features list.
+- Fix language issue where only English was supported (by mistake).
+
 ## 0.2.1
 
 - Make English the default language in case the language is not supported.
