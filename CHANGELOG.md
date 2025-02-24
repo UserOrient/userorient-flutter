@@ -1,3 +1,7 @@
+## 0.3.1
+
+- Localize tab labels.
+
 ## 0.3.0
 
 - Add support for dark mode.
