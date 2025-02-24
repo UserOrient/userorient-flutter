@@ -174,13 +174,13 @@ class _Tabs extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _Tab(
-            label: 'Roadmap',
+            label: L10n.roadmap,
             isActive: index == 0,
             onTap: () => onIndexChanged(0),
           ),
           const SizedBox(width: 2),
           _Tab(
-            label: 'Implemented',
+            label: L10n.implemented,
             isActive: index == 1,
             onTap: () => onIndexChanged(1),
           ),
