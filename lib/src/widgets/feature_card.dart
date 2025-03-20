@@ -222,7 +222,7 @@ class _LabelRow extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6.0),
               ),
               child: Text(
-                label.name[UserOrient.languageCode],
+                label.name[UserOrient.languageCode] ?? label.name['en'],
                 style: TextStyle(
                   fontSize: 12.0,
                   height: 16 / 12,
