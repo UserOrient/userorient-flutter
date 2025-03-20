@@ -39,4 +39,4 @@ These Terms will be governed by applicable laws based on our place of incorporat
 
 ## 10. Contact Us
 For any questions, reach out to us at:
-- **Email**: [support@userorient.com](mailto:support@userorient.com)
+- **Email**: [kamran@userorient.com](mailto:kamran@userorient.com)

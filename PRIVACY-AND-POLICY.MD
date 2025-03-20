@@ -34,7 +34,7 @@ Collected data is used for:
 - **Deletion**: Request deletion of your account and data, with certain legal exceptions.
 - **Withdraw Consent**: For data processing based on consent, you can withdraw consent at any time by contacting us.
 
-Requests should be directed to: **[support@userorient.com](mailto:support@userorient.com)**
+Requests should be directed to: **[kamran@userorient.com](mailto:kamran@userorient.com)**
 
 ## 5. Data Security
 
@@ -59,4 +59,4 @@ We may update this Privacy Policy periodically. Major updates will be communicat
 ## 10. Contact Us
 
 For questions or requests regarding this Privacy Policy, please contact us at:
-- **Email**: [support@userorient.com](mailto:support@userorient.com)
+- **Email**: [kamran@userorient.com](mailto:kamran@userorient.com)

@@ -84,7 +84,7 @@ await UserOrient.clearCache();
 
 For any questions or support, please reach out to us:
 
-- Email: [support@userorient.com](mailto:support@userorient.com)
+- Email: [kamran@userorient.com](mailto:kamran@userorient.com)
 - Twitter: [@userorient](https://twitter.com/userorient)
 - Live Chat: [userorient.com](https://userorient.com)
 
