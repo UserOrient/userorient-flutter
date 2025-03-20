@@ -1,3 +1,8 @@
+## 0.3.2
+
+- Fix issue where labels in Spanish were having null values, causing Text widget to throw an error.
+- Improve localization texts.
+
 ## 0.3.1
 
 - Localize tab labels.
