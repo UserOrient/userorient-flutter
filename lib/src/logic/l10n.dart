@@ -34,8 +34,7 @@ class L10n {
     },
     'es': {
       'title': 'Sugerencias',
-      'tip':
-          'Vota por la sugerencia que más te importe para que podamos implementarla más rápido.',
+      'tip': 'Vota las funciones que deseas pronto.',
       'form_hint': 'Describe tu idea...',
       'submit_form': 'Enviar',
       'sent_title': '¡Solicitud de sugerencia enviada!',
@@ -48,8 +47,7 @@ class L10n {
     },
     'it': {
       'title': 'Suggerimenti',
-      'tip':
-          'Vota le funzionalità che più ti interessano, così potremo implementarle più velocemente.',
+      'tip': 'Vota le funzionalità che vuoi vedere presto.',
       'form_hint': 'Descrivi la tua idea...',
       'submit_form': 'Invia',
       'sent_title': 'Richiesta di funzionalità inviata!',
@@ -62,7 +60,7 @@ class L10n {
     },
     'tr': {
       'title': 'Öneriler',
-      'tip': 'Pek yakında görmek istediğiniz özellikleri oylayın.',
+      'tip': 'Yakında görmek isteklerinizi oylayın.',
       'form_hint': 'Fikrinizi tanımlayın...',
       'submit_form': 'Gönder',
       'sent_title': 'Öneri isteği gönderildi!',

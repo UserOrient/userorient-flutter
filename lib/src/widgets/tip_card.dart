@@ -22,7 +22,7 @@ class TipCard extends StatelessWidget {
               'assets/light-bulb.svg',
               package: 'userorient_flutter',
             ),
-            const SizedBox(width: 16.0),
+            const SizedBox(width: 12.0),
             Expanded(
               child: Text(
                 L10n.tip,
