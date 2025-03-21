@@ -1,3 +1,9 @@
+## 1.0.0
+
+- <b>1.0.0 is here 🎉</b>. This means after a long time of internal testing and polishing, UserOrient is now ready for production.
+- Also, fixed overflow issue in the form view when the keyboard is open.
+- Restricted submitting empty form.
+
 ## 0.3.2
 
 - Fix issue where labels in Spanish were having null values, causing Text widget to throw an error.

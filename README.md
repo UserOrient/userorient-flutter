@@ -86,10 +86,9 @@ For any questions or support, please reach out to us:
 
 - Email: [kamran@userorient.com](mailto:kamran@userorient.com)
 - Twitter: [@userorient](https://twitter.com/userorient)
-- Live Chat: [userorient.com](https://userorient.com)
 
 ---
 
 <p align="center">
-  Made with 💙 by the UserOrient team
+  Developed by <a href="https://kamranbekirov.com">Kamran Bekirov</a>, <i>por el arte</i>
 </p>
