@@ -57,17 +57,11 @@ class FormViewState extends State<FormView> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 8.0),
-                  // TODO: don't submit empty form
-                  StyledTextField(
-                    minLines: 10,
-                    controller: _controller,
-                    hintText: L10n.formHint,
-                    autoFocus: true,
-                  ),
-                ],
+              child: StyledTextField(
+                minLines: 20,
+                controller: _controller,
+                hintText: L10n.formHint,
+                autoFocus: true,
               ),
             ),
           ),
