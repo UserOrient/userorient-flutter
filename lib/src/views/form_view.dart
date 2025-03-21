@@ -70,6 +70,37 @@ class FormViewState extends State<FormView> {
             onPressed: () {
               final String content = _controller.text.trim();
 
+              if (content.isEmpty) {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    elevation: 0,
+                    content: Text(
+                      L10n.formEmpty,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.red,
+                      ),
+                    ),
+                    margin: const EdgeInsets.only(
+                      bottom: 120,
+                      left: 24,
+                      right: 24,
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.red.shade100,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                );
+
+                return;
+              }
+
               setState(() {
                 _isLoading = true;
               });

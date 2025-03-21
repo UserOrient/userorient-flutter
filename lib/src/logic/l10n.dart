@@ -18,6 +18,7 @@ class L10n {
       'add_feature': 'Təklif Göndər',
       'roadmap': 'Yol Xəritəsi',
       'implemented': 'Tamamlanmış',
+      'formEmpty': 'Təklifinizi daxil edin',
     },
     'en': {
       'title': 'Features',
@@ -31,6 +32,7 @@ class L10n {
       'add_feature': 'Suggest Feature',
       'roadmap': 'Roadmap',
       'implemented': 'Implemented',
+      'formEmpty': 'Please enter your suggestion',
     },
     'es': {
       'title': 'Sugerencias',
@@ -44,6 +46,7 @@ class L10n {
       'add_feature': 'Agregar Sugerencia',
       'roadmap': 'Ruta',
       'implemented': 'Implementado',
+      'formEmpty': 'Ingresa tu sugerencia',
     },
     'it': {
       'title': 'Suggerimenti',
@@ -57,6 +60,7 @@ class L10n {
       'add_feature': 'Aggiungi Funzionalità',
       'roadmap': 'Rotta',
       'implemented': 'Implementato',
+      'formEmpty': 'Inserisci il tuo suggerimento',
     },
     'tr': {
       'title': 'Öneriler',
@@ -70,6 +74,7 @@ class L10n {
       'add_feature': 'Öneri Gönder',
       'roadmap': 'Yol Haritası',
       'implemented': 'Tamamlanmış',
+      'formEmpty': 'Önerinizi girin',
     },
   };
 
@@ -91,4 +96,5 @@ class L10n {
   static String get roadmap => _content[_languageCode]!['roadmap'] ?? 'N/A';
   static String get implemented =>
       _content[_languageCode]!['implemented'] ?? 'N/A';
+  static String get formEmpty => _content[_languageCode]!['formEmpty'] ?? 'N/A';
 }
