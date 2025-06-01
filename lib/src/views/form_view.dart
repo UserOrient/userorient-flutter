@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/logic/user_orient.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
+import 'package:userorient_flutter/src/utilities/navigation.dart';
 import 'package:userorient_flutter/src/views/sent_view.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
 import 'package:userorient_flutter/src/widgets/button.dart';
@@ -108,16 +109,7 @@ class FormViewState extends State<FormView> {
               UserOrient.submitForm(content: content).then((_) {
                 setState(() {
                   Navigator.pop(context);
-
-                  showGeneralDialog(
-                    context: context,
-                    barrierDismissible: true,
-                    barrierLabel: 'UserOrient',
-                    transitionDuration: kThemeAnimationDuration,
-                    pageBuilder: (context, animation, secondaryAnimation) {
-                      return const SentView();
-                    },
-                  );
+                  Navigation.push(context, const SentView());
                 });
               });
             },

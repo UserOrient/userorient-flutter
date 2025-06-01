@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
+import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
 import 'package:userorient_flutter/src/widgets/button.dart';
 import 'package:userorient_flutter/userorient_flutter.dart';
 
@@ -88,6 +89,8 @@ class Watermark extends StatelessWidget {
                 // ),
               ],
             ),
+            if (defaultTargetPlatform == TargetPlatform.iOS)
+              const BottomPadding(32),
           ],
         ),
       ),

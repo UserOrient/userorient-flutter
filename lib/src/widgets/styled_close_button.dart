@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 
 class StyledCloseButton extends StatelessWidget {
@@ -6,19 +7,17 @@ class StyledCloseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pop();
+    return IconButton(
+      onPressed: () {
+        if (kIsWeb && !Navigator.of(context).canPop()) {
+          Navigator.of(context, rootNavigator: true).pop();
+        } else {
+          Navigator.of(context).pop();
+        }
       },
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height: 40.0,
-        width: 40.0,
-        alignment: Alignment.center,
-        child: Icon(
-          Icons.close_rounded,
-          color: context.isDark ? Colors.white : Colors.black,
-        ),
+      icon: Icon(
+        Icons.close,
+        color: context.textColor,
       ),
     );
   }

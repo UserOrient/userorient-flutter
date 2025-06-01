@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
@@ -74,7 +73,7 @@ class _Body extends StatelessWidget {
             },
             label: L10n.goBack,
           ),
-          const BottomPadding(),
+          const BottomPadding(32),
         ],
       ),
     );

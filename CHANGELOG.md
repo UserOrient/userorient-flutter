@@ -1,3 +1,8 @@
+## 1.1.0
+
+- <b>Web support is here 🎉</b>. The board now works on Flutter for Web apps.
+- Improved opening transitions on Android and iOS to be more consistent with native apps.
+
 ## 1.0.0
 
 - <b>1.0.0 is here 🎉</b>. This means after a long time of internal testing and polishing, UserOrient is now ready for production.

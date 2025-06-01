@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
+import 'package:userorient_flutter/src/utilities/navigation.dart';
 
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/logic/user_orient_data.dart';
@@ -20,35 +22,14 @@ class UserOrient {
 
   /// Open the UserOrient board view
   static Future<void> openBoard(BuildContext context) {
-    return _open(
-      context: context,
-      child: const BoardView(),
-    );
+    _initialize();
+    return Navigation.push(context, const BoardView());
   }
 
   /// Open the UserOrient feature request form
   static Future<void> openForm(BuildContext context) {
-    return _open(
-      context: context,
-      child: const FormView(),
-    );
-  }
-
-  static Future<void> _open({
-    required BuildContext context,
-    required Widget child,
-  }) {
     _initialize();
-
-    return showGeneralDialog(
-      context: context,
-      barrierDismissible: true,
-      barrierLabel: 'UserOrient',
-      transitionDuration: kThemeAnimationDuration,
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return child;
-      },
-    );
+    return Navigation.push(context, const FormView());
   }
 
   /// Configure the UserOrient SDK. This method must be called before using the SDK.

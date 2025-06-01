@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:userorient_flutter/src/logic/l10n.dart';
 
+import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/widgets/feature_card.dart';
