@@ -10,6 +10,7 @@ class StyledTextField extends StatelessWidget {
   final String? helperText;
   final int? maxLength;
   final TextEditingController controller;
+  final TextStyle? style;
 
   const StyledTextField({
     super.key,
@@ -20,6 +21,7 @@ class StyledTextField extends StatelessWidget {
     this.minLines = 1,
     this.helperText,
     this.maxLength,
+    this.style,
   });
 
   @override
@@ -34,10 +36,11 @@ class StyledTextField extends StatelessWidget {
       inputFormatters: const [
         CapitalizeFirstLetterFormatter(),
       ],
-      style: TextStyle(
-        fontSize: 18.0,
-        color: context.textColor,
-      ),
+      style: style ??
+          TextStyle(
+            fontSize: 18.0,
+            color: context.textColor,
+          ),
       cursorColor: context.textColor,
       decoration: InputDecoration(
         hintText: hintText,

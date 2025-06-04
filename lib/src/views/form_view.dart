@@ -10,7 +10,9 @@ import 'package:userorient_flutter/src/widgets/styled_close_button.dart';
 import 'package:userorient_flutter/src/widgets/styled_text_field.dart';
 
 class FormView extends StatefulWidget {
-  const FormView({super.key});
+  const FormView({super.key, this.buttonColor, this.buttonTextColor});
+  final Color? buttonColor;
+  final Color? buttonTextColor;
 
   @override
   State<FormView> createState() => FormViewState();
@@ -18,18 +20,22 @@ class FormView extends StatefulWidget {
 
 class FormViewState extends State<FormView> {
   late final TextEditingController _controller;
+  late final TextEditingController _titleController;
   bool _isLoading = false;
 
   @override
   void initState() {
+    UserOrient.initialize().ignore();
     super.initState();
     _controller = TextEditingController();
+    _titleController = TextEditingController();
   }
 
   @override
   void dispose() {
     super.dispose();
     _controller.dispose();
+    _titleController.dispose();
   }
 
   @override
@@ -55,6 +61,21 @@ class FormViewState extends State<FormView> {
       ),
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: StyledTextField(
+              minLines: 1,
+              controller: _titleController,
+              hintText: L10n.addFeature,
+              autoFocus: true,
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w700,
+                color: context.textColor,
+              ),
+            ),
+          ),
+          const SizedBox(height: 12.0),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -62,14 +83,17 @@ class FormViewState extends State<FormView> {
                 minLines: 20,
                 controller: _controller,
                 hintText: L10n.formHint,
-                autoFocus: true,
+                autoFocus: false,
               ),
             ),
           ),
           const SizedBox(height: 24.0),
           Button(
+            color: widget.buttonColor,
+            textColor: widget.buttonTextColor,
             onPressed: () {
               final String content = _controller.text.trim();
+              final String title = _titleController.text.trim();
 
               if (content.isEmpty) {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -106,10 +130,18 @@ class FormViewState extends State<FormView> {
                 _isLoading = true;
               });
 
-              UserOrient.submitForm(content: content).then((_) {
+              UserOrient.submitForm(
+                content: content,
+                title: title,
+              ).then((_) {
                 setState(() {
                   Navigator.pop(context);
-                  Navigation.push(context, const SentView());
+                  Navigation.push(
+                      context,
+                      SentView(
+                        buttonColor: widget.buttonColor,
+                        buttonTextColor: widget.buttonTextColor,
+                      ));
                 });
               });
             },

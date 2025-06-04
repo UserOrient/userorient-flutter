@@ -44,6 +44,7 @@ class RestfulEndpoints {
   static Endpoint sendFeedback({
     required String projectId,
     required String content,
+    required String title,
     required String userId,
   }) {
     return Endpoint.post(
@@ -51,8 +52,13 @@ class RestfulEndpoints {
       body: {
         'userId': userId,
         'description': {
-          'en': content,
+          // TODO: For time being, pass the title and content as a single string.
+          // TODO: We will change this to a more structured format in the future.
+          'en': '$title\n\n$content',
         },
+        'title': {
+          'en': title,
+        }
       },
     );
   }

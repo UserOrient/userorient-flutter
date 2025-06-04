@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
-import 'package:userorient_flutter/src/utilities/navigation.dart';
-
-import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/logic/user_orient_data.dart';
+import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/models/user.dart';
 import 'package:userorient_flutter/src/utilities/helper_functions.dart';
+import 'package:userorient_flutter/src/utilities/navigation.dart';
 import 'package:userorient_flutter/src/views/board_view.dart';
 import 'package:userorient_flutter/src/views/form_view.dart';
 
@@ -22,13 +21,11 @@ class UserOrient {
 
   /// Open the UserOrient board view
   static Future<void> openBoard(BuildContext context) {
-    _initialize();
     return Navigation.push(context, const BoardView());
   }
 
   /// Open the UserOrient feature request form
   static Future<void> openForm(BuildContext context) {
-    _initialize();
     return Navigation.push(context, const FormView());
   }
 
@@ -66,7 +63,7 @@ class UserOrient {
     );
 
     UserOrient.user = user;
-
+    initialize().ignore();
     logUO('Set user', emoji: '👤');
   }
 
@@ -83,7 +80,8 @@ class UserOrient {
     logUO('Cache cleared', emoji: '🆑');
   }
 
-  static Future<void> _initialize() async {
+  /// Initialize the UserOrient SDK. This method must be called before using the SDK.
+  static Future<void> initialize() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final String? cachedProjectId = prefs.getString('user_orient_project_id');
@@ -96,7 +94,7 @@ class UserOrient {
       logUO('Project changed, cache cleared...', emoji: '🔄');
     }
 
-    if (!_isInitialized) {
+    if (!_isInitialized || (userUuid?.isEmpty ?? true) || projectChanged) {
       logUO('Initializing the SDK', emoji: '🚁');
 
       if (_apiKey == null) {
@@ -109,7 +107,7 @@ class UserOrient {
         user: user,
       );
 
-      await _fetchAndSetFeatures();
+      await fetchAndSetFeatures();
 
       logUO(
         'Initialization completed for project $_apiKey',
@@ -120,11 +118,11 @@ class UserOrient {
 
       _isInitialized = true;
     } else {
-      await _fetchAndSetFeatures();
+      await fetchAndSetFeatures();
     }
   }
 
-  static Future<void> _fetchAndSetFeatures() async {
+  static Future<void> fetchAndSetFeatures() async {
     final List<dynamic> results = await Future.wait([
       UserOrientData.getFeatures(projectId: _apiKey!, userId: userUuid!),
     ]);
@@ -164,6 +162,7 @@ class UserOrient {
   /// Submit a feature request. Used internally by the SDK.
   static Future<void> submitForm({
     required String content,
+    required String title,
   }) async {
     logUO('Sending feature request', emoji: '📬');
 
@@ -171,6 +170,7 @@ class UserOrient {
       projectId: _apiKey!,
       userId: userUuid!,
       content: content,
+      title: title,
     );
 
     logUO('Feature request sent', emoji: '🚀');
