@@ -6,19 +6,26 @@ import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
 import 'package:userorient_flutter/src/widgets/button.dart';
 
 class SentView extends StatelessWidget {
-  const SentView({super.key});
+  const SentView({super.key, this.buttonColor, this.buttonTextColor});
+  final Color? buttonColor;
+  final Color? buttonTextColor;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.backgroundColor,
-      body: const _Body(),
+      body: _Body(
+        buttonColor: buttonColor,
+        buttonTextColor: buttonTextColor,
+      ),
     );
   }
 }
 
 class _Body extends StatelessWidget {
-  const _Body();
+  const _Body({this.buttonColor, this.buttonTextColor});
+  final Color? buttonColor;
+  final Color? buttonTextColor;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +79,8 @@ class _Body extends StatelessWidget {
               Navigator.of(context).pop();
             },
             label: L10n.goBack,
+            color: buttonColor,
+            textColor: buttonTextColor,
           ),
           const BottomPadding(32),
         ],

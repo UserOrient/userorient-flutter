@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:userorient_flutter/src/views/board_view.dart';
+import 'package:userorient_flutter/src/views/form_view.dart';
 import 'package:userorient_flutter/userorient_flutter.dart';
 
 void main() async {
@@ -24,8 +26,21 @@ class MainApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      UserOrient.setUser();
+    }); // addPostFrameCallback is called after the build method is called, so we can initialize UserOrien
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,27 +53,59 @@ class HomePage extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.feedback),
               title: const Text(
-                'Feature requests',
+                'Features Screen',
               ),
               subtitle: const Text(
-                'View and vote on feature requests',
+                'View and vote on feature requests in a new Screen',
               ),
               onTap: () {
-                UserOrient.setUser(
-                    // uniqueIdentifier: '123123',
-                    // fullName: 'Kamran',
-                    // phoneNumber: '+994501234567',
-                    // email: 'kamran@userorient.com',
-                    // language: 'az',
-                    // extra: {
-                    //   'is_premium': true,
-                    //   'is_azerbaijani': true,
-                    //   'online_session_count': 17,
-                    //   'subscription_date': '2021-09-01',
-                    // },
-                    );
-
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BoardView(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.feedback),
+              title: const Text(
+                'Features Sheet',
+              ),
+              subtitle: const Text(
+                'View and vote on feature requests in a bottom Sheet',
+              ),
+              onTap: () {
                 UserOrient.openBoard(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.feedback),
+              title: const Text(
+                'Feature request Screen',
+              ),
+              subtitle: const Text(
+                'Request a new feature in new screen',
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const FormView(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.feedback),
+              title: const Text(
+                'Feature request  in a Sheet',
+              ),
+              subtitle: const Text(
+                'Request a new feature in a bottom Sheet',
+              ),
+              onTap: () {
+                UserOrient.openForm(context);
               },
             ),
             ListTile(

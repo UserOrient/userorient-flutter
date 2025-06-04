@@ -6,6 +6,8 @@ class Button extends StatelessWidget {
   final VoidCallback onPressed;
   final Widget? icon;
   final bool busy;
+  final Color? color;
+  final Color? textColor;
 
   const Button({
     super.key,
@@ -13,6 +15,8 @@ class Button extends StatelessWidget {
     required this.onPressed,
     this.busy = false,
     this.icon,
+    this.color,
+    this.textColor,
   });
 
   @override
@@ -31,7 +35,7 @@ class Button extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: context.buttonColor,
+          color: color ?? context.buttonColor,
         ),
         child: busy
             ? Container(
@@ -40,7 +44,7 @@ class Button extends StatelessWidget {
                 height: 24.0,
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    context.buttonTextColor,
+                    textColor ?? context.buttonTextColor,
                   ),
                   strokeWidth: 3.0,
                 ),
@@ -55,7 +59,7 @@ class Button extends StatelessWidget {
                   Text(
                     label,
                     style: TextStyle(
-                      color: context.buttonTextColor,
+                      color: textColor ?? context.buttonTextColor,
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500,
                     ),

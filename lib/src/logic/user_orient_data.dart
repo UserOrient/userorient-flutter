@@ -83,11 +83,13 @@ class UserOrientData {
   static Future<void> sendFeatureRequest({
     required String projectId,
     required String userId,
+    required String title,
     required String content,
   }) async {
     final Endpoint endpoint = RestfulEndpoints.sendFeedback(
       projectId: projectId,
       content: content,
+      title: title,
       userId: userId,
     );
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
@@ -10,7 +9,9 @@ import 'package:userorient_flutter/src/widgets/watermark.dart';
 import 'package:userorient_flutter/userorient_flutter.dart';
 
 class BoardView extends StatefulWidget {
-  const BoardView({super.key});
+  const BoardView({super.key, this.buttonColor, this.buttonTextColor});
+  final Color? buttonColor;
+  final Color? buttonTextColor;
 
   @override
   State<BoardView> createState() => _BoardViewState();
@@ -22,6 +23,7 @@ class _BoardViewState extends State<BoardView> {
 
   @override
   void initState() {
+    UserOrient.initialize().ignore();
     super.initState();
     _scrollController = ScrollController();
   }
@@ -67,6 +69,8 @@ class _BoardViewState extends State<BoardView> {
             onIndexChanged: (index) {
               setState(() => _index = index);
             },
+            activeColor: widget.buttonColor,
+            textColor: widget.buttonTextColor,
           ),
           const SizedBox(height: 8),
           Expanded(
@@ -103,7 +107,10 @@ class _BoardViewState extends State<BoardView> {
               },
             ),
           ),
-          const Watermark(),
+          Watermark(
+            buttonColor: widget.buttonColor,
+            buttonTextColor: widget.buttonTextColor,
+          ),
         ],
       ),
     );
@@ -153,10 +160,14 @@ class _List extends StatelessWidget {
 class _Tabs extends StatelessWidget {
   final int index;
   final Function(int) onIndexChanged;
+  final Color? activeColor;
+  final Color? textColor;
 
   const _Tabs({
     required this.index,
     required this.onIndexChanged,
+    this.activeColor,
+    this.textColor,
   });
 
   @override
@@ -177,12 +188,16 @@ class _Tabs extends StatelessWidget {
             label: L10n.roadmap,
             isActive: index == 0,
             onTap: () => onIndexChanged(0),
+            activeColor: activeColor,
+            textColor: textColor,
           ),
           const SizedBox(width: 2),
           _Tab(
             label: L10n.implemented,
             isActive: index == 1,
             onTap: () => onIndexChanged(1),
+            activeColor: activeColor,
+            textColor: textColor,
           ),
         ],
       ),
@@ -194,11 +209,15 @@ class _Tab extends StatelessWidget {
   final String label;
   final bool isActive;
   final Function() onTap;
+  final Color? activeColor;
+  final Color? textColor;
 
   const _Tab({
     required this.label,
     required this.isActive,
     required this.onTap,
+    this.activeColor,
+    this.textColor,
   });
 
   @override
@@ -211,7 +230,9 @@ class _Tab extends StatelessWidget {
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 24),
         decoration: BoxDecoration(
-          color: isActive ? context.buttonColor : Colors.transparent,
+          color: isActive
+              ? (activeColor ?? context.buttonColor)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Text(
@@ -219,7 +240,8 @@ class _Tab extends StatelessWidget {
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: isActive ? context.buttonTextColor : context.textColor,
+            color: textColor ??
+                (isActive ? context.buttonTextColor : context.textColor),
           ),
         ),
       ),
