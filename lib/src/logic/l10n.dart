@@ -76,6 +76,20 @@ class L10n {
       'implemented': 'Tamamlanmış',
       'formEmpty': 'Önerinizi girin',
     },
+    'ru': {
+      'title': 'Предложения',
+      'tip': 'Голосуйте за функции, которые хотите увидеть в ближайшее время.',
+      'form_hint': 'Опишите вашу идею...',
+      'submit_form': 'Отправить',
+      'sent_title': 'Запрос отправлен!',
+      'sent_description':
+          'Мы рассмотрим ваш запрос и, если он впишется в наш план развития, добавим его в список функций для реализации. Следите за обновлениями!',
+      'go_back': 'Назад',
+      'add_feature': 'Предложить функцию',
+      'roadmap': 'Дорожная карта',
+      'implemented': 'Реализовано',
+      'formEmpty': 'Пожалуйста, введите ваше предложение',
+    },
   };
 
   static String get _languageCode => UserOrient.languageCode;
