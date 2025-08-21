@@ -7,9 +7,15 @@ class StyledCloseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDesktop = [
+      TargetPlatform.windows,
+      TargetPlatform.linux,
+      TargetPlatform.macOS
+    ].contains(defaultTargetPlatform);
+
     return IconButton(
       onPressed: () {
-        if (kIsWeb && !Navigator.of(context).canPop()) {
+        if ((kIsWeb || isDesktop) && !Navigator.of(context).canPop()) {
           Navigator.of(context, rootNavigator: true).pop();
         } else {
           Navigator.of(context).pop();
