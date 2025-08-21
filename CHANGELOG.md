@@ -1,3 +1,7 @@
+## 1.1.1
+
+- Fix issue where the close button was not working on desktop platforms.
+
 ## 1.1.0
 
 - <b>Web support is here 🎉</b>. The board now works on Flutter for Web apps.
