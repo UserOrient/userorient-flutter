@@ -1,3 +1,7 @@
+## 1.2.0
+
+- Add support for Russian language.
+
 ## 1.1.1
 
 - Fix issue where the close button was not working on desktop platforms.
