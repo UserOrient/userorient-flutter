@@ -1,3 +1,7 @@
+## 1.3.1
+
+- Improve comments functionality.
+
 ## 1.3.0
 
 - Add support for adding comments to features.
