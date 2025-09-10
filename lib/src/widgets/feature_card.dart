@@ -248,7 +248,7 @@ class _LabelRow extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Color(
                   int.parse('0xff${label.color.replaceAll('#', '')}'),
-                ).withOpacity(.1),
+                ).withValues(alpha: .1),
                 borderRadius: BorderRadius.circular(6.0),
               ),
               child: Text(

@@ -13,7 +13,7 @@ class TipCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          color: const Color(0xff529BDF).withOpacity(.1),
+          color: const Color(0xff529BDF).withValues(alpha: .1),
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Row(

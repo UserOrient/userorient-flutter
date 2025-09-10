@@ -20,10 +20,10 @@ extension BuildContextX on BuildContext {
       isDark ? const Color(0xffFAFAFA) : const Color(0xff2A2A2A);
   Color get buttonTextColor => isDark ? const Color(0xff1D1D1D) : Colors.white;
   Color get unvotedContainerColor => isDark
-      ? const Color(0xffB2B2B2).withOpacity(.1)
-      : const Color(0xffE9EAEE).withOpacity(.75);
+      ? const Color(0xffB2B2B2).withValues(alpha: .1)
+      : const Color(0xffE9EAEE).withValues(alpha: .75);
   Color get votedContainerColor =>
-      isDark ? Colors.white.withOpacity(.75) : const Color(0xff2F313F);
+      isDark ? Colors.white.withValues(alpha: .75) : const Color(0xff2F313F);
   Color get completedContainerColor =>
       isDark ? const Color(0xff223027) : const Color(0xffDCF9E6);
   Color get tabsBackgroundColor =>
