@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
+import 'package:userorient_flutter/src/models/comment.dart';
 import 'package:userorient_flutter/src/utilities/navigation.dart';
 
 import 'package:userorient_flutter/src/models/feature.dart';
@@ -13,6 +14,7 @@ import 'package:userorient_flutter/src/views/form_view.dart';
 
 class UserOrient {
   static final ValueNotifier<List<Feature>?> features = ValueNotifier(null);
+  static final ValueNotifier<List<Comment>?> comments = ValueNotifier(null);
 
   static String? _apiKey;
   static User? user;
@@ -174,5 +176,41 @@ class UserOrient {
     );
 
     logUO('Feature request sent', emoji: '🚀');
+  }
+
+  static Future<void> getComments(Feature feature) async {
+    UserOrient.comments.value = null;
+
+    final List<Comment> comments = await UserOrientData.getComments(
+      projectId: _apiKey!,
+      userId: userUuid!,
+      featureId: feature.id,
+    );
+
+    UserOrient.comments.value = comments;
+  }
+
+  static Future<void> addComment({
+    required String content,
+    required String featureId,
+  }) async {
+    await UserOrientData.addComment(
+      projectId: _apiKey!,
+      userId: userUuid!,
+      featureId: featureId,
+      content: content,
+    );
+
+    logUO('Comment added', emoji: '💬');
+
+    UserOrient.comments.value = [
+      Comment(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        content: content,
+        ownerFullName: user?.fullName,
+        createdAt: DateTime.now(),
+      ),
+      ...UserOrient.comments.value!,
+    ];
   }
 }

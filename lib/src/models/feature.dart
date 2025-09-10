@@ -13,6 +13,7 @@ class Feature {
   final Map<String, dynamic> title;
   final Map<String, dynamic> description;
   final List<Label>? labels;
+  final int? commentsCount;
 
   String titleForLocale(String? locale) {
     return title[locale] ?? title['en'] ?? 'N/A';
@@ -38,6 +39,7 @@ class Feature {
       title: {},
       description: {},
       labels: [],
+      commentsCount: 0,
     );
   }
 
@@ -54,6 +56,7 @@ class Feature {
     required this.title,
     required this.description,
     required this.labels,
+    required this.commentsCount,
   });
 
   Feature copyWith({
@@ -69,6 +72,7 @@ class Feature {
     Map<String, String?>? title,
     Map<String, String?>? description,
     List<Label>? labels,
+    int? commentsCount,
   }) {
     return Feature(
       id: id ?? this.id,
@@ -83,6 +87,7 @@ class Feature {
       title: title ?? this.title,
       description: description ?? this.description,
       labels: labels ?? this.labels,
+      commentsCount: commentsCount ?? this.commentsCount,
     );
   }
 
@@ -103,6 +108,7 @@ class Feature {
       labels: json['labels'] != null
           ? List<Label>.from(json['labels'].map((x) => Label.fromJson(x)))
           : [],
+      commentsCount: json['commentsCount'],
     );
   }
 }

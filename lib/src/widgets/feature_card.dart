@@ -5,6 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/models/label.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
+import 'package:userorient_flutter/src/utilities/navigation.dart';
+import 'package:userorient_flutter/src/views/comments_view.dart';
 import 'package:userorient_flutter/userorient_flutter.dart';
 
 class FeatureCard extends StatelessWidget {
@@ -19,23 +21,33 @@ class FeatureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      key: ValueKey(feature.id),
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: context.borderColor,
-            width: 1.0,
+    return GestureDetector(
+      onTap: () {
+        Navigation.push(
+          context,
+          CommentsView(
+            feature: feature,
           ),
-          borderRadius: BorderRadius.circular(16.0),
+        );
+      },
+      child: SizedBox(
+        key: ValueKey(feature.id),
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: context.borderColor,
+              width: 1.0,
+            ),
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: isShimmer ? _buildShimmer() : _buildWidget(context),
         ),
-        child: isShimmer ? _buildShimmer() : _buildWidget(context),
       ),
     );
   }
 
-  Row _buildWidget(BuildContext context) {
+  Widget _buildWidget(BuildContext context) {
     final bool isCompleted = feature.labels?.any(
           (label) => label.id == '07d82cf0-51ea-45d5-b274-59edb1b11a20',
         ) ??
@@ -140,6 +152,24 @@ class FeatureCard extends StatelessWidget {
               ),
               _LabelRow(
                 labels: feature.labels,
+              ),
+              const SizedBox(height: 10.0),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/comments.svg',
+                    package: 'userorient_flutter',
+                  ),
+                  const SizedBox(width: 4.0),
+                  Text(
+                    feature.commentsCount.toString(),
+                    style: TextStyle(
+                      fontSize: 12,
+                      height: 16 / 12,
+                      color: context.secondaryTextColor,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

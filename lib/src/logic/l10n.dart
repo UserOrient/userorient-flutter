@@ -19,6 +19,7 @@ class L10n {
       'roadmap': 'Yol Xəritəsi',
       'implemented': 'Tamamlanmış',
       'formEmpty': 'Təklifinizi daxil edin',
+      'comments': 'Rəylər',
     },
     'en': {
       'title': 'Features',
@@ -33,6 +34,7 @@ class L10n {
       'roadmap': 'Roadmap',
       'implemented': 'Implemented',
       'formEmpty': 'Please enter your suggestion',
+      'comments': 'Comments',
     },
     'es': {
       'title': 'Sugerencias',
@@ -47,6 +49,7 @@ class L10n {
       'roadmap': 'Ruta',
       'implemented': 'Implementado',
       'formEmpty': 'Ingresa tu sugerencia',
+      'comments': 'Comentarios',
     },
     'it': {
       'title': 'Suggerimenti',
@@ -61,6 +64,7 @@ class L10n {
       'roadmap': 'Rotta',
       'implemented': 'Implementato',
       'formEmpty': 'Inserisci il tuo suggerimento',
+      'comments': 'Commenti',
     },
     'tr': {
       'title': 'Öneriler',
@@ -75,6 +79,7 @@ class L10n {
       'roadmap': 'Yol Haritası',
       'implemented': 'Tamamlanmış',
       'formEmpty': 'Önerinizi girin',
+      'comments': 'Yorumlar',
     },
     'ru': {
       'title': 'Предложения',
@@ -89,6 +94,7 @@ class L10n {
       'roadmap': 'План развития',
       'implemented': 'Выполнено',
       'formEmpty': 'Введите предложение',
+      'comments': 'Комментарии',
     },
   };
 
@@ -111,4 +117,5 @@ class L10n {
   static String get implemented =>
       _content[_languageCode]!['implemented'] ?? 'N/A';
   static String get formEmpty => _content[_languageCode]!['formEmpty'] ?? 'N/A';
+  static String get comments => _content[_languageCode]!['comments'] ?? 'N/A';
 }

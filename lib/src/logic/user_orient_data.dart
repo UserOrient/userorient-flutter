@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:userorient_flutter/src/models/comment.dart';
 
 import 'package:userorient_flutter/src/models/endpoint.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
@@ -47,6 +48,8 @@ class UserOrientData {
     final http.Response response = await http.get(
       Uri.parse(endpoint.url),
     );
+
+    logUO(response.body.toString(), emoji: '👀');
 
     // TODO: throws user not found when an old project's user has been used, sync user before, check if it exists then continue
 
@@ -130,5 +133,57 @@ class UserOrientData {
 
       return uuid;
     }
+  }
+
+  static Future<List<Comment>> getComments({
+    required String projectId,
+    required String userId,
+    required String featureId,
+  }) async {
+    final Endpoint endpoint = RestfulEndpoints.comments(
+      projectId: projectId,
+      userId: userId,
+      featureId: featureId,
+    );
+
+    logUO(endpoint.url, emoji: '👀');
+
+    final http.Response response = await http.get(
+      Uri.parse(endpoint.url),
+    );
+
+    logUO(response.body.toString(), emoji: '👀');
+
+    return (jsonDecode(response.body)['comments'] as List).map((comment) {
+      return Comment.fromJson(comment);
+    }).toList();
+  }
+
+  static Future<void> addComment({
+    required String projectId,
+    required String userId,
+    required String featureId,
+    required String content,
+  }) async {
+    final Endpoint endpoint = RestfulEndpoints.addComment(
+      projectId: projectId,
+      userId: userId,
+      featureId: featureId,
+      content: content,
+    );
+
+    logUO('Body: ${endpoint.body}', emoji: '👀');
+    logUO('URL: ${endpoint.url}', emoji: '👀');
+    logUO('Method: ${endpoint.method}', emoji: '👀');
+
+    final http.Response response = await http.post(
+      Uri.parse(endpoint.url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(endpoint.body),
+    );
+
+    logUO(response.body.toString(), emoji: '👀');
   }
 }

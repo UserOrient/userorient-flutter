@@ -3,7 +3,8 @@ import 'package:userorient_flutter/src/models/endpoint.dart';
 class RestfulEndpoints {
   const RestfulEndpoints._();
 
-  static const String baseUrl = 'https://api.userorient.com';
+  // static const String baseUrl = 'https://api.userorient.com';
+  static const String baseUrl = 'http://localhost:3000';
 
   static Endpoint projectDetails(String projectId) {
     return Endpoint.get(
@@ -40,7 +41,6 @@ class RestfulEndpoints {
     );
   }
 
-  // {{base_url}}/sdk/feedback?projectId={{project_id}}
   static Endpoint sendFeedback({
     required String projectId,
     required String content,
@@ -53,6 +53,33 @@ class RestfulEndpoints {
         'description': {
           'en': content,
         },
+      },
+    );
+  }
+
+  static Endpoint comments({
+    required String projectId,
+    required String userId,
+    required String featureId,
+  }) {
+    return Endpoint.get(
+      url:
+          '$baseUrl/sdk/comment/all?projectId=$projectId&userId=$userId&featureId=$featureId',
+    );
+  }
+
+  static Endpoint addComment({
+    required String projectId,
+    required String userId,
+    required String featureId,
+    required String content,
+  }) {
+    return Endpoint.post(
+      url: '$baseUrl/sdk/comment?projectId=$projectId',
+      body: {
+        'userId': userId,
+        'featureId': featureId,
+        'content': content,
       },
     );
   }

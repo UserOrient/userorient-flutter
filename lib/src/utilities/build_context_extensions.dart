@@ -28,4 +28,6 @@ extension BuildContextX on BuildContext {
       isDark ? const Color(0xff223027) : const Color(0xffDCF9E6);
   Color get tabsBackgroundColor =>
       isDark ? const Color(0xff121212) : const Color(0xffFAFAFA);
+  Color get textFieldFillColor =>
+      isDark ? const Color(0xff2A2A2A) : const Color(0xffFAFAFA);
 }
