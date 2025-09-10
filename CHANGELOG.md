@@ -1,3 +1,7 @@
+## 1.3.0
+
+- Add support for adding comments to features.
+
 ## 1.2.0
 
 - Add support for Russian language.
