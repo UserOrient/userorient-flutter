@@ -1,6 +1,6 @@
 name: userorient_flutter
 description: "Feature Voting Board for Flutter. Collect feedback from your users and prioritize your development roadmap."
-version: 1.3.1
+version: 1.3.2
 homepage: https://userorient.com
 repository: https://github.com/userorient/userorient-flutter
 issue_tracker: https://github.com/userorient/userorient-flutter/issues

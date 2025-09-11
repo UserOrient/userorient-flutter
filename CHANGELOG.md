@@ -1,3 +1,8 @@
+## 1.3.2
+
+- Fix bottom padding issue on iOS.
+- Limit submitting empty form.
+
 ## 1.3.1
 
 - Improve comments functionality.
