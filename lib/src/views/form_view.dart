@@ -19,11 +19,19 @@ class FormView extends StatefulWidget {
 class FormViewState extends State<FormView> {
   late final TextEditingController _controller;
   bool _isLoading = false;
+  bool _isEmpty = true;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    _controller.addListener(_onTextChanged);
+  }
+
+  void _onTextChanged() {
+    setState(() {
+      _isEmpty = _controller.text.trim().isEmpty;
+    });
   }
 
   @override
@@ -114,6 +122,7 @@ class FormViewState extends State<FormView> {
               });
             },
             busy: _isLoading,
+            disabled: _isEmpty,
             label: L10n.submitForm,
           ),
           const BottomPadding(),

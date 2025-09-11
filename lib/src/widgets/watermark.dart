@@ -77,20 +77,10 @@ class Watermark extends StatelessWidget {
                     color: Color(0xffACAEAF),
                   ),
                 ),
-                // const SizedBox(width: 4.0),
-                // const Text(
-                //   'UserOrient',
-                //   style: TextStyle(
-                //     fontSize: 12.0,
-                //     height: 16 / 12,
-                //     color: Color(0xffACAEAF),
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
               ],
             ),
-            if (defaultTargetPlatform == TargetPlatform.iOS)
-              const BottomPadding(32),
+            // if (defaultTargetPlatform == TargetPlatform.iOS)
+            //   const BottomPadding(),
           ],
         ),
       ),

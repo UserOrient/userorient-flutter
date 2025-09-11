@@ -6,13 +6,15 @@ class Button extends StatelessWidget {
   final VoidCallback onPressed;
   final Widget? icon;
   final bool busy;
+  final bool disabled;
 
   const Button({
     super.key,
     required this.label,
     required this.onPressed,
-    this.busy = false,
     this.icon,
+    this.busy = false,
+    this.disabled = false,
   });
 
   @override
@@ -31,7 +33,7 @@ class Button extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: context.buttonColor,
+          color: disabled ? context.unvotedContainerColor : context.buttonColor,
         ),
         child: busy
             ? Container(
@@ -55,7 +57,9 @@ class Button extends StatelessWidget {
                   Text(
                     label,
                     style: TextStyle(
-                      color: context.buttonTextColor,
+                      color: disabled
+                          ? context.secondaryTextColor
+                          : context.buttonTextColor,
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500,
                     ),
