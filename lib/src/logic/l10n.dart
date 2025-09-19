@@ -96,6 +96,21 @@ class L10n {
       'formEmpty': 'Введите предложение',
       'comments': 'Комментарии',
     },
+    'ar': {
+      'title': 'الميزات',
+      'tip': 'صوت للميزات التي تريد رؤيتها قريباً.',
+      'form_hint': 'اصف فكرتك...',
+      'submit_form': 'إرسال',
+      'sent_title': 'تم إرسال طلب الميزة!',
+      'sent_description':
+          'سنراجع طلبك وإذا كان يتناسب مع خريطة طريقنا، سنضيفه إلى قائمة الميزات المراد تطويرها. ابق على اطلاع!',
+      'go_back': 'العودة',
+      'add_feature': 'اقتراح ميزة',
+      'roadmap': 'خريطة الطريق',
+      'implemented': 'مُنفذ',
+      'formEmpty': 'يرجى إدخال اقتراحك',
+      'comments': 'التعليقات',
+    },
   };
 
   static String get _languageCode => UserOrient.languageCode;
