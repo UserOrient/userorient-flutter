@@ -1,3 +1,7 @@
+## 1.4.0
+
+- Add Arabic language support.
+
 ## 1.3.2
 
 - Fix bottom padding issue on iOS.
