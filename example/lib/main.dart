@@ -4,10 +4,7 @@ import 'package:userorient_flutter/userorient_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  UserOrient.configure(
-    apiKey: 'YOUR_API_KEY',
-    languageCode: 'en',
-  );
+  UserOrient.configure(apiKey: 'YOUR_API_KEY', languageCode: 'en');
 
   runApp(const MainApp());
 }
@@ -36,36 +33,25 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ListTile(
-              leading: const Icon(Icons.feedback),
-              title: const Text(
-                'Feature requests',
-              ),
-              subtitle: const Text(
-                'View and vote on feature requests',
-              ),
+              leading: const Icon(Icons.feedback_outlined),
+              title: const Text('Feature requests'),
+              subtitle: const Text('View and vote on feature requests'),
               onTap: () {
                 UserOrient.setUser(
-                    // uniqueIdentifier: '123123',
-                    // fullName: 'Kamran',
-                    // phoneNumber: '+994501234567',
-                    // email: 'kamran@userorient.com',
-                    // language: 'az',
-                    // extra: {
-                    //   'is_premium': true,
-                    //   'is_azerbaijani': true,
-                    //   'online_session_count': 17,
-                    //   'subscription_date': '2021-09-01',
-                    // },
-                    );
+                  uniqueIdentifier: '123123',
+                  fullName: 'Kamran Bekirov',
+                  phoneNumber: '+994501234567',
+                  email: 'kamran@userorient.com',
+                  language: 'en',
+                  extra: {'is_premium': true},
+                );
 
                 UserOrient.openBoard(context);
               },
             ),
             ListTile(
-              leading: const Icon(Icons.feedback),
-              title: const Text(
-                'Logout',
-              ),
+              leading: const Icon(Icons.logout_outlined),
+              title: const Text('Logout'),
               onTap: () {
                 UserOrient.clearCache();
               },
