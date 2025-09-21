@@ -59,52 +59,53 @@ class _BoardViewState extends State<BoardView> {
           SizedBox(width: 12.0),
         ],
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 8),
-          _Tabs(
-            index: _index,
-            onIndexChanged: (index) {
-              setState(() => _index = index);
-            },
-          ),
-          const SizedBox(height: 8),
-          Expanded(
-            child: ValueListenableBuilder(
-              valueListenable: UserOrient.features,
-              builder: (context, List<Feature>? features, _) {
-                features ??= List.generate(7, (index) {
-                  return Feature.skeleton();
-                });
-
-                // sort features by status
-                final List<Feature> sortedFeatures = features.toList()
-                  ..removeWhere((feature) {
-                    final bool isCompleted = feature.labels?.any(
-                          (label) {
-                            return label.id ==
-                                '07d82cf0-51ea-45d5-b274-59edb1b11a20';
-                          },
-                        ) ??
-                        false;
-
-                    return _index == 0 ? isCompleted : !isCompleted;
-                  });
-
-                return MediaQuery.removePadding(
-                  context: context,
-                  removeBottom: true,
-                  child: Scrollbar(
-                    child: _List(
-                      features: sortedFeatures,
-                    ),
-                  ),
-                );
+      body: SafeArea(
+        child: Column(
+          children: [
+            const SizedBox(height: 8),
+            _Tabs(
+              index: _index,
+              onIndexChanged: (index) {
+                setState(() => _index = index);
               },
             ),
-          ),
-          const Watermark(),
-        ],
+            const SizedBox(height: 8),
+            Expanded(
+              child: ValueListenableBuilder(
+                valueListenable: UserOrient.features,
+                builder: (context, List<Feature>? features, _) {
+                  features ??= List.generate(7, (index) {
+                    return Feature.skeleton();
+                  });
+
+                  // sort features by status
+                  final List<Feature> sortedFeatures = features.toList()
+                    ..removeWhere((feature) {
+                      final bool isCompleted = feature.labels?.any(
+                            (label) {
+                              return label.id == '07d82cf0-51ea-45d5-b274-59edb1b11a20';
+                            },
+                          ) ??
+                          false;
+
+                      return _index == 0 ? isCompleted : !isCompleted;
+                    });
+
+                  return MediaQuery.removePadding(
+                    context: context,
+                    removeBottom: true,
+                    child: Scrollbar(
+                      child: _List(
+                        features: sortedFeatures,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            const Watermark(),
+          ],
+        ),
       ),
     );
   }
