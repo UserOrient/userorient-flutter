@@ -23,9 +23,7 @@ class Watermark extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.only(
           top: 16.0,
-          bottom: defaultTargetPlatform != TargetPlatform.iOS
-              ? MediaQuery.of(context).padding.bottom + 12.0
-              : MediaQuery.of(context).padding.bottom,
+          bottom: defaultTargetPlatform != TargetPlatform.iOS ? 12 : 0,
         ),
         decoration: BoxDecoration(
           boxShadow: const [
@@ -43,44 +41,46 @@ class Watermark extends StatelessWidget {
             ),
           ),
         ),
-        child: Column(
-          children: [
-            Button(
-              onPressed: () {
-                UserOrient.openForm(context);
-              },
-              icon: SvgPicture.asset(
-                'assets/add.svg',
-                package: 'userorient_flutter',
-                colorFilter: ColorFilter.mode(
-                  context.buttonTextColor,
-                  BlendMode.srcIn,
-                ),
-              ),
-              label: L10n.addFeature,
-            ),
-            const SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/uo${context.isDark ? '-dark' : ''}.svg',
+        child: SafeArea(
+          child: Column(
+            children: [
+              Button(
+                onPressed: () {
+                  UserOrient.openForm(context);
+                },
+                icon: SvgPicture.asset(
+                  'assets/add.svg',
                   package: 'userorient_flutter',
-                ),
-                const SizedBox(width: 4.0),
-                const Text(
-                  'Powered by UserOrient',
-                  style: TextStyle(
-                    fontSize: 12.0,
-                    height: 16 / 12,
-                    color: Color(0xffACAEAF),
+                  colorFilter: ColorFilter.mode(
+                    context.buttonTextColor,
+                    BlendMode.srcIn,
                   ),
                 ),
-              ],
-            ),
-            // if (defaultTargetPlatform == TargetPlatform.iOS)
-            //   const BottomPadding(),
-          ],
+                label: L10n.addFeature,
+              ),
+              const SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/uo${context.isDark ? '-dark' : ''}.svg',
+                    package: 'userorient_flutter',
+                  ),
+                  const SizedBox(width: 4.0),
+                  const Text(
+                    'Powered by UserOrient',
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      height: 16 / 12,
+                      color: Color(0xffACAEAF),
+                    ),
+                  ),
+                ],
+              ),
+              // if (defaultTargetPlatform == TargetPlatform.iOS)
+              // const BottomPadding(),
+            ],
+          ),
         ),
       ),
     );
