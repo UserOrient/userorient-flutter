@@ -30,7 +30,7 @@ class FormViewState extends State<FormView> {
 
   void _onTextChanged() {
     setState(() {
-      _isEmpty = _controller.text.trim().isEmpty;
+      _isEmpty = _controller.text.trim().length < 8;
     });
   }
 
@@ -66,11 +66,34 @@ class FormViewState extends State<FormView> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: StyledTextField(
-                minLines: 20,
-                controller: _controller,
-                hintText: L10n.formHint,
-                autoFocus: true,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: StyledTextField(
+                      minLines: 20,
+                      controller: _controller,
+                      hintText: L10n.formHint,
+                      autoFocus: true,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 12.0, top: 8.0),
+                      child: Text(
+                        '${_controller.text.trim().length}/500',
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          color: _controller.text.trim().length == 0
+                              ? context.secondaryTextColor.withOpacity(0.5)
+                              : _controller.text.trim().length < 8
+                                  ? Colors.red
+                                  : context.secondaryTextColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -79,36 +102,7 @@ class FormViewState extends State<FormView> {
             onPressed: () {
               final String content = _controller.text.trim();
 
-              if (content.isEmpty) {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    elevation: 0,
-                    content: Text(
-                      L10n.formEmpty,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.red,
-                      ),
-                    ),
-                    margin: const EdgeInsets.only(
-                      bottom: 120,
-                      left: 24,
-                      right: 24,
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    behavior: SnackBarBehavior.floating,
-                    backgroundColor: Colors.red.shade100,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                );
-
-                return;
-              }
+              if (content.length < 8) return;
 
               setState(() {
                 _isLoading = true;
