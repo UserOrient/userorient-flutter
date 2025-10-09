@@ -1,3 +1,7 @@
+## 1.4.3
+
+- Fix linting issues. Make pub score 160!
+
 ## 1.4.2
 
 - Limit the length of the feature request to be minimum 8 characters. This will prevent users from submitting 1-2 characters as a feature request.
