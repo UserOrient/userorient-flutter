@@ -84,8 +84,9 @@ class FormViewState extends State<FormView> {
                         '${_controller.text.trim().length}/500',
                         style: TextStyle(
                           fontSize: 12.0,
-                          color: _controller.text.trim().length == 0
-                              ? context.secondaryTextColor.withOpacity(0.5)
+                          color: _controller.text.trim().isEmpty
+                              ? context.secondaryTextColor
+                                  .withValues(alpha: 0.5)
                               : _controller.text.trim().length < 8
                                   ? Colors.red
                                   : context.secondaryTextColor,
