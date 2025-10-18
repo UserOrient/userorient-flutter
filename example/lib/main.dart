@@ -4,7 +4,7 @@ import 'package:userorient_flutter/userorient_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  UserOrient.configure(apiKey: 'YOUR_API_KEY', languageCode: 'en');
+  UserOrient.configure(apiKey: 'YOUR-API-KEY', languageCode: 'en');
 
   runApp(const MainApp());
 }
@@ -32,11 +32,10 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ListTile(
-              leading: const Icon(Icons.feedback_outlined),
-              title: const Text('Feature requests'),
-              subtitle: const Text('View and vote on feature requests'),
-              onTap: () {
+            FilledButton.tonalIcon(
+              icon: const Icon(Icons.feedback_outlined),
+              label: const Text('Suggest features'),
+              onPressed: () {
                 UserOrient.setUser(
                   uniqueIdentifier: '123123',
                   fullName: 'Kamran Bekirov',
@@ -49,10 +48,14 @@ class HomePage extends StatelessWidget {
                 UserOrient.openBoard(context);
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.logout_outlined),
-              title: const Text('Logout'),
-              onTap: () {
+            FilledButton.tonalIcon(
+              style: FilledButton.styleFrom(
+                foregroundColor: Colors.red,
+                backgroundColor: Colors.red.withValues(alpha: .1),
+              ),
+              icon: const Icon(Icons.logout_outlined),
+              label: const Text('Logout'),
+              onPressed: () {
                 UserOrient.clearCache();
               },
             ),

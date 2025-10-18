@@ -97,6 +97,7 @@ class _BoardViewState extends State<BoardView> {
                   child: Scrollbar(
                     child: _List(
                       features: sortedFeatures,
+                      showTip: _index == 0,
                     ),
                   ),
                 );
@@ -112,9 +113,11 @@ class _BoardViewState extends State<BoardView> {
 
 class _List extends StatelessWidget {
   final List<Feature> features;
+  final bool showTip;
 
   const _List({
     required this.features,
+    required this.showTip,
   });
 
   @override
@@ -129,7 +132,11 @@ class _List extends StatelessWidget {
       itemCount: features.length + 1,
       itemBuilder: (context, index) {
         if (index == 0) {
-          return const TipCard();
+          if (showTip) {
+            return const TipCard();
+          }
+
+          return const SizedBox.shrink();
         }
 
         final Feature feature = features[index - 1];
@@ -140,10 +147,6 @@ class _List extends StatelessWidget {
         );
       },
       separatorBuilder: (context, index) {
-        if (index == 0) {
-          return const SizedBox(height: 12.0);
-        }
-
         return const SizedBox(height: 4.0);
       },
     );
@@ -205,9 +208,8 @@ class _Tab extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: AnimatedContainer(
+      child: Container(
         height: 32,
-        duration: const Duration(milliseconds: 100),
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 24),
         decoration: BoxDecoration(

@@ -1,3 +1,7 @@
+## 1.4.4
+
+- For better UX and more space, the tip card is now hidden after the first time it is shown. Also we hide it in "Implemented" tab as it's not relevant there.
+
 ## 1.4.3
 
 - Fix linting issues. Make pub score 160!
