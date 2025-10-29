@@ -1,3 +1,7 @@
+## 1.4.5
+
+- Fix issue where the board was not scrolling smoothly.
+
 ## 1.4.4
 
 - For better UX and more space, the tip card is now hidden after the first time it is shown. Also we hide it in "Implemented" tab as it's not relevant there.

@@ -17,20 +17,7 @@ class BoardView extends StatefulWidget {
 }
 
 class _BoardViewState extends State<BoardView> {
-  late final ScrollController _scrollController;
   int _index = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _scrollController.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +56,7 @@ class _BoardViewState extends State<BoardView> {
             },
           ),
           const SizedBox(height: 8),
+          if (_index == 0) const TipCard(),
           Expanded(
             child: ValueListenableBuilder(
               valueListenable: UserOrient.features,
@@ -94,11 +82,8 @@ class _BoardViewState extends State<BoardView> {
                 return MediaQuery.removePadding(
                   context: context,
                   removeBottom: true,
-                  child: Scrollbar(
-                    child: _List(
-                      features: sortedFeatures,
-                      showTip: _index == 0,
-                    ),
+                  child: _List(
+                    features: sortedFeatures,
                   ),
                 );
               },
@@ -113,42 +98,35 @@ class _BoardViewState extends State<BoardView> {
 
 class _List extends StatelessWidget {
   final List<Feature> features;
-  final bool showTip;
 
   const _List({
     required this.features,
-    required this.showTip,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.only(
-        left: 16.0,
-        right: 16.0,
-        top: 8.0,
-        bottom: 16.0,
+    return Scrollbar(
+      child: ListView.separated(
+        padding: const EdgeInsets.only(
+          left: 16.0,
+          right: 16.0,
+          top: 8.0,
+          bottom: 16.0,
+        ),
+        cacheExtent: features.length * 80,
+        itemCount: features.length,
+        itemBuilder: (context, index) {
+          final Feature feature = features[index];
+
+          return FeatureCard(
+            feature,
+            isShimmer: feature.isSkeleton,
+          );
+        },
+        separatorBuilder: (context, index) {
+          return const SizedBox(height: 4.0);
+        },
       ),
-      itemCount: features.length + 1,
-      itemBuilder: (context, index) {
-        if (index == 0) {
-          if (showTip) {
-            return const TipCard();
-          }
-
-          return const SizedBox.shrink();
-        }
-
-        final Feature feature = features[index - 1];
-
-        return FeatureCard(
-          feature,
-          isShimmer: feature.isSkeleton,
-        );
-      },
-      separatorBuilder: (context, index) {
-        return const SizedBox(height: 4.0);
-      },
     );
   }
 }
