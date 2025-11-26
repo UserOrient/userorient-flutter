@@ -30,7 +30,7 @@ class FormViewState extends State<FormView> {
 
   void _onTextChanged() {
     setState(() {
-      _isEmpty = _controller.text.trim().length < 8;
+      _isEmpty = _controller.text.trim().length < 10;
     });
   }
 
@@ -87,7 +87,7 @@ class FormViewState extends State<FormView> {
                           color: _controller.text.trim().isEmpty
                               ? context.secondaryTextColor
                                   .withValues(alpha: 0.5)
-                              : _controller.text.trim().length < 8
+                              : _controller.text.trim().length < 10
                                   ? Colors.red
                                   : context.secondaryTextColor,
                         ),
@@ -103,7 +103,7 @@ class FormViewState extends State<FormView> {
             onPressed: () {
               final String content = _controller.text.trim();
 
-              if (content.length < 8) return;
+              if (content.length < 10) return;
 
               setState(() {
                 _isLoading = true;
