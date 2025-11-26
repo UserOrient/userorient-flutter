@@ -1,3 +1,8 @@
+## 1.4.6
+
+- Fix padding and glitching issue of tip card.
+- Set minimum length of feature request to be 10 characters.
+
 ## 1.4.5
 
 - Fix issue where the board was not scrolling smoothly.
