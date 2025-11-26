@@ -11,7 +11,7 @@ class TipCard extends StatefulWidget {
 }
 
 class _TipCardState extends State<TipCard> {
-  bool _showTip = true;
+  bool _showTip = false;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _TipCardState extends State<TipCard> {
       curve: Curves.easeInOut,
       child: Container(
         padding: const EdgeInsets.all(16),
-        margin: const EdgeInsets.only(bottom: 8),
+        margin: const EdgeInsets.only(bottom: 8, left: 16, right: 16),
         decoration: BoxDecoration(
           color: const Color(0xff529BDF).withValues(alpha: .1),
           borderRadius: BorderRadius.circular(16.0),
