@@ -1,3 +1,7 @@
+## 1.5.0
+
+- Fix issues on `CupertinoApp` based Flutter apps.
+
 ## 1.4.6
 
 - Fix padding and glitching issue of tip card.
