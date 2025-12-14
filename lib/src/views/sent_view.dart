@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
+import 'package:userorient_flutter/src/utilities/localizations_overrider.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
 import 'package:userorient_flutter/src/widgets/button.dart';
 
@@ -10,9 +11,11 @@ class SentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.backgroundColor,
-      body: const _Body(),
+    return LocalizationsOverrider(
+      child: Scaffold(
+        backgroundColor: context.backgroundColor,
+        body: const _Body(),
+      ),
     );
   }
 }

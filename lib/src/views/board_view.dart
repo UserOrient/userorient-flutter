@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
+import 'package:userorient_flutter/src/utilities/localizations_overrider.dart';
 import 'package:userorient_flutter/src/widgets/feature_card.dart';
 import 'package:userorient_flutter/src/widgets/styled_close_button.dart';
 import 'package:userorient_flutter/src/widgets/tip_card.dart';
@@ -21,76 +22,78 @@ class _BoardViewState extends State<BoardView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.backgroundColor,
-      appBar: AppBar(
+    return LocalizationsOverrider(
+      child: Scaffold(
         backgroundColor: context.backgroundColor,
-        elevation: 0.0,
-        automaticallyImplyLeading: false,
-        surfaceTintColor: Colors.transparent,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 4.0),
-          child: Text(
-            L10n.title,
-            style: TextStyle(
-              fontSize: 20.0,
-              height: 28 / 20,
-              fontWeight: FontWeight.bold,
-              color: context.textColor,
+        appBar: AppBar(
+          backgroundColor: context.backgroundColor,
+          elevation: 0.0,
+          automaticallyImplyLeading: false,
+          surfaceTintColor: Colors.transparent,
+          title: Padding(
+            padding: const EdgeInsets.only(left: 4.0),
+            child: Text(
+              L10n.title,
+              style: TextStyle(
+                fontSize: 20.0,
+                height: 28 / 20,
+                fontWeight: FontWeight.bold,
+                color: context.textColor,
+              ),
             ),
           ),
+          centerTitle: false,
+          actions: const [
+            StyledCloseButton(),
+            SizedBox(width: 12.0),
+          ],
         ),
-        centerTitle: false,
-        actions: const [
-          StyledCloseButton(),
-          SizedBox(width: 12.0),
-        ],
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 8),
-          _Tabs(
-            index: _index,
-            onIndexChanged: (index) {
-              setState(() => _index = index);
-            },
-          ),
-          const SizedBox(height: 8),
-          if (_index == 0) const TipCard(),
-          Expanded(
-            child: ValueListenableBuilder(
-              valueListenable: UserOrient.features,
-              builder: (context, List<Feature>? features, _) {
-                features ??= List.generate(7, (index) {
-                  return Feature.skeleton();
-                });
-
-                // sort features by status
-                final List<Feature> sortedFeatures = features.toList()
-                  ..removeWhere((feature) {
-                    final bool isCompleted = feature.labels?.any(
-                          (label) {
-                            return label.id ==
-                                '07d82cf0-51ea-45d5-b274-59edb1b11a20';
-                          },
-                        ) ??
-                        false;
-
-                    return _index == 0 ? isCompleted : !isCompleted;
-                  });
-
-                return MediaQuery.removePadding(
-                  context: context,
-                  removeBottom: true,
-                  child: _List(
-                    features: sortedFeatures,
-                  ),
-                );
+        body: Column(
+          children: [
+            const SizedBox(height: 8),
+            _Tabs(
+              index: _index,
+              onIndexChanged: (index) {
+                setState(() => _index = index);
               },
             ),
-          ),
-          const Watermark(),
-        ],
+            const SizedBox(height: 8),
+            if (_index == 0) const TipCard(),
+            Expanded(
+              child: ValueListenableBuilder(
+                valueListenable: UserOrient.features,
+                builder: (context, List<Feature>? features, _) {
+                  features ??= List.generate(7, (index) {
+                    return Feature.skeleton();
+                  });
+
+                  // sort features by status
+                  final List<Feature> sortedFeatures = features.toList()
+                    ..removeWhere((feature) {
+                      final bool isCompleted = feature.labels?.any(
+                            (label) {
+                              return label.id ==
+                                  '07d82cf0-51ea-45d5-b274-59edb1b11a20';
+                            },
+                          ) ??
+                          false;
+
+                      return _index == 0 ? isCompleted : !isCompleted;
+                    });
+
+                  return MediaQuery.removePadding(
+                    context: context,
+                    removeBottom: true,
+                    child: _List(
+                      features: sortedFeatures,
+                    ),
+                  );
+                },
+              ),
+            ),
+            const Watermark(),
+          ],
+        ),
       ),
     );
   }
