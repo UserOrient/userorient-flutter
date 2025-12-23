@@ -1,3 +1,7 @@
+## 1.5.1
+
+- Add Ukrainian language support. Thanks to [@SergoFrost](https://github.com/SergoFrost)
+
 ## 1.5.0
 
 - Fix issues on `CupertinoApp` based Flutter apps.
