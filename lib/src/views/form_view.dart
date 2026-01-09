@@ -7,7 +7,7 @@ import 'package:userorient_flutter/src/utilities/navigation.dart';
 import 'package:userorient_flutter/src/views/sent_view.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
 import 'package:userorient_flutter/src/widgets/button.dart';
-import 'package:userorient_flutter/src/widgets/styled_close_button.dart';
+import 'package:userorient_flutter/src/widgets/styled_back_button.dart';
 import 'package:userorient_flutter/src/widgets/styled_text_field.dart';
 
 class FormView extends StatefulWidget {
@@ -50,24 +50,21 @@ class FormViewState extends State<FormView> {
           backgroundColor: context.backgroundColor,
           automaticallyImplyLeading: false,
           centerTitle: true,
+          leading: const StyledBackButton(),
           title: Text(
             L10n.addFeature,
             style: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w700,
+              fontSize: 18,
               color: context.textColor,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          actions: const [
-            StyledCloseButton(),
-            SizedBox(width: 12.0),
-          ],
         ),
         body: Column(
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: Column(
                   children: [
                     Expanded(
@@ -104,13 +101,13 @@ class FormViewState extends State<FormView> {
             Button(
               onPressed: () {
                 final String content = _controller.text.trim();
-      
+
                 if (content.length < 10) return;
-      
+
                 setState(() {
                   _isLoading = true;
                 });
-      
+
                 UserOrient.submitForm(content: content).then((_) {
                   setState(() {
                     Navigator.pop(context);

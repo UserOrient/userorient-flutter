@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 class Navigation {
@@ -7,15 +6,8 @@ class Navigation {
       GlobalKey<NavigatorState>();
 
   static Future<T?> push<T>(BuildContext context, Widget child) {
-    if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return Navigator.of(context).push(
-        CupertinoSheetRoute(
-          builder: (_) => child,
-        ),
-      );
-    }
-
-    if (defaultTargetPlatform == TargetPlatform.android) {
+    if ([TargetPlatform.android, TargetPlatform.iOS]
+        .contains(defaultTargetPlatform)) {
       return Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => child,

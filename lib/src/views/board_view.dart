@@ -1,10 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/utilities/localizations_overrider.dart';
 import 'package:userorient_flutter/src/widgets/feature_card.dart';
+import 'package:userorient_flutter/src/widgets/styled_back_button.dart';
 import 'package:userorient_flutter/src/widgets/styled_close_button.dart';
 import 'package:userorient_flutter/src/widgets/tip_card.dart';
 import 'package:userorient_flutter/src/widgets/watermark.dart';
@@ -22,6 +25,9 @@ class _BoardViewState extends State<BoardView> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = [TargetPlatform.android, TargetPlatform.iOS]
+        .contains(defaultTargetPlatform);
+
     return LocalizationsOverrider(
       child: Scaffold(
         backgroundColor: context.backgroundColor,
@@ -30,34 +36,18 @@ class _BoardViewState extends State<BoardView> {
           elevation: 0.0,
           automaticallyImplyLeading: false,
           surfaceTintColor: Colors.transparent,
-          title: Padding(
-            padding: const EdgeInsets.only(left: 4.0),
-            child: Text(
-              L10n.title,
-              style: TextStyle(
-                fontSize: 20.0,
-                height: 28 / 20,
-                fontWeight: FontWeight.bold,
-                color: context.textColor,
-              ),
-            ),
+          title: _Tabs(
+            index: _index,
+            onIndexChanged: (index) {
+              setState(() => _index = index);
+            },
           ),
-          centerTitle: false,
-          actions: const [
-            StyledCloseButton(),
-            SizedBox(width: 12.0),
-          ],
+          centerTitle: true,
+          leading:
+              isMobile ? const StyledBackButton() : const StyledCloseButton(),
         ),
         body: Column(
           children: [
-            const SizedBox(height: 8),
-            _Tabs(
-              index: _index,
-              onIndexChanged: (index) {
-                setState(() => _index = index);
-              },
-            ),
-            const SizedBox(height: 8),
             if (_index == 0) const TipCard(),
             Expanded(
               child: ValueListenableBuilder(
@@ -188,7 +178,12 @@ class _Tab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        onTap.call();
+
+        HapticFeedback.lightImpact();
+      },
+      behavior: HitTestBehavior.translucent,
       child: Container(
         height: 32,
         alignment: Alignment.center,

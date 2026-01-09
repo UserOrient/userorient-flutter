@@ -8,7 +8,7 @@ import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/utilities/date_time_extensions.dart';
 import 'package:userorient_flutter/src/utilities/localizations_overrider.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
-import 'package:userorient_flutter/src/widgets/styled_close_button.dart';
+import 'package:userorient_flutter/src/widgets/styled_back_button.dart';
 import 'package:userorient_flutter/src/widgets/styled_loading_indicator.dart';
 
 class CommentsView extends StatefulWidget {
@@ -35,19 +35,17 @@ class CommentsViewState extends State<CommentsView> {
         appBar: AppBar(
           backgroundColor: context.backgroundColor,
           automaticallyImplyLeading: false,
+          leading: const StyledBackButton(),
           centerTitle: true,
           title: Text(
             L10n.comments,
             style: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w700,
+              fontSize: 18,
+              height: 26 / 18,
               color: context.textColor,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          actions: const [
-            StyledCloseButton(),
-            SizedBox(width: 12.0),
-          ],
         ),
         body: Column(
           children: [

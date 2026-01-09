@@ -1,3 +1,10 @@
+## 1.5.2
+
+- Started using `MaterialPageRoute` for page transitions.
+- Removed "Features" title from board page since it wasn't complementing "Roadmap" and "Implemented" below.
+- Moved tabs on board apge to `AppBar` which gives more space to body of features.
+- Added selection haptic when tab items clicked.
+
 ## 1.5.1
 
 - Add Ukrainian language support. Thanks to [@SergoFrost](https://github.com/SergoFrost)
