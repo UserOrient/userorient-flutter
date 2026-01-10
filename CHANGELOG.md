@@ -1,3 +1,7 @@
+## 1.6.0
+
+- That amazing feature is now available: sort votes by paying users! Simply set "isPaying" true/false while calling `UserOrient.setUser` and get the ability to filter votes in [dashboard](https://app.userorient.com) by paying users so you understand which features matter most to your revenue-generating users.
+
 ## 1.5.2
 
 - Started using `MaterialPageRoute` for page transitions.

@@ -4,6 +4,7 @@ class User {
   final String? email;
   final String? phoneNumber;
   final String? language;
+  final bool? isPaying;
   final Map<String, dynamic>? extra;
 
   const User({
@@ -12,6 +13,7 @@ class User {
     this.email,
     this.phoneNumber,
     this.language,
+    this.isPaying,
     this.extra,
   });
 
@@ -23,9 +25,14 @@ class User {
         email = null,
         phoneNumber = null,
         language = null,
+        isPaying = null,
         extra = null;
 
   Map<String, dynamic> toJson(String? id) {
+    final Map<String, dynamic> extra = {
+      if (isPaying != null) 'isPaying': isPaying,
+    };
+
     return {
       'userId': id,
       'uniqueIdentifier': uniqueIdentifier,

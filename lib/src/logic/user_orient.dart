@@ -56,6 +56,7 @@ class UserOrient {
     String? email,
     String? phoneNumber,
     String? language,
+    bool? isPaying,
     Map<String, dynamic>? extra,
   }) {
     final User user = User(
@@ -64,6 +65,7 @@ class UserOrient {
       email: email,
       phoneNumber: phoneNumber,
       language: language,
+      isPaying: isPaying,
       extra: extra,
     );
 
