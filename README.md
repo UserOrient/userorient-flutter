@@ -1,10 +1,5 @@
 # [UserOrient.com](https://userorient.com)
 
-[![Pub](https://img.shields.io/pub/v/userorient_flutter.svg)](https://pub.dartlang.org/packages/userorient_flutter)
-[![Pub Likes](https://img.shields.io/pub/likes/userorient_flutter)](https://pub.dev/packages/userorient_flutter/score)
-[![Popularity](https://img.shields.io/pub/popularity/userorient_flutter)](https://pub.dev/packages/userorient_flutter/score)
-[![Pub points](https://img.shields.io/pub/points/userorient_flutter)](https://pub.dev/packages/userorient_flutter/score)
-
 **Feature Voting Board for Flutter**
 
 UserOrient is a feature voting board that helps you collect feedback from your users and prioritize your development roadmap in your Flutter projects.
@@ -13,11 +8,11 @@ UserOrient is a feature voting board that helps you collect feedback from your u
   <img src="https://raw.githubusercontent.com/UserOrient/userorient-flutter/refs/heads/main/assets/cover.png" alt="UserOrient Cover" width="100%"/>
 </p>
 
-## Getting Started
+## 🎯 Getting Started
 
-Considering that you have already created a project on [UserOrient.com](https://userorient.com) and received an API key, follow these steps to integrate the SDK into your Flutter app.
+Considering that you have already created a project on [UserOrient.com](https://app.userorient.com) and received an API key, follow these steps to integrate the SDK into your Flutter app.
 
-### Add the dependency
+### 📦 Add the dependency
 
 Add the following to your `pubspec.yaml` file:
 
@@ -26,7 +21,7 @@ dependencies:
   userorient_flutter: <latest-version>
 ```
 
-### Initialize the SDK
+### ⚙️ Initialize the SDK
 
 Initialize the SDK with your project's API key and preferred language:
 
@@ -40,39 +35,46 @@ void main() {
   );
 ```
 
-### Display the board
+### 🎨 Display the board
 
-To show the UserOrient board, call `UserOrient.openBoard(context)`:
+To show the UserOrient board, call `UserOrient.openBoard(context)`. Make sure to set user information first (see [User Identification](#user-identification) below):
 
 ```dart
-import 'package:userorient_flutter/userorient_flutter.dart';
+UserOrient.openBoard(context);
+```
 
-void openBoard() {
-  // Set user information
-  UserOrient.setUser(
-    uniqueIdentifier: '123456',
-    fullName: 'Kamran Bekirov',
-    email: 'kamran@userorient.com',
-    phoneNumber: '+1234567890',
-    language: 'en',
-    extra: {
-      'age': 27,
-      'is_premium': true,
-    }
-  );
+## 👤 User Identification
 
-  // Display the board
-  UserOrient.openBoard(context);
-}
+Before displaying the board, set user information using `UserOrient.setUser()`. UserOrient requires a unique identifier (`uniqueIdentifier`) for each user. This can be an email address, phone number, or custom ID. If not provided, UserOrient will generate a random identifier.
+
+```dart
+UserOrient.setUser(
+  uniqueIdentifier: '123456',
+  fullName: 'Kamran Bekirov',
+  email: 'kamran@userorient.com',
+  phoneNumber: '+1234567890',
+  language: 'en',
+  isPaying: true,
+  extra: {
+    'age': 27,
+    'gender': 'male',
+  }
+);
 ```
 
 > **Note:** It's recommended to call `UserOrient.setUser` before each board launch to ensure up-to-date user information.
 
-## User Identification
+## 💰 Paying Users
 
-UserOrient requires a unique identifier (`uniqueIdentifier`) for each user. This can be an email address, phone number, or custom ID. If not provided, UserOrient will generate a random identifier.
+Set the `isPaying` property to `true` for users who have a paid subscription or are paying customers. This enables powerful filtering in your UserOrient dashboard:
 
-## Logging Out
+- **Filter by paying users**: Toggle "filter by paying users" in the dashboard to see votes specifically from paying customers
+- **Prioritize features**: Understand which features matter most to your revenue-generating users
+- **Better decision-making**: Make data-driven decisions by focusing on feedback from your most valuable users
+
+See the `isPaying` property in the [User Identification](#user-identification) example above.
+
+## 👋 Logging Out
 
 When a user logs out of your app, call `UserOrient.clearCache()` to prevent potential issues:
 
@@ -80,15 +82,9 @@ When a user logs out of your app, call `UserOrient.clearCache()` to prevent pote
 await UserOrient.clearCache();
 ```
 
-## Contact
+## 💬 Contact
 
 For any questions or support, please reach out to us:
 
 - Email: [kamran@userorient.com](mailto:kamran@userorient.com)
 - Twitter: [@userorient](https://twitter.com/userorient)
-
----
-
-<p align="center">
-  Developed by <a href="https://kamranbekirov.com">Kamran Bekirov</a>, <i>por el arte</i>
-</p>
