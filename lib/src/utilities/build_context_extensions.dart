@@ -43,4 +43,6 @@ extension BuildContextX on BuildContext {
       isDark ? const Color(0xff121212) : const Color(0xffFAFAFA);
   Color get textFieldFillColor =>
       isDark ? const Color(0xff2A2A2A) : const Color(0xffFAFAFA);
+  Color get skeletonColor =>
+      isDark ? const Color(0xff3D3D3D) : const Color(0xffE9EAEE);
 }

@@ -41,7 +41,7 @@ class FeatureCard extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(16.0),
           ),
-          child: isShimmer ? _buildShimmer() : _buildWidget(context),
+          child: isShimmer ? _buildShimmer(context) : _buildWidget(context),
         ),
       ),
     );
@@ -179,7 +179,7 @@ class FeatureCard extends StatelessWidget {
     );
   }
 
-  Widget _buildShimmer() {
+  Widget _buildShimmer(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -187,7 +187,7 @@ class FeatureCard extends StatelessWidget {
           height: 56.0,
           width: 56.0,
           decoration: BoxDecoration(
-            color: const Color(0xffE9EAEE),
+            color: context.skeletonColor,
             borderRadius: BorderRadius.circular(12.0),
           ),
         ),
@@ -200,7 +200,7 @@ class FeatureCard extends StatelessWidget {
                 height: 24.0,
                 width: 160.0,
                 decoration: BoxDecoration(
-                  color: const Color(0xffE9EAEE),
+                  color: context.skeletonColor,
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
@@ -209,7 +209,7 @@ class FeatureCard extends StatelessWidget {
                 height: 20.0,
                 width: 240.0,
                 decoration: BoxDecoration(
-                  color: const Color(0xffE9EAEE),
+                  color: context.skeletonColor,
                   borderRadius: BorderRadius.circular(7.0),
                 ),
               ),
