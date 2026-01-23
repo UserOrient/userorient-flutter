@@ -37,15 +37,7 @@ void main() {
 
 ### 🎨 Display the board
 
-To show the UserOrient board, call `UserOrient.openBoard(context)`. Make sure to set user information first (see [User Identification](#user-identification) below):
-
-```dart
-UserOrient.openBoard(context);
-```
-
-## 👤 User Identification
-
-Before displaying the board, set user information using `UserOrient.setUser()`. UserOrient requires a unique identifier (`uniqueIdentifier`) for each user. This can be an email address, phone number, or custom ID. If not provided, UserOrient will generate a random identifier.
+Before displaying the board, set user information using `UserOrient.setUser()`. Ideally you should pass a unique identifier (`uniqueIdentifier`) for the user so that their votes can persist across app installs. This can be an email address, phone number, or custom ID. If not provided, UserOrient will generate a random identifier.
 
 ```dart
 UserOrient.setUser(
@@ -62,6 +54,14 @@ UserOrient.setUser(
 );
 ```
 
+Then, to show the board, call `UserOrient.openBoard(context)`.
+
+```dart
+UserOrient.openBoard(context);
+```
+
+That's it.
+
 > **Note:** It's recommended to call `UserOrient.setUser` before each board launch to ensure up-to-date user information.
 
 ## 💰 Paying Users
@@ -73,6 +73,10 @@ Set the `isPaying` property to `true` for users who have a paid subscription or 
 - **Better decision-making**: Make data-driven decisions by focusing on feedback from your most valuable users
 
 See the `isPaying` property in the [User Identification](#user-identification) example above.
+
+## 🫟 Customize theme
+
+
 
 ## 👋 Logging Out
 
