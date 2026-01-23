@@ -94,6 +94,8 @@ UserOrient.setTheme(
 - `backgroundColor`: SDK's background color
 - `accentColor`: Primary button, active tab and voted state color (text color adjusts automatically)
 
+Font family is inherited from your app's `ThemeData`.
+
 ## 👋 Logging Out
 
 When a user logs out of your app, call `UserOrient.clearCache()` to prevent potential issues:
