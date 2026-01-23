@@ -8,6 +8,7 @@ import 'package:userorient_flutter/src/utilities/navigation.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/logic/user_orient_data.dart';
 import 'package:userorient_flutter/src/models/user.dart';
+import 'package:userorient_flutter/src/models/theme.dart';
 import 'package:userorient_flutter/src/utilities/helper_functions.dart';
 import 'package:userorient_flutter/src/views/board_view.dart';
 import 'package:userorient_flutter/src/views/form_view.dart';
@@ -21,6 +22,7 @@ class UserOrient {
   static UserUUID? userUuid;
   static bool _isInitialized = false;
   static String languageCode = 'en';
+  static UserOrientTheme? theme;
 
   /// Open the UserOrient board view
   static Future<void> openBoard(BuildContext context) {
@@ -38,6 +40,7 @@ class UserOrient {
   ///
   /// [apiKey] is the API Key from the UserOrient dashboard.
   /// [languageCode] is the language code for the user's language.
+  /// [theme] is the optional theme configuration for customizing colors.
   static void configure({
     required String apiKey,
     required String languageCode,
@@ -48,6 +51,14 @@ class UserOrient {
     }
 
     _apiKey = apiKey;
+  }
+
+  static void setTheme({
+    required UserOrientColors? light,
+    required UserOrientColors? dark,
+  }) {
+    UserOrient.theme = UserOrientTheme(light: light, dark: dark);
+    logUO('Custom theme applied', emoji: '🫟');
   }
 
   static void setUser({

@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:userorient_flutter/src/logic/user_orient.dart';
+import 'package:userorient_flutter/src/models/theme.dart';
 
 extension BuildContextX on BuildContext {
   bool get isDark => Theme.of(this).brightness == Brightness.dark;
-  Color get backgroundColor => isDark ? const Color(0xff1D1D1D) : Colors.white;
+
+  UserOrientColors? get _themeColors =>
+      isDark ? UserOrient.theme?.dark : UserOrient.theme?.light;
+
+  Color get backgroundColor =>
+      _themeColors?.backgroundColor ??
+      (isDark ? const Color(0xff1D1D1D) : Colors.white);
+
   Color get textColor =>
       isDark ? const Color(0xffFAFAFA) : const Color(0xff2A2A2A);
   Color get secondaryTextColor =>
@@ -16,14 +25,18 @@ extension BuildContextX on BuildContext {
       isDark ? const Color(0xff2C2C2C) : const Color(0xffF7F7F7);
   Color get votedArrowColor =>
       isDark ? const Color(0xff52DF82) : const Color(0xff52DF82);
+
   Color get buttonColor =>
-      isDark ? const Color(0xffFAFAFA) : const Color(0xff2A2A2A);
-  Color get buttonTextColor => isDark ? const Color(0xff1D1D1D) : Colors.white;
+      _themeColors?.accentColor ??
+      (isDark ? const Color(0xffFAFAFA) : const Color(0xff2A2A2A));
+
+  Color get buttonTextColor =>
+      buttonColor.computeLuminance() < 0.5 ? Colors.white : Colors.black;
+
   Color get unvotedContainerColor => isDark
       ? const Color(0xffB2B2B2).withValues(alpha: .1)
       : const Color(0xffE9EAEE).withValues(alpha: .75);
-  Color get votedContainerColor =>
-      isDark ? Colors.white.withValues(alpha: .75) : const Color(0xff2F313F);
+  Color get votedContainerColor => buttonColor;
   Color get completedContainerColor =>
       isDark ? const Color(0xff223027) : const Color(0xffDCF9E6);
   Color get tabsBackgroundColor =>

@@ -196,6 +196,7 @@ class _Tab extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: 14,
+            height: 14 / 14,
             fontWeight: FontWeight.w500,
             color: isActive ? context.buttonTextColor : context.textColor,
           ),
