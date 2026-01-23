@@ -74,9 +74,25 @@ Set the `isPaying` property to `true` for users who have a paid subscription or 
 
 See the `isPaying` property in the [User Identification](#user-identification) example above.
 
-## 🫟 Customize theme
+## 🫟 Customize appearance
 
+Customize the appearance to match your app's design:
 
+```dart
+UserOrient.setTheme(
+  light: UserOrientColors(
+    backgroundColor: Colors.white,
+    accentColor: Colors.blue,
+  ),
+  dark: UserOrientColors(
+    backgroundColor: Color(0xff1D1D1D),
+    accentColor: Colors.blue,
+  ),
+);
+```
+
+- `backgroundColor`: SDK's background color
+- `accentColor`: Primary button, active tab and voted state color (text color adjusts automatically)
 
 ## 👋 Logging Out
 
