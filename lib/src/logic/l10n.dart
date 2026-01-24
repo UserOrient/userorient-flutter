@@ -21,6 +21,21 @@ class L10n {
       'formEmpty': 'Təklifinizi daxil edin',
       'comments': 'Rəylər',
     },
+    'de': {
+      'title': 'Vorschläge',
+      'tip': 'Stimme für die Funktionen, die du bald sehen möchtest.',
+      'form_hint': 'Beschreibe deine Idee...',
+      'submit_form': 'Absenden',
+      'sent_title': 'Vorschlag gesendet!',
+      'sent_description':
+          'Wir werden deinen Vorschlag prüfen und ihn, wenn er zu unserer Roadmap passt, in unsere Liste der umzusetzenden Funktionen aufnehmen. Bleib dran!',
+      'go_back': 'Zurück',
+      'add_feature': 'Vorschlag einreichen',
+      'roadmap': 'Roadmap',
+      'implemented': 'Implementiert',
+      'formEmpty': 'Bitte gib deinen Vorschlag ein',
+      'comments': 'Kommentare',
+    },
     'en': {
       'title': 'Features',
       'tip': 'Vote the features you want to see soon.',
