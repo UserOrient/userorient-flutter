@@ -1,6 +1,6 @@
-## 1.7.1
+## 1.8.0
 
-- Added German language support. Thanks to [@josefshamstr](https://github.com/josefshamstr)
+- You can now reply to user's comment in the dashboard, and it will be visible on the comments page.
 
 ## 1.7.0
 
