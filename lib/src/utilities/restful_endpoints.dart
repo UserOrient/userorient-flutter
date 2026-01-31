@@ -4,7 +4,6 @@ class RestfulEndpoints {
   const RestfulEndpoints._();
 
   static const String baseUrl = 'https://api.userorient.com';
-  // static const String baseUrl = 'http://localhost:3000';
 
   static Endpoint projectDetails(String projectId) {
     return Endpoint.get(

@@ -14,7 +14,10 @@ import 'package:userorient_flutter/src/widgets/styled_loading_indicator.dart';
 class CommentsView extends StatefulWidget {
   final Feature feature;
 
-  const CommentsView({super.key, required this.feature});
+  const CommentsView({
+    super.key,
+    required this.feature,
+  });
 
   @override
   State<CommentsView> createState() => CommentsViewState();
@@ -109,33 +112,13 @@ class CommentsViewState extends State<CommentsView> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              comment.ownerFullName ?? 'Guest User',
-                              style: TextStyle(
-                                fontSize: 16,
-                                height: 24 / 16,
-                                color: context.textColor,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            _Item(
+                              comment: comment,
                             ),
-                            Text(
-                              comment.createdAt?.timeAgoWithAllEdgeCases() ??
-                                  'Some time ago',
-                              style: TextStyle(
-                                fontSize: 12,
-                                height: 16 / 12,
-                                color: context.secondaryTextColor,
+                            if (comment.replies.isNotEmpty)
+                              _Reply(
+                                comment: comment,
                               ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              comment.content ?? 'N/A',
-                              style: TextStyle(
-                                fontSize: 14,
-                                height: 20 / 14,
-                                color: context.secondaryTextColor,
-                              ),
-                            ),
                           ],
                         );
                       },
@@ -158,6 +141,100 @@ class CommentsViewState extends State<CommentsView> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _Reply extends StatelessWidget {
+  final Comment comment;
+
+  const _Reply({
+    required this.comment,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Container(
+        padding: const EdgeInsets.only(left: 24),
+        decoration: BoxDecoration(
+          border: Border(
+            left: BorderSide(
+              color: context.borderColor,
+              width: 2,
+            ),
+          ),
+        ),
+        child: _Item.developer(
+          comment: comment.replies.first,
+        ),
+      ),
+    );
+  }
+}
+
+class _Item extends StatelessWidget {
+  final Comment comment;
+
+  const _Item({
+    required this.comment,
+  }) : _isDeveloper = false;
+
+  const _Item.developer({
+    required this.comment,
+  }) : _isDeveloper = true;
+
+  final bool _isDeveloper;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(
+              comment.ownerFullName ?? 'Guest User',
+              style: TextStyle(
+                fontSize: 16,
+                height: 24 / 16,
+                color: context.textColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            if (_isDeveloper) ...[
+              const SizedBox(width: 4),
+              SvgPicture.asset(
+                'assets/checkmark.svg',
+                package: 'userorient_flutter',
+                width: 16,
+                colorFilter: ColorFilter.mode(
+                  context.votedContainerColor,
+                  BlendMode.srcIn,
+                ),
+              )
+            ],
+          ],
+        ),
+        Text(
+          comment.createdAt?.timeAgoWithAllEdgeCases() ?? 'Some time ago',
+          style: TextStyle(
+            fontSize: 12,
+            height: 16 / 12,
+            color: context.secondaryTextColor,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          comment.content ?? 'N/A',
+          style: TextStyle(
+            fontSize: 14,
+            height: 20 / 14,
+            color: context.secondaryTextColor,
+          ),
+        ),
+      ],
     );
   }
 }
