@@ -1,3 +1,7 @@
+## 1.7.1
+
+- - Added German language support. Thanks to [@josefshamstr](https://github.com/josefshamstr)
+
 ## 1.7.0
 
 - Long requested SDK theme customization is here! You can now customize background, button, active tab and voted state colors. 
