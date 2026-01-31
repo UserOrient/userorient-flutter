@@ -1,6 +1,6 @@
 ## 1.7.1
 
-- - Added German language support. Thanks to [@josefshamstr](https://github.com/josefshamstr)
+- Added German language support. Thanks to [@josefshamstr](https://github.com/josefshamstr)
 
 ## 1.7.0
 
