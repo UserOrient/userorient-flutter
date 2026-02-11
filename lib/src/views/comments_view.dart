@@ -37,6 +37,8 @@ class CommentsViewState extends State<CommentsView> {
       child: Scaffold(
         backgroundColor: context.backgroundColor,
         appBar: AppBar(
+          elevation: 0,
+          surfaceTintColor: Colors.transparent,
           backgroundColor: context.backgroundColor,
           automaticallyImplyLeading: false,
           leading: const StyledBackButton(),
@@ -61,11 +63,15 @@ class CommentsViewState extends State<CommentsView> {
                     padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                     children: [
                       FeatureCard.full(widget.feature),
+                      Divider(
+                        color: context.borderColor,
+                        height: 1,
+                      ),
                       if (value == null) ...[
                         const SizedBox(height: 48),
                         const Center(child: StyledLoadingIndicator()),
                       ] else if (value.isEmpty) ...[
-                        const SizedBox(height: 48),
+                        const SizedBox(height: 64),
                         Center(
                           child: SizedBox(
                             width: 48,
@@ -126,11 +132,33 @@ class CommentsViewState extends State<CommentsView> {
                 },
               ),
             ),
-            const SizedBox(height: 24.0),
-            _TextField(
-              featureId: widget.feature.id,
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.06),
+                    offset: const Offset(0, -4),
+                    blurRadius: 24.0,
+                  ),
+                ],
+                color: context.backgroundColor,
+                border: Border(
+                  top: BorderSide(
+                    color: context.borderColor,
+                    width: 1.0,
+                  ),
+                ),
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(height: 16),
+                  _TextField(
+                    featureId: widget.feature.id,
+                  ),
+                  const BottomPadding(),
+                ],
+              ),
             ),
-            const BottomPadding(),
           ],
         ),
       ),
@@ -192,8 +220,8 @@ class _Item extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 height: 24 / 16,
-                color: context.textColor,
-                fontWeight: FontWeight.bold,
+                color: context.secondaryTextColor,
+                fontWeight: FontWeight.w500,
               ),
             ),
             if (_isDeveloper) ...[
@@ -201,30 +229,31 @@ class _Item extends StatelessWidget {
               SvgPicture.asset(
                 'assets/checkmark.svg',
                 package: 'userorient_flutter',
-                width: 16,
+                width: 14,
                 colorFilter: ColorFilter.mode(
                   context.votedContainerColor,
                   BlendMode.srcIn,
                 ),
-              )
+              ),
             ],
+            const Spacer(),
+            Text(
+              comment.createdAt?.timeAgoWithAllEdgeCases() ?? 'Some time ago',
+              style: TextStyle(
+                fontSize: 12,
+                height: 16 / 12,
+                color: context.secondaryTextColor,
+              ),
+            ),
           ],
         ),
-        Text(
-          comment.createdAt?.timeAgoWithAllEdgeCases() ?? 'Some time ago',
-          style: TextStyle(
-            fontSize: 12,
-            height: 16 / 12,
-            color: context.secondaryTextColor,
-          ),
-        ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 4),
         Text(
           comment.content ?? 'N/A',
           style: TextStyle(
-            fontSize: 14,
-            height: 20 / 14,
-            color: context.secondaryTextColor,
+            fontSize: 16,
+            height: 24 / 16,
+            color: context.textColor,
           ),
         ),
       ],
@@ -301,68 +330,64 @@ class _TextFieldState extends State<_TextField> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            AnimatedSize(
-              duration: kThemeAnimationDuration,
-              curve: Curves.ease,
-              child: Row(
-                children: [
-                  // TODO:
-                  Expanded(
-                    child: EditableText(
-                      controller: _controller,
-                      focusNode: _focusNode,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: context.textColor,
-                      ),
-                      cursorColor: context.textColor,
-                      backgroundCursorColor: Colors.transparent,
-                      onChanged: (value) {
-                        setState(() {
-                          // Trigger rebuild when text changes for placeholder visibility
-                        });
-                      },
-                      onSubmitted: (_) {
+            Row(
+              children: [
+                // TODO:
+                Expanded(
+                  child: EditableText(
+                    controller: _controller,
+                    focusNode: _focusNode,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: context.textColor,
+                    ),
+                    cursorColor: context.textColor,
+                    backgroundCursorColor: Colors.transparent,
+                    onChanged: (value) {
+                      setState(() {
+                        // Trigger rebuild when text changes for placeholder visibility
+                      });
+                    },
+                    onSubmitted: (_) {
+                      _addComment();
+                    },
+                    textInputAction: TextInputAction.done,
+                  ),
+                ),
+                if (_controller.text.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: GestureDetector(
+                      onTap: () {
                         _addComment();
                       },
-                      textInputAction: TextInputAction.done,
-                    ),
-                  ),
-                  if (_controller.text.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16),
-                      child: GestureDetector(
-                        onTap: () {
-                          _addComment();
-                        },
-                        behavior: HitTestBehavior.translucent,
-                        child: Container(
-                          width: 52,
-                          height: 36,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: context.buttonColor,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: _isLoading
-                              ? StyledLoadingIndicator.small(
-                                  color: context.buttonTextColor,
-                                )
-                              : SvgPicture.asset(
-                                  'assets/add-comment.svg',
-                                  package: 'userorient_flutter',
-                                  width: 24,
-                                  height: 24,
-                                  colorFilter: ColorFilter.mode(
-                                    context.buttonTextColor,
-                                    BlendMode.srcIn,
-                                  ),
-                                ),
+                      behavior: HitTestBehavior.translucent,
+                      child: Container(
+                        width: 52,
+                        height: 36,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: context.buttonColor,
+                          borderRadius: BorderRadius.circular(12),
                         ),
+                        child: _isLoading
+                            ? StyledLoadingIndicator.small(
+                                color: context.buttonTextColor,
+                              )
+                            : SvgPicture.asset(
+                                'assets/add-comment.svg',
+                                package: 'userorient_flutter',
+                                width: 24,
+                                height: 24,
+                                colorFilter: ColorFilter.mode(
+                                  context.buttonTextColor,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
                       ),
                     ),
-                ],
-              ),
+                  ),
+              ],
             ),
             // TODO: add clear
             if (showPlaceholder)
@@ -383,15 +408,19 @@ class _TextFieldState extends State<_TextField> {
   }
 
   Future<void> _addComment() async {
+    final String comment = _controller.text;
+
+    if (comment.isEmpty) return;
+
     setState(() {
       _isLoading = true;
     });
-    await UserOrient.addComment(
-      content: _controller.text,
-      featureId: widget.featureId,
-    );
+
+    await UserOrient.addComment(content: comment, featureId: widget.featureId);
+
     _controller.clear();
     _focusNode.unfocus();
+
     setState(() {
       _isLoading = false;
     });
