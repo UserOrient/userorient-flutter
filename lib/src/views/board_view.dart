@@ -268,7 +268,10 @@ class _List extends StatelessWidget {
                 );
               },
               separatorBuilder: (context, index) {
-                return const SizedBox(height: 4.0);
+                return Divider(
+                  color: context.borderColor,
+                  height: 1,
+                );
               },
             ),
             const SizedBox(height: 32),
