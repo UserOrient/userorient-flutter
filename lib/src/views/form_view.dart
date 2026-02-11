@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/logic/user_orient.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
@@ -75,49 +76,66 @@ class FormViewState extends State<FormView> {
                         autoFocus: true,
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 12.0, top: 8.0),
-                        child: Text(
-                          '${_controller.text.trim().length}/500',
-                          style: TextStyle(
-                            fontSize: 12.0,
-                            color: _controller.text.trim().isEmpty
-                                ? context.secondaryTextColor
-                                    .withValues(alpha: 0.5)
-                                : _controller.text.trim().length < 10
-                                    ? Colors.red
-                                    : context.secondaryTextColor,
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 24.0),
-            Button(
-              onPressed: () {
-                final String content = _controller.text.trim();
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4),
+                    child: Text(
+                      '${_controller.text.trim().length}/500',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFeatures: const [
+                          FontFeature.tabularFigures(),
+                        ],
+                        color: _controller.text.trim().isEmpty
+                            ? context.secondaryTextColor.withValues(alpha: 0.5)
+                            : _controller.text.trim().length < 10
+                                ? Colors.red
+                                : context.secondaryTextColor,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  Button(
+                    onPressed: () {
+                      final String content = _controller.text.trim();
 
-                if (content.length < 10) return;
+                      if (content.length < 10) return;
 
-                setState(() {
-                  _isLoading = true;
-                });
+                      setState(() {
+                        _isLoading = true;
+                      });
 
-                UserOrient.submitForm(content: content).then((_) {
-                  setState(() {
-                    Navigator.pop(context);
-                    Navigation.push(context, const SentView());
-                  });
-                });
-              },
-              busy: _isLoading,
-              disabled: _isEmpty,
-              label: L10n.submitForm,
+                      UserOrient.submitForm(content: content).then((_) {
+                        setState(() {
+                          Navigator.pop(context);
+                          Navigation.push(context, const SentView());
+                        });
+                      });
+                    },
+                    label: L10n.submitForm,
+                    busy: _isLoading,
+                    disabled: _isEmpty,
+                    iconAffinity: IconAffinity.trailing,
+                    icon: SvgPicture.asset(
+                      'assets/arrow-up.svg',
+                      package: 'userorient_flutter',
+                      colorFilter: ColorFilter.mode(
+                        _isEmpty
+                            ? context.secondaryTextColor
+                            : context.buttonTextColor,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             const BottomPadding(),
           ],

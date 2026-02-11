@@ -38,9 +38,12 @@ class StyledTextField extends StatelessWidget {
         fontSize: 18.0,
         color: context.textColor,
       ),
+      cursorHeight: 20,
       cursorColor: context.textColor,
       decoration: InputDecoration(
         hintText: hintText,
+        filled: false,
+        fillColor: Colors.transparent,
         border: const OutlineInputBorder(
           borderSide: BorderSide.none,
         ),

@@ -144,12 +144,6 @@ class CommentsViewState extends State<CommentsView> {
                   ),
                 ],
                 color: context.backgroundColor,
-                border: Border(
-                  top: BorderSide(
-                    color: context.borderColor,
-                    width: 1.0,
-                  ),
-                ),
               ),
               child: Column(
                 children: [
