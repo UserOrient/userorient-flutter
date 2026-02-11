@@ -1,3 +1,19 @@
+## 2.0.0
+
+UserOrient v2.0 is here! In this milestone, lots of cool changes made to make SDK's UI more neutral to fit your own design:
+
+- The CTA buttons now doesn't take huge space vertically and horizontally. They are redesigned as rounded & shrunk pills.
+- "Suggest Feature" button on board (besides now being like a pill) is hiding/reappearing on scroll. This freed up a lot of space!
+- Removed borders from feature items, which removed the 12px inner padding. That freed up a lot of space too!
+- Feature descriptions now truncate to 2 lines. Man! That freed up a lot space too! The board now is breathing and displaying more features and is easily scannable.
+- Redesigned comments view with full feature card at top with full description and improved comment item text hierarchy by making name secondary, comment itself primary.
+- Previously, if your app didn't collect emails, you weren't able to contact user. But now, email collection step is added before submitting a feature request (skippable).
+- Added Simplified Chinese (zh) — now 10 languages supported!
+
+What's next? Now that we're collecting emails, you'll be able to send informative emails to users when a feature they suggested or upvoted changes status.
+
+Closing the gap between your Flutter app and users with every update 🩵
+
 ## 1.8.0
 
 - You can now reply to user's comment in the dashboard, and it will be visible on the comments page.
