@@ -176,6 +176,25 @@ class L10n {
       'beFirstToComment': 'Будьте першим, хто прокоментує цю функцію',
       'guestUser': 'Гість',
       'addComment': 'Напишіть коментар...',
+    },
+    'zh': {
+      'title': '功能建议',
+      'tip': '为你期待的功能投票。',
+      'form_hint': '描述你的想法...',
+      'submit_form': '提交',
+      'sent_title': '功能建议已发送！',
+      'sent_description':
+          '我们会审核你的建议，如果符合产品规划，会将其加入待开发列表。敬请关注！',
+      'go_back': '返回',
+      'add_feature': '提交建议',
+      'roadmap': '路线图',
+      'implemented': '已实现',
+      'formEmpty': '请输入你的建议',
+      'comments': '评论',
+      'noCommentsYet': '暂无评论',
+      'beFirstToComment': '成为第一个评论此功能的人',
+      'guestUser': '访客',
+      'addComment': '写下评论...',
     }
   };
 
