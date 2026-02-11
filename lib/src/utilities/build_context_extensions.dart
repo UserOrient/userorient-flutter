@@ -17,7 +17,7 @@ extension BuildContextX on BuildContext {
   Color get secondaryTextColor =>
       isDark ? const Color(0xffB2B2B2) : const Color(0xffACAEAF);
   Color get borderColor =>
-      isDark ? const Color(0xff303030) : const Color(0xffF2F2F2);
+      isDark ? const Color(0xff262626) : const Color(0xffF2F2F2);
 
   Color get votedColor =>
       isDark ? const Color(0xff223027) : const Color(0xffEEFCF2);
