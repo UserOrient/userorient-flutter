@@ -6,7 +6,7 @@ import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/models/label.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/utilities/navigation.dart';
-import 'package:userorient_flutter/src/views/comments_view.dart';
+import 'package:userorient_flutter/src/views/comments/comments_view.dart';
 import 'package:userorient_flutter/userorient_flutter.dart';
 
 class FeatureCard extends StatelessWidget {

@@ -4,7 +4,15 @@ import 'package:userorient_flutter/userorient_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  UserOrient.configure(apiKey: 'YOUR-API-KEY', languageCode: 'en');
+  UserOrient.configure(
+    apiKey: 'bcf021fb-de29-45ca-a6af-306515ab188e',
+    languageCode: 'en',
+  );
+
+  UserOrient.setTheme(
+    light: const UserOrientColors(accentColor: Color(0xff2F7366)),
+    dark: null,
+  );
 
   runApp(const MainApp());
 }

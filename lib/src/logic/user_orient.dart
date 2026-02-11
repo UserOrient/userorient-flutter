@@ -10,7 +10,7 @@ import 'package:userorient_flutter/src/logic/user_orient_data.dart';
 import 'package:userorient_flutter/src/models/user.dart';
 import 'package:userorient_flutter/src/models/theme.dart';
 import 'package:userorient_flutter/src/utilities/helper_functions.dart';
-import 'package:userorient_flutter/src/views/board_view.dart';
+import 'package:userorient_flutter/src/views/board/board_view.dart';
 import 'package:userorient_flutter/src/views/form_view.dart';
 
 class UserOrient {
