@@ -30,6 +30,18 @@ class L10n {
       'skipAndSend': 'Keç və Göndər',
       'next': 'Növbəti',
       'invalidEmail': 'Düzgün e-poçt daxil edin',
+      'time_just_now': 'İndicə',
+      'time_some_time_ago': 'Bir müddət əvvəl',
+      'time_one_minute': '1 dəqiqə əvvəl',
+      'time_minutes': '{n} dəqiqə əvvəl',
+      'time_one_hour': '1 saat əvvəl',
+      'time_hours': '{n} saat əvvəl',
+      'time_one_day': 'Dünən',
+      'time_days': '{n} gün əvvəl',
+      'time_one_month': '1 ay əvvəl',
+      'time_months': '{n} ay əvvəl',
+      'time_one_year': '1 il əvvəl',
+      'time_years': '{n} il əvvəl',
     },
     'de': {
       'title': 'Vorschläge',
@@ -55,6 +67,18 @@ class L10n {
       'skipAndSend': 'Überspringen und Senden',
       'next': 'Weiter',
       'invalidEmail': 'Gib eine gültige E-Mail ein',
+      'time_just_now': 'Gerade eben',
+      'time_some_time_ago': 'Vor einiger Zeit',
+      'time_one_minute': 'Vor 1 Minute',
+      'time_minutes': 'Vor {n} Minuten',
+      'time_one_hour': 'Vor 1 Stunde',
+      'time_hours': 'Vor {n} Stunden',
+      'time_one_day': 'Gestern',
+      'time_days': 'Vor {n} Tagen',
+      'time_one_month': 'Vor 1 Monat',
+      'time_months': 'Vor {n} Monaten',
+      'time_one_year': 'Vor 1 Jahr',
+      'time_years': 'Vor {n} Jahren',
     },
     'en': {
       'title': 'Features',
@@ -80,6 +104,18 @@ class L10n {
       'skipAndSend': 'Skip and Send',
       'next': 'Next',
       'invalidEmail': 'Enter a valid email',
+      'time_just_now': 'Just now',
+      'time_some_time_ago': 'Some time ago',
+      'time_one_minute': '1 minute ago',
+      'time_minutes': '{n} minutes ago',
+      'time_one_hour': '1 hour ago',
+      'time_hours': '{n} hours ago',
+      'time_one_day': 'Yesterday',
+      'time_days': '{n} days ago',
+      'time_one_month': '1 month ago',
+      'time_months': '{n} months ago',
+      'time_one_year': '1 year ago',
+      'time_years': '{n} years ago',
     },
     'es': {
       'title': 'Sugerencias',
@@ -105,6 +141,55 @@ class L10n {
       'skipAndSend': 'Omitir y Enviar',
       'next': 'Siguiente',
       'invalidEmail': 'Ingresa un correo válido',
+      'time_just_now': 'Justo ahora',
+      'time_some_time_ago': 'Hace un tiempo',
+      'time_one_minute': 'Hace 1 minuto',
+      'time_minutes': 'Hace {n} minutos',
+      'time_one_hour': 'Hace 1 hora',
+      'time_hours': 'Hace {n} horas',
+      'time_one_day': 'Ayer',
+      'time_days': 'Hace {n} días',
+      'time_one_month': 'Hace 1 mes',
+      'time_months': 'Hace {n} meses',
+      'time_one_year': 'Hace 1 año',
+      'time_years': 'Hace {n} años',
+    },
+    'fr': {
+      'title': 'Suggestions',
+      'tip': 'Votez pour les fonctionnalités que vous souhaitez voir bientôt.',
+      'form_hint': 'Décrivez votre idée...',
+      'submit_form': 'Envoyer',
+      'sent_title': 'Suggestion envoyée !',
+      'sent_description':
+          'Merci ! Nous examinerons votre suggestion et vous tiendrons informé.',
+      'go_back': 'Terminé',
+      'add_feature': 'Suggérer une fonctionnalité',
+      'roadmap': 'Feuille de route',
+      'implemented': 'Implémenté',
+      'formEmpty': 'Veuillez entrer votre suggestion',
+      'comments': 'Commentaires',
+      'noCommentsYet': 'Pas encore de commentaires',
+      'beFirstToComment': 'Soyez le premier à commenter cette fonctionnalité',
+      'guestUser': 'Invité',
+      'addComment': 'Ajouter un commentaire...',
+      'emailPromptTitle': 'Adresse e-mail',
+      'emailHint': 'Votre e-mail pour le suivi (facultatif)',
+      'send': 'Envoyer',
+      'skipAndSend': 'Passer et Envoyer',
+      'next': 'Suivant',
+      'invalidEmail': 'Entrez un e-mail valide',
+      'time_just_now': 'À l\'instant',
+      'time_some_time_ago': 'Il y a quelque temps',
+      'time_one_minute': 'Il y a 1 minute',
+      'time_minutes': 'Il y a {n} minutes',
+      'time_one_hour': 'Il y a 1 heure',
+      'time_hours': 'Il y a {n} heures',
+      'time_one_day': 'Hier',
+      'time_days': 'Il y a {n} jours',
+      'time_one_month': 'Il y a 1 mois',
+      'time_months': 'Il y a {n} mois',
+      'time_one_year': 'Il y a 1 an',
+      'time_years': 'Il y a {n} ans',
     },
     'it': {
       'title': 'Suggerimenti',
@@ -130,6 +215,18 @@ class L10n {
       'skipAndSend': 'Salta e Invia',
       'next': 'Avanti',
       'invalidEmail': 'Inserisci un\'email valida',
+      'time_just_now': 'Proprio ora',
+      'time_some_time_ago': 'Qualche tempo fa',
+      'time_one_minute': '1 minuto fa',
+      'time_minutes': '{n} minuti fa',
+      'time_one_hour': '1 ora fa',
+      'time_hours': '{n} ore fa',
+      'time_one_day': 'Ieri',
+      'time_days': '{n} giorni fa',
+      'time_one_month': '1 mese fa',
+      'time_months': '{n} mesi fa',
+      'time_one_year': '1 anno fa',
+      'time_years': '{n} anni fa',
     },
     'tr': {
       'title': 'Öneriler',
@@ -155,6 +252,18 @@ class L10n {
       'skipAndSend': 'Atla ve Gönder',
       'next': 'İleri',
       'invalidEmail': 'Geçerli bir e-posta girin',
+      'time_just_now': 'Az önce',
+      'time_some_time_ago': 'Bir süre önce',
+      'time_one_minute': '1 dakika önce',
+      'time_minutes': '{n} dakika önce',
+      'time_one_hour': '1 saat önce',
+      'time_hours': '{n} saat önce',
+      'time_one_day': 'Dün',
+      'time_days': '{n} gün önce',
+      'time_one_month': '1 ay önce',
+      'time_months': '{n} ay önce',
+      'time_one_year': '1 yıl önce',
+      'time_years': '{n} yıl önce',
     },
     'ru': {
       'title': 'Предложения',
@@ -180,6 +289,18 @@ class L10n {
       'skipAndSend': 'Пропустить и Отправить',
       'next': 'Далее',
       'invalidEmail': 'Введите корректный email',
+      'time_just_now': 'Только что',
+      'time_some_time_ago': 'Некоторое время назад',
+      'time_one_minute': '1 минуту назад',
+      'time_minutes': '{n} минут назад',
+      'time_one_hour': '1 час назад',
+      'time_hours': '{n} часов назад',
+      'time_one_day': 'Вчера',
+      'time_days': '{n} дней назад',
+      'time_one_month': '1 месяц назад',
+      'time_months': '{n} месяцев назад',
+      'time_one_year': '1 год назад',
+      'time_years': '{n} лет назад',
     },
     'ar': {
       'title': 'الميزات',
@@ -205,6 +326,18 @@ class L10n {
       'skipAndSend': 'تخطي وإرسال',
       'next': 'التالي',
       'invalidEmail': 'أدخل بريداً إلكترونياً صالحاً',
+      'time_just_now': 'الآن',
+      'time_some_time_ago': 'منذ فترة',
+      'time_one_minute': 'منذ دقيقة',
+      'time_minutes': 'منذ {n} دقائق',
+      'time_one_hour': 'منذ ساعة',
+      'time_hours': 'منذ {n} ساعات',
+      'time_one_day': 'أمس',
+      'time_days': 'منذ {n} أيام',
+      'time_one_month': 'منذ شهر',
+      'time_months': 'منذ {n} أشهر',
+      'time_one_year': 'منذ سنة',
+      'time_years': 'منذ {n} سنوات',
     },
     'uk': {
       'title': 'Пропозиції',
@@ -230,6 +363,18 @@ class L10n {
       'skipAndSend': 'Пропустити і Надіслати',
       'next': 'Далі',
       'invalidEmail': 'Введіть коректний email',
+      'time_just_now': 'Щойно',
+      'time_some_time_ago': 'Деякий час тому',
+      'time_one_minute': '1 хвилину тому',
+      'time_minutes': '{n} хвилин тому',
+      'time_one_hour': '1 годину тому',
+      'time_hours': '{n} годин тому',
+      'time_one_day': 'Вчора',
+      'time_days': '{n} днів тому',
+      'time_one_month': '1 місяць тому',
+      'time_months': '{n} місяців тому',
+      'time_one_year': '1 рік тому',
+      'time_years': '{n} років тому',
     },
     'zh': {
       'title': '功能建议',
@@ -255,52 +400,75 @@ class L10n {
       'skipAndSend': '跳过并发送',
       'next': '下一步',
       'invalidEmail': '请输入有效的邮箱',
+      'time_just_now': '刚刚',
+      'time_some_time_ago': '一段时间前',
+      'time_one_minute': '1 分钟前',
+      'time_minutes': '{n} 分钟前',
+      'time_one_hour': '1 小时前',
+      'time_hours': '{n} 小时前',
+      'time_one_day': '昨天',
+      'time_days': '{n} 天前',
+      'time_one_month': '1 个月前',
+      'time_months': '{n} 个月前',
+      'time_one_year': '1 年前',
+      'time_years': '{n} 年前',
     }
   };
 
   static String get _languageCode => UserOrient.languageCode;
 
-  static String get tip => _content[_languageCode]!['tip'] ?? 'N/A';
-  static String get formHint => _content[_languageCode]!['form_hint'] ?? 'N/A';
-  static String get submitForm =>
-      _content[_languageCode]!['submit_form'] ?? 'N/A';
-  static String get sentTitle =>
-      _content[_languageCode]!['sent_title'] ?? 'N/A';
-  static String get sentDescription =>
-      _content[_languageCode]!['sent_description'] ?? 'N/A';
-  static String get goBack => _content[_languageCode]!['go_back'] ?? 'N/A';
+  static String _t(String key) =>
+      _content[_languageCode]?[key] ?? _content['en']![key] ?? 'N/A';
 
-  static String get addFeature =>
-      _content[_languageCode]!['add_feature'] ?? 'N/A';
-  static String get title => _content[_languageCode]!['title'] ?? 'N/A';
-  static String get roadmap => _content[_languageCode]!['roadmap'] ?? 'N/A';
-  static String get implemented =>
-      _content[_languageCode]!['implemented'] ?? 'N/A';
-  static String get formEmpty => _content[_languageCode]!['formEmpty'] ?? 'N/A';
-  static String get comments => _content[_languageCode]!['comments'] ?? 'N/A';
-  static String get noCommentsYet =>
-      _content[_languageCode]!['noCommentsYet'] ??
-      _content['en']!['noCommentsYet'];
-  static String get beFirstToComment =>
-      _content[_languageCode]!['beFirstToComment'] ??
-      _content['en']!['beFirstToComment'];
-  static String get guestUser =>
-      _content[_languageCode]!['guestUser'] ?? _content['en']!['guestUser'];
-  static String get addComment =>
-      _content[_languageCode]!['addComment'] ?? _content['en']!['addComment'];
-  static String get emailPromptTitle =>
-      _content[_languageCode]!['emailPromptTitle'] ??
-      _content['en']!['emailPromptTitle'];
-  static String get emailHint =>
-      _content[_languageCode]!['emailHint'] ?? _content['en']!['emailHint'];
-  static String get send =>
-      _content[_languageCode]!['send'] ?? _content['en']!['send'];
-  static String get skipAndSend =>
-      _content[_languageCode]!['skipAndSend'] ??
-      _content['en']!['skipAndSend'];
-  static String get next =>
-      _content[_languageCode]!['next'] ?? _content['en']!['next'];
-  static String get invalidEmail =>
-      _content[_languageCode]!['invalidEmail'] ??
-      _content['en']!['invalidEmail'];
+  static String get tip => _t('tip');
+  static String get formHint => _t('form_hint');
+  static String get submitForm => _t('submit_form');
+  static String get sentTitle => _t('sent_title');
+  static String get sentDescription => _t('sent_description');
+  static String get goBack => _t('go_back');
+  static String get addFeature => _t('add_feature');
+  static String get title => _t('title');
+  static String get roadmap => _t('roadmap');
+  static String get implemented => _t('implemented');
+  static String get formEmpty => _t('formEmpty');
+  static String get comments => _t('comments');
+  static String get noCommentsYet => _t('noCommentsYet');
+  static String get beFirstToComment => _t('beFirstToComment');
+  static String get guestUser => _t('guestUser');
+  static String get addComment => _t('addComment');
+  static String get emailPromptTitle => _t('emailPromptTitle');
+  static String get emailHint => _t('emailHint');
+  static String get send => _t('send');
+  static String get skipAndSend => _t('skipAndSend');
+  static String get next => _t('next');
+  static String get invalidEmail => _t('invalidEmail');
+
+  static String get someTimeAgo => _t('time_some_time_ago');
+
+  static String timeAgo(Duration diff) {
+    if (diff.inSeconds < 60) return _t('time_just_now');
+
+    if (diff.inMinutes < 60) {
+      final n = diff.inMinutes;
+      return n == 1 ? _t('time_one_minute') : _t('time_minutes').replaceFirst('{n}', '$n');
+    }
+
+    if (diff.inHours < 24) {
+      final n = diff.inHours;
+      return n == 1 ? _t('time_one_hour') : _t('time_hours').replaceFirst('{n}', '$n');
+    }
+
+    if (diff.inDays < 30) {
+      final n = diff.inDays;
+      return n == 1 ? _t('time_one_day') : _t('time_days').replaceFirst('{n}', '$n');
+    }
+
+    if (diff.inDays < 365) {
+      final n = diff.inDays ~/ 30;
+      return n == 1 ? _t('time_one_month') : _t('time_months').replaceFirst('{n}', '$n');
+    }
+
+    final n = diff.inDays ~/ 365;
+    return n == 1 ? _t('time_one_year') : _t('time_years').replaceFirst('{n}', '$n');
+  }
 }

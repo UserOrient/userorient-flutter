@@ -115,7 +115,7 @@ class _BoardViewState extends State<BoardView>
                     child: ValueListenableBuilder(
                       valueListenable: UserOrient.features,
                       builder: (context, List<Feature>? features, _) {
-                        features ??= List.generate(5, (index) {
+                        features ??= List.generate(10, (index) {
                           return Feature.skeleton();
                         });
 
