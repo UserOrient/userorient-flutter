@@ -6,11 +6,6 @@ void main() async {
 
   UserOrient.configure(apiKey: 'YOUR-API-KEY', languageCode: 'en');
 
-  UserOrient.setTheme(
-    light: const UserOrientColors(accentColor: Color(0xff2F7366)),
-    dark: null,
-  );
-
   runApp(const MainApp());
 }
 
