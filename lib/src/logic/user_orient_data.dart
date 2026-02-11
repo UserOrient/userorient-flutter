@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:userorient_flutter/src/models/comment.dart';
-
 import 'package:userorient_flutter/src/models/endpoint.dart';
+import 'package:userorient_flutter/src/models/project.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/models/user.dart';
 import 'package:userorient_flutter/src/utilities/helper_functions.dart';
@@ -42,6 +42,13 @@ class UserOrientData {
 
     final body = jsonDecode(response.body);
     return ResolvedUser(id: body['id'], email: body['email']);
+  }
+
+  static Future<Project> getProject({required String projectId}) async {
+    final Endpoint endpoint = RestfulEndpoints.projectDetails(projectId);
+    final http.Response response = await http.get(Uri.parse(endpoint.url));
+
+    return Project.fromJson(jsonDecode(response.body));
   }
 
   static Future<List<Feature>> getFeatures({

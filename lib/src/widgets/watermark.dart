@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 
-// TODO: add license for not removing Watermark manually
 class Watermark extends StatelessWidget {
   const Watermark({super.key});
 

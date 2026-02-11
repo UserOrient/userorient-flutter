@@ -7,6 +7,7 @@ import 'package:userorient_flutter/src/utilities/navigation.dart';
 
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/logic/user_orient_data.dart';
+import 'package:userorient_flutter/src/models/project.dart';
 import 'package:userorient_flutter/src/models/user.dart';
 import 'package:userorient_flutter/src/models/theme.dart';
 import 'package:userorient_flutter/src/utilities/helper_functions.dart';
@@ -17,6 +18,7 @@ import 'package:userorient_flutter/src/views/form_view.dart';
 class UserOrient {
   static final ValueNotifier<List<Feature>?> features = ValueNotifier(null);
   static final ValueNotifier<List<Comment>?> comments = ValueNotifier(null);
+  static final ValueNotifier<Project?> project = ValueNotifier(null);
 
   static String? _apiKey;
   static User? user;
@@ -94,6 +96,7 @@ class UserOrient {
     userUuid = null;
 
     features.value = null;
+    project.value = null;
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('user_orient_project_id');
@@ -121,6 +124,8 @@ class UserOrient {
       if (_apiKey == null) {
         throw 'Call `UserOrient.configure()` method before using the SDK';
       }
+
+      _fetchProject();
 
       // TODO: if user id is cached, continue do that in the background
       final ResolvedUser resolvedUser = await UserOrientData.resolveUserUuid(
@@ -162,6 +167,15 @@ class UserOrient {
 
     final List<Feature> features = results[0];
     UserOrient.features.value = features;
+  }
+
+  static Future<void> _fetchProject() async {
+    try {
+      final project = await UserOrientData.getProject(projectId: _apiKey!);
+      UserOrient.project.value = project;
+    } catch (_) {
+      // Silently fail — watermark stays visible as default
+    }
   }
 
   /// Toggle the upvote status of a feature. Used internally by the SDK.

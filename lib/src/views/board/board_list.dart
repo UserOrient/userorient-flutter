@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:userorient_flutter/src/logic/user_orient.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
+import 'package:userorient_flutter/src/models/project.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/widgets/feature_card.dart';
 import 'package:userorient_flutter/src/widgets/watermark.dart';
@@ -42,7 +44,15 @@ class BoardList extends StatelessWidget {
               },
             ),
             const SizedBox(height: 32),
-            const Watermark(),
+            ValueListenableBuilder<Project?>(
+              valueListenable: UserOrient.project,
+              builder: (context, project, child) {
+                if (project?.onPaidPlan == true) {
+                  return const SizedBox.shrink();
+                }
+                return const Watermark();
+              },
+            ),
             const SizedBox(height: 140),
           ],
         ),
