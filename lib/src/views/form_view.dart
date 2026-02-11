@@ -4,6 +4,7 @@ import 'package:userorient_flutter/src/logic/user_orient.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/utilities/localizations_overrider.dart';
 import 'package:userorient_flutter/src/utilities/navigation.dart';
+import 'package:userorient_flutter/src/views/email_view.dart';
 import 'package:userorient_flutter/src/views/sent_view.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
 import 'package:userorient_flutter/src/widgets/button.dart';
@@ -41,6 +42,60 @@ class FormViewState extends State<FormView> {
     _controller.dispose();
   }
 
+  bool get _hasEmail => UserOrient.user?.email != null;
+
+  Widget _buildSubmitButton(BuildContext context) {
+    if (_hasEmail) {
+      return Button(
+        onPressed: () {
+          final String content = _controller.text.trim();
+          if (content.length < 10) return;
+
+          setState(() {
+            _isLoading = true;
+          });
+
+          UserOrient.submitForm(content: content).then((_) {
+            Navigator.pop(context);
+            Navigation.push(context, const SentView());
+          });
+        },
+        label: L10n.submitForm,
+        busy: _isLoading,
+        disabled: _isEmpty,
+        iconAffinity: IconAffinity.trailing,
+        icon: Icon(
+          Icons.arrow_upward,
+          size: 20,
+          color:
+              _isEmpty ? context.secondaryTextColor : context.buttonTextColor,
+        ),
+      );
+    }
+
+    return Button(
+      onPressed: () {
+        final String content = _controller.text.trim();
+        if (content.length < 10) return;
+
+        Navigation.push(context, EmailView(content: content)).then((submitted) {
+          if (submitted == true) {
+            Navigator.pop(context);
+            Navigation.push(context, const SentView());
+          }
+        });
+      },
+      label: L10n.next,
+      disabled: _isEmpty,
+      iconAffinity: IconAffinity.trailing,
+      icon: Icon(
+        Icons.arrow_forward,
+        size: 20,
+        color: _isEmpty ? context.secondaryTextColor : context.buttonTextColor,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return LocalizationsOverrider(
@@ -75,49 +130,35 @@ class FormViewState extends State<FormView> {
                         autoFocus: true,
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 12.0, top: 8.0),
-                        child: Text(
-                          '${_controller.text.trim().length}/500',
-                          style: TextStyle(
-                            fontSize: 12.0,
-                            color: _controller.text.trim().isEmpty
-                                ? context.secondaryTextColor
-                                    .withValues(alpha: 0.5)
-                                : _controller.text.trim().length < 10
-                                    ? Colors.red
-                                    : context.secondaryTextColor,
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 24.0),
-            Button(
-              onPressed: () {
-                final String content = _controller.text.trim();
-
-                if (content.length < 10) return;
-
-                setState(() {
-                  _isLoading = true;
-                });
-
-                UserOrient.submitForm(content: content).then((_) {
-                  setState(() {
-                    Navigator.pop(context);
-                    Navigation.push(context, const SentView());
-                  });
-                });
-              },
-              busy: _isLoading,
-              disabled: _isEmpty,
-              label: L10n.submitForm,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4),
+                    child: Text(
+                      '${_controller.text.trim().length}/500',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFeatures: const [
+                          FontFeature.tabularFigures(),
+                        ],
+                        color: _controller.text.trim().isEmpty
+                            ? context.secondaryTextColor.withValues(alpha: 0.5)
+                            : _controller.text.trim().length < 10
+                                ? Colors.red
+                                : context.secondaryTextColor,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  _buildSubmitButton(context),
+                ],
+              ),
             ),
             const BottomPadding(),
           ],

@@ -10,6 +10,7 @@ class StyledTextField extends StatelessWidget {
   final String? helperText;
   final int? maxLength;
   final TextEditingController controller;
+  final TextInputType? keyboardType;
 
   const StyledTextField({
     super.key,
@@ -20,27 +21,37 @@ class StyledTextField extends StatelessWidget {
     this.minLines = 1,
     this.helperText,
     this.maxLength,
+    this.keyboardType,
   });
 
   @override
   Widget build(BuildContext context) {
+    final bool isEmail = keyboardType == TextInputType.emailAddress;
+
     return TextField(
       minLines: minLines,
       maxLines: minLines,
       autofocus: autoFocus,
       maxLength: maxLength,
       controller: controller,
-      textCapitalization: TextCapitalization.sentences,
-      inputFormatters: const [
-        CapitalizeFirstLetterFormatter(),
-      ],
+      keyboardType: keyboardType,
+      textCapitalization:
+          isEmail ? TextCapitalization.none : TextCapitalization.sentences,
+      inputFormatters: isEmail
+          ? null
+          : const [
+              CapitalizeFirstLetterFormatter(),
+            ],
       style: TextStyle(
         fontSize: 18.0,
         color: context.textColor,
       ),
+      cursorHeight: 20,
       cursorColor: context.textColor,
       decoration: InputDecoration(
         hintText: hintText,
+        filled: false,
+        fillColor: Colors.transparent,
         border: const OutlineInputBorder(
           borderSide: BorderSide.none,
         ),

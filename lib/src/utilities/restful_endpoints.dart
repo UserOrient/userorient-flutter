@@ -44,11 +44,13 @@ class RestfulEndpoints {
     required String projectId,
     required String content,
     required String userId,
+    required String? email,
   }) {
     return Endpoint.post(
       url: '$baseUrl/sdk/feedback?projectId=$projectId',
       body: {
         'userId': userId,
+        'email': email,
         'description': {
           'en': content,
         },

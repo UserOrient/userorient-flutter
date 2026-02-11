@@ -6,21 +6,52 @@ import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/models/label.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/utilities/navigation.dart';
-import 'package:userorient_flutter/src/views/comments_view.dart';
+import 'package:userorient_flutter/src/views/comments/comments_view.dart';
 import 'package:userorient_flutter/userorient_flutter.dart';
 
 class FeatureCard extends StatelessWidget {
   final Feature feature;
   final bool isShimmer;
+  final bool expanded;
 
   const FeatureCard(
     this.feature, {
     super.key,
     required this.isShimmer,
-  });
+  }) : expanded = false;
+
+  const FeatureCard.full(
+    this.feature, {
+    super.key,
+  })  : isShimmer = false,
+        expanded = true;
 
   @override
   Widget build(BuildContext context) {
+    final child = isShimmer ? _buildShimmer(context) : _buildWidget(context);
+
+    final content = SizedBox(
+      key: ValueKey(feature.id),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: child,
+      ),
+    );
+
+    if (expanded) {
+      return Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: context.borderColor,
+            width: 1.0,
+          ),
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: child,
+      );
+    }
+
     return GestureDetector(
       onTap: () {
         Navigation.push(
@@ -30,20 +61,8 @@ class FeatureCard extends StatelessWidget {
           ),
         );
       },
-      child: SizedBox(
-        key: ValueKey(feature.id),
-        child: Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: context.borderColor,
-              width: 1.0,
-            ),
-            borderRadius: BorderRadius.circular(16.0),
-          ),
-          child: isShimmer ? _buildShimmer(context) : _buildWidget(context),
-        ),
-      ),
+      behavior: HitTestBehavior.translucent,
+      child: content,
     );
   }
 
@@ -141,36 +160,44 @@ class FeatureCard extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 2.0),
-              Text(
-                feature.descriptionForLocale(UserOrient.user?.language),
-                style: TextStyle(
-                  fontSize: 14.0,
-                  height: 20 / 14,
-                  color: context.secondaryTextColor,
+              if (feature
+                  .descriptionForLocale(UserOrient.user?.language)
+                  .isNotEmpty) ...[
+                const SizedBox(height: 2.0),
+                Text(
+                  feature.descriptionForLocale(UserOrient.user?.language),
+                  maxLines: expanded ? null : 2,
+                  overflow: expanded ? null : TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    height: 20 / 14,
+                    color: context.secondaryTextColor,
+                  ),
                 ),
-              ),
+              ],
               _LabelRow(
                 labels: feature.labels,
               ),
-              const SizedBox(height: 10.0),
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/comments.svg',
-                    package: 'userorient_flutter',
-                  ),
-                  const SizedBox(width: 4.0),
-                  Text(
-                    feature.commentsCount.toString(),
-                    style: TextStyle(
-                      fontSize: 12,
-                      height: 16 / 12,
-                      color: context.secondaryTextColor,
+              if (!expanded) ...[
+                const SizedBox(height: 10.0),
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/comments.svg',
+                      package: 'userorient_flutter',
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(width: 4.0),
+                    Text(
+                      feature.commentsCount.toString(),
+                      style: TextStyle(
+                        fontSize: 12,
+                        height: 16 / 12,
+                        color: context.secondaryTextColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ],
           ),
         ),
@@ -206,8 +233,17 @@ class FeatureCard extends StatelessWidget {
               ),
               const SizedBox(height: 2.0),
               Container(
-                height: 20.0,
+                height: 18.0,
                 width: 240.0,
+                decoration: BoxDecoration(
+                  color: context.skeletonColor,
+                  borderRadius: BorderRadius.circular(7.0),
+                ),
+              ),
+              const SizedBox(height: 2.0),
+              Container(
+                height: 18.0,
+                width: 120.0,
                 decoration: BoxDecoration(
                   color: context.skeletonColor,
                   borderRadius: BorderRadius.circular(7.0),

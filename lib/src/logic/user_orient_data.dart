@@ -12,8 +12,15 @@ import 'package:userorient_flutter/src/utilities/restful_endpoints.dart';
 
 typedef UserUUID = String;
 
+class ResolvedUser {
+  final String id;
+  final String? email;
+
+  const ResolvedUser({required this.id, this.email});
+}
+
 class UserOrientData {
-  static Future<UserUUID> syncUser({
+  static Future<ResolvedUser> syncUser({
     required User? user,
     required String? cachedId,
     required String projectId,
@@ -31,9 +38,10 @@ class UserOrientData {
       },
     );
 
-    logUO(response.body.toString(), emoji: '👀');
+    logUO('Authenticated user: ${response.body}', emoji: '👀');
 
-    return jsonDecode(response.body)['id'];
+    final body = jsonDecode(response.body);
+    return ResolvedUser(id: body['id'], email: body['email']);
   }
 
   static Future<List<Feature>> getFeatures({
@@ -87,11 +95,13 @@ class UserOrientData {
     required String projectId,
     required String userId,
     required String content,
+    required String? email,
   }) async {
     final Endpoint endpoint = RestfulEndpoints.sendFeedback(
       projectId: projectId,
       content: content,
       userId: userId,
+      email: email,
     );
 
     await http.post(
@@ -103,7 +113,7 @@ class UserOrientData {
     );
   }
 
-  static Future<UserUUID> resolveUserUuid({
+  static Future<ResolvedUser> resolveUserUuid({
     required String projectId,
     required User? user,
   }) async {
@@ -113,25 +123,25 @@ class UserOrientData {
     if (cachedUuid != null) {
       logUO('Found cached UUID: $cachedUuid', emoji: '🔍');
 
-      UserOrientData.syncUser(
+      final result = await UserOrientData.syncUser(
         user: user,
         projectId: projectId,
         cachedId: cachedUuid,
-      ).ignore();
+      );
 
-      return cachedUuid;
+      return ResolvedUser(id: cachedUuid, email: result.email);
     } else {
-      final UserUUID uuid = await UserOrientData.syncUser(
+      final result = await UserOrientData.syncUser(
         user: user,
         cachedId: null,
         projectId: projectId,
       );
 
-      await prefs.setString('user_orient_user_uuid', uuid);
+      await prefs.setString('user_orient_user_uuid', result.id);
 
-      logUO('Acquired a new UUID: $uuid', emoji: '🆕');
+      logUO('Acquired a new UUID: ${result.id}', emoji: '🆕');
 
-      return uuid;
+      return result;
     }
   }
 
