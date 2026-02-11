@@ -20,6 +20,10 @@ class L10n {
       'implemented': 'Tamamlanmış',
       'formEmpty': 'Təklifinizi daxil edin',
       'comments': 'Rəylər',
+      'noCommentsYet': 'Hələ rəy yoxdur',
+      'beFirstToComment': 'Bu funksiyaya ilk rəy yazan siz olun',
+      'guestUser': 'Qonaq',
+      'addComment': 'Rəy yazın...',
     },
     'de': {
       'title': 'Vorschläge',
@@ -35,6 +39,10 @@ class L10n {
       'implemented': 'Implementiert',
       'formEmpty': 'Bitte gib deinen Vorschlag ein',
       'comments': 'Kommentare',
+      'noCommentsYet': 'Noch keine Kommentare',
+      'beFirstToComment': 'Sei der Erste, der diese Funktion kommentiert',
+      'guestUser': 'Gast',
+      'addComment': 'Kommentar schreiben...',
     },
     'en': {
       'title': 'Features',
@@ -50,6 +58,10 @@ class L10n {
       'implemented': 'Implemented',
       'formEmpty': 'Please enter your suggestion',
       'comments': 'Comments',
+      'noCommentsYet': 'No comments yet',
+      'beFirstToComment': 'Be the first to comment on this feature',
+      'guestUser': 'Guest User',
+      'addComment': 'Add a comment...',
     },
     'es': {
       'title': 'Sugerencias',
@@ -65,6 +77,10 @@ class L10n {
       'implemented': 'Implementado',
       'formEmpty': 'Ingresa tu sugerencia',
       'comments': 'Comentarios',
+      'noCommentsYet': 'Aún no hay comentarios',
+      'beFirstToComment': 'Sé el primero en comentar esta función',
+      'guestUser': 'Invitado',
+      'addComment': 'Añade un comentario...',
     },
     'it': {
       'title': 'Suggerimenti',
@@ -80,6 +96,10 @@ class L10n {
       'implemented': 'Implementato',
       'formEmpty': 'Inserisci il tuo suggerimento',
       'comments': 'Commenti',
+      'noCommentsYet': 'Nessun commento ancora',
+      'beFirstToComment': 'Sii il primo a commentare questa funzionalità',
+      'guestUser': 'Ospite',
+      'addComment': 'Aggiungi un commento...',
     },
     'tr': {
       'title': 'Öneriler',
@@ -95,6 +115,10 @@ class L10n {
       'implemented': 'Tamamlanmış',
       'formEmpty': 'Önerinizi girin',
       'comments': 'Yorumlar',
+      'noCommentsYet': 'Henüz yorum yok',
+      'beFirstToComment': 'Bu özelliğe ilk yorumu siz yapın',
+      'guestUser': 'Misafir',
+      'addComment': 'Yorum yazın...',
     },
     'ru': {
       'title': 'Предложения',
@@ -110,6 +134,10 @@ class L10n {
       'implemented': 'Выполнено',
       'formEmpty': 'Введите предложение',
       'comments': 'Комментарии',
+      'noCommentsYet': 'Комментариев пока нет',
+      'beFirstToComment': 'Будьте первым, кто прокомментирует эту функцию',
+      'guestUser': 'Гость',
+      'addComment': 'Напишите комментарий...',
     },
     'ar': {
       'title': 'الميزات',
@@ -125,6 +153,10 @@ class L10n {
       'implemented': 'مُنفذ',
       'formEmpty': 'يرجى إدخال اقتراحك',
       'comments': 'التعليقات',
+      'noCommentsYet': 'لا توجد تعليقات بعد',
+      'beFirstToComment': 'كن أول من يعلّق على هذه الميزة',
+      'guestUser': 'ضيف',
+      'addComment': 'أضف تعليقاً...',
     },
     'uk': {
       'title': 'Пропозиції',
@@ -140,6 +172,10 @@ class L10n {
       'implemented': 'Реалізовано',
       'formEmpty': 'Будь ласка, введіть пропозицію',
       'comments': 'Коментарі',
+      'noCommentsYet': 'Коментарів поки немає',
+      'beFirstToComment': 'Будьте першим, хто прокоментує цю функцію',
+      'guestUser': 'Гість',
+      'addComment': 'Напишіть коментар...',
     }
   };
 
@@ -163,4 +199,14 @@ class L10n {
       _content[_languageCode]!['implemented'] ?? 'N/A';
   static String get formEmpty => _content[_languageCode]!['formEmpty'] ?? 'N/A';
   static String get comments => _content[_languageCode]!['comments'] ?? 'N/A';
+  static String get noCommentsYet =>
+      _content[_languageCode]!['noCommentsYet'] ??
+      _content['en']!['noCommentsYet'];
+  static String get beFirstToComment =>
+      _content[_languageCode]!['beFirstToComment'] ??
+      _content['en']!['beFirstToComment'];
+  static String get guestUser =>
+      _content[_languageCode]!['guestUser'] ?? _content['en']!['guestUser'];
+  static String get addComment =>
+      _content[_languageCode]!['addComment'] ?? _content['en']!['addComment'];
 }

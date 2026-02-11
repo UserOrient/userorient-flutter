@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/models/comment.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/utilities/date_time_extensions.dart';
@@ -58,7 +59,7 @@ class CommentItem extends StatelessWidget {
         Row(
           children: [
             Text(
-              comment.ownerFullName ?? 'Guest User',
+              comment.ownerFullName ?? L10n.guestUser,
               style: TextStyle(
                 fontSize: 16,
                 height: 24 / 16,
@@ -78,15 +79,17 @@ class CommentItem extends StatelessWidget {
                 ),
               ),
             ],
-            const Spacer(),
-            Text(
-              comment.createdAt?.timeAgoWithAllEdgeCases() ?? 'Some time ago',
-              style: TextStyle(
-                fontSize: 12,
-                height: 16 / 12,
-                color: context.secondaryTextColor,
+            if (comment.createdAt != null) ...[
+              const Spacer(),
+              Text(
+                comment.createdAt!.timeAgoWithAllEdgeCases(),
+                style: TextStyle(
+                  fontSize: 12,
+                  height: 16 / 12,
+                  color: context.secondaryTextColor,
+                ),
               ),
-            ),
+            ],
           ],
         ),
         const SizedBox(height: 4),

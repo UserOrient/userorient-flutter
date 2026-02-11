@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/logic/user_orient.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/widgets/styled_loading_indicator.dart';
@@ -138,7 +139,7 @@ class _CommentTextFieldState extends State<CommentTextField> {
               Positioned(
                 left: 0,
                 child: Text(
-                  'Add a comment...',
+                  L10n.addComment,
                   style: TextStyle(
                     fontSize: 16,
                     color: context.secondaryTextColor,

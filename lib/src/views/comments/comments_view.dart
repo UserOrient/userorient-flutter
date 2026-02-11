@@ -91,7 +91,7 @@ class CommentsViewState extends State<CommentsView> {
                         const SizedBox(height: 16),
                         Center(
                           child: Text(
-                            'No comments yet',
+                            L10n.noCommentsYet,
                             style: TextStyle(
                               fontSize: 18,
                               height: 28 / 18,
@@ -103,7 +103,7 @@ class CommentsViewState extends State<CommentsView> {
                         const SizedBox(height: 8),
                         Center(
                           child: Text(
-                            'Be the first to comment on this feature',
+                            L10n.beFirstToComment,
                             style: TextStyle(
                               fontSize: 14,
                               height: 20 / 14,
