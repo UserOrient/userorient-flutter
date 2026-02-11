@@ -69,7 +69,9 @@ class CommentsViewState extends State<CommentsView> {
                       ),
                       if (value == null) ...[
                         const SizedBox(height: 48),
-                        const Center(child: StyledLoadingIndicator()),
+                        const Center(
+                          child: StyledLoadingIndicator(),
+                        ),
                       ] else if (value.isEmpty) ...[
                         const SizedBox(height: 64),
                         Center(
@@ -110,7 +112,7 @@ class CommentsViewState extends State<CommentsView> {
                           ),
                         ),
                       ] else ...[
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 32),
                         for (int i = 0; i < value.length; i++) ...[
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
