@@ -53,7 +53,7 @@ class _CommentTextFieldState extends State<CommentTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final bool showPlaceholder = _controller.text.isEmpty && !_isFocused;
+    final bool showPlaceholder = _controller.text.isEmpty;
 
     return GestureDetector(
       onTap: () {
@@ -66,7 +66,7 @@ class _CommentTextFieldState extends State<CommentTextField> {
         margin: EdgeInsets.only(
           left: 16,
           right: 16,
-          bottom: showPlaceholder ? 16 : 0,
+          bottom: showPlaceholder && !_isFocused ? 16 : 0,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
@@ -78,7 +78,6 @@ class _CommentTextFieldState extends State<CommentTextField> {
           children: [
             Row(
               children: [
-                // TODO:
                 Expanded(
                   child: EditableText(
                     controller: _controller,
@@ -139,7 +138,6 @@ class _CommentTextFieldState extends State<CommentTextField> {
                   ),
               ],
             ),
-            // TODO: add clear
             if (showPlaceholder)
               Positioned(
                 left: 0,

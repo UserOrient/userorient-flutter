@@ -56,8 +56,10 @@ class FormViewState extends State<FormView> {
           });
 
           UserOrient.submitForm(content: content).then((_) {
-            Navigator.pop(context);
-            Navigation.push(context, const SentView());
+            if (context.mounted) {
+              Navigator.pop(context);
+              Navigation.push(context, const SentView());
+            }
           });
         },
         label: L10n.submitForm,
@@ -80,8 +82,10 @@ class FormViewState extends State<FormView> {
 
         Navigation.push(context, EmailView(content: content)).then((submitted) {
           if (submitted == true) {
-            Navigator.pop(context);
-            Navigation.push(context, const SentView());
+            if (context.mounted) {
+              Navigator.pop(context);
+              Navigation.push(context, const SentView());
+            }
           }
         });
       },
