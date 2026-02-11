@@ -47,12 +47,13 @@ class _Body extends StatelessWidget {
                   Text(
                     L10n.sentTitle,
                     style: TextStyle(
-                      fontSize: 20.0,
-                      height: 28 / 20,
+                      fontSize: 18.0,
+                      height: 28 / 18,
                       color: context.textColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 16.0),
+                  const SizedBox(height: 8.0),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40.0),
                     child: Text(

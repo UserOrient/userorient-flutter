@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/logic/user_orient.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/utilities/localizations_overrider.dart';
 import 'package:userorient_flutter/src/utilities/navigation.dart';
+import 'package:userorient_flutter/src/views/email_view.dart';
 import 'package:userorient_flutter/src/views/sent_view.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
 import 'package:userorient_flutter/src/widgets/button.dart';
@@ -40,6 +40,60 @@ class FormViewState extends State<FormView> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+  }
+
+  bool get _hasEmail => UserOrient.user?.email != null;
+
+  Widget _buildSubmitButton(BuildContext context) {
+    if (_hasEmail) {
+      return Button(
+        onPressed: () {
+          final String content = _controller.text.trim();
+          if (content.length < 10) return;
+
+          setState(() {
+            _isLoading = true;
+          });
+
+          UserOrient.submitForm(content: content).then((_) {
+            Navigator.pop(context);
+            Navigation.push(context, const SentView());
+          });
+        },
+        label: L10n.submitForm,
+        busy: _isLoading,
+        disabled: _isEmpty,
+        iconAffinity: IconAffinity.trailing,
+        icon: Icon(
+          Icons.arrow_upward,
+          size: 20,
+          color:
+              _isEmpty ? context.secondaryTextColor : context.buttonTextColor,
+        ),
+      );
+    }
+
+    return Button(
+      onPressed: () {
+        final String content = _controller.text.trim();
+        if (content.length < 10) return;
+
+        Navigation.push(context, EmailView(content: content)).then((submitted) {
+          if (submitted == true) {
+            Navigator.pop(context);
+            Navigation.push(context, const SentView());
+          }
+        });
+      },
+      label: L10n.next,
+      disabled: _isEmpty,
+      iconAffinity: IconAffinity.trailing,
+      icon: Icon(
+        Icons.arrow_forward,
+        size: 20,
+        color: _isEmpty ? context.secondaryTextColor : context.buttonTextColor,
+      ),
+    );
   }
 
   @override
@@ -102,38 +156,7 @@ class FormViewState extends State<FormView> {
                     ),
                   ),
                   const Spacer(),
-                  Button(
-                    onPressed: () {
-                      final String content = _controller.text.trim();
-
-                      if (content.length < 10) return;
-
-                      setState(() {
-                        _isLoading = true;
-                      });
-
-                      UserOrient.submitForm(content: content).then((_) {
-                        setState(() {
-                          Navigator.pop(context);
-                          Navigation.push(context, const SentView());
-                        });
-                      });
-                    },
-                    label: L10n.submitForm,
-                    busy: _isLoading,
-                    disabled: _isEmpty,
-                    iconAffinity: IconAffinity.trailing,
-                    icon: SvgPicture.asset(
-                      'assets/arrow-up.svg',
-                      package: 'userorient_flutter',
-                      colorFilter: ColorFilter.mode(
-                        _isEmpty
-                            ? context.secondaryTextColor
-                            : context.buttonTextColor,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                  ),
+                  _buildSubmitButton(context),
                 ],
               ),
             ),

@@ -23,6 +23,8 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool muted = disabled;
+
     return GestureDetector(
       onTap: () {
         if (!busy && !disabled) {
@@ -34,9 +36,9 @@ class Button extends StatelessWidget {
         height: 52,
         padding: const EdgeInsets.symmetric(horizontal: 24),
         decoration: BoxDecoration(
-          color: disabled ? context.unvotedContainerColor : context.buttonColor,
+          color: muted ? context.unvotedContainerColor : context.buttonColor,
           borderRadius: BorderRadius.circular(26),
-          boxShadow: disabled
+          boxShadow: muted
               ? null
               : [
                   BoxShadow(
@@ -47,13 +49,15 @@ class Button extends StatelessWidget {
                 ],
         ),
         child: busy
-            ? SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(
-                  strokeWidth: 3.0,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    context.buttonTextColor,
+            ? Center(
+                child: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 3.0,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      context.buttonTextColor,
+                    ),
                   ),
                 ),
               )
@@ -67,7 +71,7 @@ class Button extends StatelessWidget {
                   Text(
                     label,
                     style: TextStyle(
-                      color: disabled
+                      color: muted
                           ? context.secondaryTextColor
                           : context.buttonTextColor,
                       fontSize: 16,

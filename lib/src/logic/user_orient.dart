@@ -119,10 +119,22 @@ class UserOrient {
       }
 
       // TODO: if user id is cached, continue do that in the background
-      userUuid = await UserOrientData.resolveUserUuid(
+      final ResolvedUser resolvedUser = await UserOrientData.resolveUserUuid(
         projectId: _apiKey!,
         user: user,
       );
+
+      userUuid = resolvedUser.id;
+
+      // If server knows this user's email but SDK wasn't given one, use it
+      if (resolvedUser.email != null && user?.email == null) {
+        if (user != null) {
+          user = user!.copyWith(email: resolvedUser.email);
+        } else {
+          user = User(email: resolvedUser.email);
+        }
+        logUO('Resolved email from server: ${resolvedUser.email}', emoji: '📧');
+      }
 
       await _fetchAndSetFeatures();
 
@@ -179,14 +191,26 @@ class UserOrient {
   /// Submit a feature request. Used internally by the SDK.
   static Future<void> submitForm({
     required String content,
+    String? email,
   }) async {
-    logUO('Sending feature request', emoji: '📬');
+    logUO(
+      'Sending feature request: "$content" by ${email ?? '(no email provided)'}',
+      emoji: '📬',
+    );
+
+    final String? resolvedEmail = email ?? user?.email;
 
     await UserOrientData.sendFeatureRequest(
       projectId: _apiKey!,
       userId: userUuid!,
       content: content,
+      email: resolvedEmail,
     );
+
+    // Update local user so we skip the email view next time
+    if (resolvedEmail != null && user?.email == null) {
+      user = user?.copyWith(email: resolvedEmail) ?? User(email: resolvedEmail);
+    }
 
     logUO('Feature request sent', emoji: '🚀');
   }
