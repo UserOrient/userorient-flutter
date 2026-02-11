@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Custom color overrides for a single brightness mode.
 class UserOrientColors {
   final Color? backgroundColor;
   final Color? accentColor;
@@ -10,6 +11,7 @@ class UserOrientColors {
   });
 }
 
+/// Theme configuration holding light and dark color overrides.
 class UserOrientTheme {
   final UserOrientColors? light;
   final UserOrientColors? dark;

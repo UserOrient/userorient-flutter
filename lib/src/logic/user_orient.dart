@@ -13,6 +13,7 @@ import 'package:userorient_flutter/src/utilities/helper_functions.dart';
 import 'package:userorient_flutter/src/views/board/board_view.dart';
 import 'package:userorient_flutter/src/views/form_view.dart';
 
+/// Main entry point for the UserOrient SDK.
 class UserOrient {
   static final ValueNotifier<List<Feature>?> features = ValueNotifier(null);
   static final ValueNotifier<List<Comment>?> comments = ValueNotifier(null);
@@ -53,6 +54,7 @@ class UserOrient {
     _apiKey = apiKey;
   }
 
+  /// Override the default light and/or dark theme colors.
   static void setTheme({
     required UserOrientColors? light,
     required UserOrientColors? dark,
@@ -61,6 +63,7 @@ class UserOrient {
     logUO('Custom theme applied', emoji: '🫟');
   }
 
+  /// Identify the current user. Call before opening any views.
   static void setUser({
     String? uniqueIdentifier,
     String? fullName,
@@ -85,6 +88,7 @@ class UserOrient {
     logUO('Set user', emoji: '👤');
   }
 
+  /// Clear all locally cached data and reset the SDK state.
   static Future<void> clearCache() async {
     _isInitialized = false;
     userUuid = null;
@@ -215,6 +219,7 @@ class UserOrient {
     logUO('Feature request sent', emoji: '🚀');
   }
 
+  /// Fetch comments for a feature. Used internally by the SDK.
   static Future<void> getComments(Feature feature) async {
     UserOrient.comments.value = null;
 
@@ -227,6 +232,7 @@ class UserOrient {
     UserOrient.comments.value = comments;
   }
 
+  /// Post a comment on a feature. Used internally by the SDK.
   static Future<void> addComment({
     required String content,
     required String featureId,
