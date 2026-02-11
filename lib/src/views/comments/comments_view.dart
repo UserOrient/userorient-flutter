@@ -64,10 +64,8 @@ class CommentsViewState extends State<CommentsView> {
                   return ListView(
                     padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                     children: [
-                      FeatureCard.full(widget.feature),
-                      Divider(
-                        color: context.borderColor,
-                        height: 1,
+                      FeatureCard.full(
+                        widget.feature,
                       ),
                       if (value == null) ...[
                         const SizedBox(height: 48),

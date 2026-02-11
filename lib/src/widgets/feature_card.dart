@@ -38,7 +38,19 @@ class FeatureCard extends StatelessWidget {
       ),
     );
 
-    if (expanded) return content;
+    if (expanded) {
+      return Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: context.borderColor,
+            width: 1.0,
+          ),
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: child,
+      );
+    }
 
     return GestureDetector(
       onTap: () {

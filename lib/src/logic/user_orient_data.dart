@@ -87,11 +87,13 @@ class UserOrientData {
     required String projectId,
     required String userId,
     required String content,
+    required String? email,
   }) async {
     final Endpoint endpoint = RestfulEndpoints.sendFeedback(
       projectId: projectId,
       content: content,
       userId: userId,
+      email: email,
     );
 
     await http.post(
