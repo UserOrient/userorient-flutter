@@ -28,18 +28,13 @@ class FeatureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final child = isShimmer ? _buildShimmer(context) : _buildWidget(context);
+
     final content = SizedBox(
       key: ValueKey(feature.id),
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: context.borderColor,
-            width: 1.0,
-          ),
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        child: isShimmer ? _buildShimmer(context) : _buildWidget(context),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: child,
       ),
     );
 
@@ -54,6 +49,7 @@ class FeatureCard extends StatelessWidget {
           ),
         );
       },
+      behavior: HitTestBehavior.translucent,
       child: content,
     );
   }
