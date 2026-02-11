@@ -8,6 +8,7 @@ import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/utilities/date_time_extensions.dart';
 import 'package:userorient_flutter/src/utilities/localizations_overrider.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
+import 'package:userorient_flutter/src/widgets/feature_card.dart';
 import 'package:userorient_flutter/src/widgets/styled_back_button.dart';
 import 'package:userorient_flutter/src/widgets/styled_loading_indicator.dart';
 
@@ -56,79 +57,71 @@ class CommentsViewState extends State<CommentsView> {
               child: ValueListenableBuilder<List<Comment>?>(
                 valueListenable: UserOrient.comments,
                 builder: (context, value, child) {
-                  if (value == null) {
-                    return const Center(
-                      child: StyledLoadingIndicator(),
-                    );
-                  }
-
-                  if (value.isEmpty) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 48,
-                          height: 48,
-                          child: SvgPicture.asset(
-                            'assets/comments-empty.svg',
-                            package: 'userorient_flutter',
-                            colorFilter: ColorFilter.mode(
-                              context.secondaryTextColor,
-                              BlendMode.srcIn,
+                  return ListView(
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                    children: [
+                      FeatureCard.full(widget.feature),
+                      if (value == null) ...[
+                        const SizedBox(height: 48),
+                        const Center(child: StyledLoadingIndicator()),
+                      ] else if (value.isEmpty) ...[
+                        const SizedBox(height: 48),
+                        Center(
+                          child: SizedBox(
+                            width: 48,
+                            height: 48,
+                            child: SvgPicture.asset(
+                              'assets/comments-empty.svg',
+                              package: 'userorient_flutter',
+                              colorFilter: ColorFilter.mode(
+                                context.secondaryTextColor,
+                                BlendMode.srcIn,
+                              ),
                             ),
                           ),
                         ),
                         const SizedBox(height: 16),
-                        Text(
-                          'No comments yet',
-                          style: TextStyle(
-                            fontSize: 18,
-                            height: 28 / 18,
-                            color: context.textColor,
-                            fontWeight: FontWeight.bold,
+                        Center(
+                          child: Text(
+                            'No comments yet',
+                            style: TextStyle(
+                              fontSize: 18,
+                              height: 28 / 18,
+                              color: context.textColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 8),
-                        Text(
-                          'Be the first to comment on this feature',
-                          style: TextStyle(
-                            fontSize: 14,
-                            height: 20 / 14,
-                            color: context.secondaryTextColor,
+                        Center(
+                          child: Text(
+                            'Be the first to comment on this feature',
+                            style: TextStyle(
+                              fontSize: 14,
+                              height: 20 / 14,
+                              color: context.secondaryTextColor,
+                            ),
                           ),
                         ),
-                      ],
-                    );
-                  }
-
-                  return Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: ListView.separated(
-                      itemCount: value.length,
-                      itemBuilder: (context, index) {
-                        final comment = value[index];
-
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _Item(
-                              comment: comment,
+                      ] else ...[
+                        const SizedBox(height: 24),
+                        for (int i = 0; i < value.length; i++) ...[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _Item(comment: value[i]),
+                              if (value[i].replies.isNotEmpty)
+                                _Reply(comment: value[i]),
+                            ],
+                          ),
+                          if (i < value.length - 1)
+                            Divider(
+                              color: context.borderColor,
+                              height: 32,
                             ),
-                            if (comment.replies.isNotEmpty)
-                              _Reply(
-                                comment: comment,
-                              ),
-                          ],
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return Divider(
-                          color: context.borderColor,
-                          height: 32,
-                        );
-                      },
-                    ),
+                        ],
+                      ],
+                    ],
                   );
                 },
               ),
