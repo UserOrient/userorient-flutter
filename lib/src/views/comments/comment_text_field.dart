@@ -5,6 +5,7 @@ import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/logic/user_orient.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/widgets/styled_loading_indicator.dart';
+import 'package:userorient_flutter/src/widgets/styled_text_field.dart';
 
 class CommentTextField extends StatefulWidget {
   final String featureId;
@@ -86,6 +87,10 @@ class _CommentTextFieldState extends State<CommentTextField> {
                       fontSize: 16,
                       color: context.textColor,
                     ),
+                    textCapitalization: TextCapitalization.sentences,
+                    inputFormatters: const [
+                      SentenceCapitalizationFormatter(),
+                    ],
                     cursorColor: context.textColor,
                     backgroundCursorColor: Colors.transparent,
                     onChanged: (value) {

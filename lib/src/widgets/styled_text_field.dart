@@ -47,7 +47,7 @@ class StyledTextField extends StatelessWidget {
       inputFormatters: isEmail
           ? null
           : const [
-              CapitalizeFirstLetterFormatter(),
+              SentenceCapitalizationFormatter(),
             ],
       style: TextStyle(
         fontSize: 18.0,
@@ -84,23 +84,30 @@ class StyledTextField extends StatelessWidget {
   }
 }
 
-class CapitalizeFirstLetterFormatter extends TextInputFormatter {
-  const CapitalizeFirstLetterFormatter();
+class SentenceCapitalizationFormatter extends TextInputFormatter {
+  const SentenceCapitalizationFormatter();
 
   @override
   TextEditingValue formatEditUpdate(
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    if (newValue.text.isEmpty) {
-      return newValue;
+    if (newValue.text.isEmpty) return newValue;
+
+    final chars = newValue.text.split('');
+    bool capitalizeNext = true;
+
+    for (int i = 0; i < chars.length; i++) {
+      if (capitalizeNext && chars[i].trim().isNotEmpty) {
+        chars[i] = chars[i].toUpperCase();
+        capitalizeNext = false;
+      }
+      if (chars[i] == '.' && i + 1 < chars.length && chars[i + 1] == ' ') {
+        capitalizeNext = true;
+      }
     }
 
-    String newText =
-        newValue.text[0].toUpperCase() + newValue.text.substring(1);
-    return newValue.copyWith(
-      text: newText,
-      selection: newValue.selection,
-    );
+    final newText = chars.join();
+    return newValue.copyWith(text: newText, selection: newValue.selection);
   }
 }
