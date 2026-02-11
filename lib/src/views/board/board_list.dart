@@ -43,14 +43,20 @@ class BoardList extends StatelessWidget {
                 );
               },
             ),
-            const SizedBox(height: 32),
             ValueListenableBuilder<Project?>(
               valueListenable: UserOrient.project,
               builder: (context, project, child) {
                 if (project?.onPaidPlan == true) {
                   return const SizedBox.shrink();
                 }
-                return const Watermark();
+
+                return const Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 32),
+                    Watermark(),
+                  ],
+                );
               },
             ),
             const SizedBox(height: 140),
