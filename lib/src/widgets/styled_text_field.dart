@@ -28,7 +28,14 @@ class StyledTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isEmail = keyboardType == TextInputType.emailAddress;
 
-    return TextField(
+    return Theme(
+      data: Theme.of(context).copyWith(
+        textSelectionTheme: TextSelectionThemeData(
+          selectionColor: context.buttonColor.withValues(alpha: 0.2),
+          selectionHandleColor: context.buttonColor,
+        ),
+      ),
+      child: TextField(
       minLines: minLines,
       maxLines: minLines,
       autofocus: autoFocus,
@@ -70,6 +77,7 @@ class StyledTextField extends StatelessWidget {
         labelStyle: TextStyle(
           fontSize: 14.0,
           color: context.textColor,
+        ),
         ),
       ),
     );
