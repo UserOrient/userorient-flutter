@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:userorient_flutter/src/logic/feedback_meta_data.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/models/comment.dart';
 import 'package:userorient_flutter/src/utilities/navigation.dart';
@@ -26,6 +27,7 @@ class UserOrient {
   static bool _isInitialized = false;
   static String languageCode = 'en';
   static UserOrientTheme? theme;
+  static Map<String, dynamic>? _metaData;
 
   /// Open the UserOrient board view
   static Future<void> openBoard(BuildContext context) {
@@ -106,6 +108,8 @@ class UserOrient {
   }
 
   static Future<void> _initialize() async {
+    _collectMetaData();
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final String? cachedProjectId = prefs.getString('user_orient_project_id');
@@ -212,7 +216,7 @@ class UserOrient {
     String? email,
   }) async {
     logUO(
-      'Sending feature request: "$content" by ${email ?? '(no email provided)'}',
+      'Sending feature request: "$content" by ${email ?? '(no email provided)'} with ${_metaData ?? 'uknown'} metadata',
       emoji: '📬',
     );
 
@@ -223,6 +227,7 @@ class UserOrient {
       userId: userUuid!,
       content: content,
       email: resolvedEmail,
+      metaData: _metaData,
     );
 
     // Update local user so we skip the email view next time
@@ -230,7 +235,7 @@ class UserOrient {
       user = user?.copyWith(email: resolvedEmail) ?? User(email: resolvedEmail);
     }
 
-    logUO('Feature request sent', emoji: '🚀');
+    logUO('Feature request sent. ', emoji: '🚀');
   }
 
   /// Fetch comments for a feature. Used internally by the SDK.
@@ -269,5 +274,16 @@ class UserOrient {
       ),
       ...UserOrient.comments.value!,
     ];
+  }
+
+  // Collects meta data to be sent with each feature request
+  static Future<void> _collectMetaData() async {
+    try {
+      _metaData = await FeedbackMetaData.collect();
+
+      logUO('Meta data ready: $_metaData', emoji: '🕵🏻‍♂️');
+    } catch (e) {
+      logUO('Failed to collect meta data. $e', emoji: '😞');
+    }
   }
 }

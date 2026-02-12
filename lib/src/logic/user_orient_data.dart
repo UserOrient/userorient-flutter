@@ -103,12 +103,14 @@ class UserOrientData {
     required String userId,
     required String content,
     required String? email,
+    required Map<String, dynamic>? metaData,
   }) async {
     final Endpoint endpoint = RestfulEndpoints.sendFeedback(
       projectId: projectId,
       content: content,
       userId: userId,
       email: email,
+      metaData: metaData,
     );
 
     await http.post(

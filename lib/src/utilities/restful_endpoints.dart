@@ -45,6 +45,7 @@ class RestfulEndpoints {
     required String content,
     required String userId,
     required String? email,
+    required Map<String, dynamic>? metaData,
   }) {
     return Endpoint.post(
       url: '$baseUrl/sdk/feedback?projectId=$projectId',
@@ -54,6 +55,7 @@ class RestfulEndpoints {
         'description': {
           'en': content,
         },
+        'metaData': metaData,
       },
     );
   }
