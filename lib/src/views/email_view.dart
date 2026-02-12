@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/logic/user_orient.dart';
+import 'package:userorient_flutter/src/utilities/helper_functions.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/utilities/localizations_overrider.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
@@ -10,8 +11,10 @@ import 'package:userorient_flutter/src/widgets/styled_text_field.dart';
 
 class EmailView extends StatefulWidget {
   final String content;
+  final bool isRequired;
 
-  const EmailView({super.key, required this.content});
+  const EmailView({super.key, required this.content, bool required = false})
+      : isRequired = required;
 
   @override
   State<EmailView> createState() => _EmailViewState();
@@ -20,12 +23,25 @@ class EmailView extends StatefulWidget {
 class _EmailViewState extends State<EmailView> {
   late final TextEditingController _controller;
   bool _isLoading = false;
+  bool _hasInteracted = false;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
-    _controller.addListener(() => setState(() {}));
+    _controller.addListener(_onTextChanged);
+
+    logUO(
+      'Email is ${widget.isRequired ? 'required' : 'optional (skip allowed)'}',
+      emoji: '📧',
+    );
+  }
+
+  void _onTextChanged() {
+    if (!_hasInteracted && _controller.text.isNotEmpty) {
+      _hasInteracted = true;
+    }
+    setState(() {});
   }
 
   @override
@@ -34,9 +50,11 @@ class _EmailViewState extends State<EmailView> {
     super.dispose();
   }
 
+  bool get _isRequired => widget.isRequired;
+
   bool get _isValid {
     final text = _controller.text.trim();
-    if (text.isEmpty) return true;
+    if (text.isEmpty) return !_isRequired;
     return RegExp(r'^[^@]+@[^@]+\.[^@]+$').hasMatch(text);
   }
 
@@ -101,7 +119,7 @@ class _EmailViewState extends State<EmailView> {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
               child: Row(
                 children: [
-                  if (!_isValid)
+                  if (!_isValid && _hasInteracted)
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 4),
@@ -114,11 +132,24 @@ class _EmailViewState extends State<EmailView> {
                         ),
                       ),
                     )
+                  else if (_isRequired && _controller.text.trim().isEmpty && !_hasInteracted)
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 4),
+                        child: Text(
+                          L10n.emailRequired,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: context.secondaryTextColor,
+                          ),
+                        ),
+                      ),
+                    )
                   else
                     const Spacer(),
                   Button(
                     onPressed: _submit,
-                    label: _controller.text.trim().isEmpty
+                    label: _controller.text.trim().isEmpty && !_isRequired
                         ? L10n.skipAndSend
                         : L10n.send,
                     busy: _isLoading,

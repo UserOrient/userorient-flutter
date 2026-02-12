@@ -30,6 +30,7 @@ class L10n {
       'skipAndSend': 'Keç və Göndər',
       'next': 'Növbəti',
       'invalidEmail': 'Düzgün e-poçt daxil edin',
+      'emailRequired': 'E-poçt tələb olunur',
       'time_just_now': 'İndicə',
       'time_some_time_ago': 'Bir müddət əvvəl',
       'time_one_minute': '1 dəqiqə əvvəl',
@@ -67,6 +68,7 @@ class L10n {
       'skipAndSend': 'Überspringen und Senden',
       'next': 'Weiter',
       'invalidEmail': 'Gib eine gültige E-Mail ein',
+      'emailRequired': 'E-Mail ist erforderlich',
       'time_just_now': 'Gerade eben',
       'time_some_time_ago': 'Vor einiger Zeit',
       'time_one_minute': 'Vor 1 Minute',
@@ -104,6 +106,7 @@ class L10n {
       'skipAndSend': 'Skip and Send',
       'next': 'Next',
       'invalidEmail': 'Enter a valid email',
+      'emailRequired': 'Email is required',
       'time_just_now': 'Just now',
       'time_some_time_ago': 'Some time ago',
       'time_one_minute': '1 minute ago',
@@ -141,6 +144,7 @@ class L10n {
       'skipAndSend': 'Omitir y Enviar',
       'next': 'Siguiente',
       'invalidEmail': 'Ingresa un correo válido',
+      'emailRequired': 'El correo es obligatorio',
       'time_just_now': 'Justo ahora',
       'time_some_time_ago': 'Hace un tiempo',
       'time_one_minute': 'Hace 1 minuto',
@@ -178,6 +182,7 @@ class L10n {
       'skipAndSend': 'Passer et Envoyer',
       'next': 'Suivant',
       'invalidEmail': 'Entrez un e-mail valide',
+      'emailRequired': 'L\'e-mail est obligatoire',
       'time_just_now': 'À l\'instant',
       'time_some_time_ago': 'Il y a quelque temps',
       'time_one_minute': 'Il y a 1 minute',
@@ -215,6 +220,7 @@ class L10n {
       'skipAndSend': 'Salta e Invia',
       'next': 'Avanti',
       'invalidEmail': 'Inserisci un\'email valida',
+      'emailRequired': 'L\'email è obbligatoria',
       'time_just_now': 'Proprio ora',
       'time_some_time_ago': 'Qualche tempo fa',
       'time_one_minute': '1 minuto fa',
@@ -252,6 +258,7 @@ class L10n {
       'skipAndSend': 'Atla ve Gönder',
       'next': 'İleri',
       'invalidEmail': 'Geçerli bir e-posta girin',
+      'emailRequired': 'E-posta gereklidir',
       'time_just_now': 'Az önce',
       'time_some_time_ago': 'Bir süre önce',
       'time_one_minute': '1 dakika önce',
@@ -289,6 +296,7 @@ class L10n {
       'skipAndSend': 'Пропустить и Отправить',
       'next': 'Далее',
       'invalidEmail': 'Введите корректный email',
+      'emailRequired': 'Email обязателен',
       'time_just_now': 'Только что',
       'time_some_time_ago': 'Некоторое время назад',
       'time_one_minute': '1 минуту назад',
@@ -326,6 +334,7 @@ class L10n {
       'skipAndSend': 'تخطي وإرسال',
       'next': 'التالي',
       'invalidEmail': 'أدخل بريداً إلكترونياً صالحاً',
+      'emailRequired': 'البريد الإلكتروني مطلوب',
       'time_just_now': 'الآن',
       'time_some_time_ago': 'منذ فترة',
       'time_one_minute': 'منذ دقيقة',
@@ -363,6 +372,7 @@ class L10n {
       'skipAndSend': 'Пропустити і Надіслати',
       'next': 'Далі',
       'invalidEmail': 'Введіть коректний email',
+      'emailRequired': 'Email є обов\'язковим',
       'time_just_now': 'Щойно',
       'time_some_time_ago': 'Деякий час тому',
       'time_one_minute': '1 хвилину тому',
@@ -400,6 +410,7 @@ class L10n {
       'skipAndSend': '跳过并发送',
       'next': '下一步',
       'invalidEmail': '请输入有效的邮箱',
+      'emailRequired': '邮箱为必填项',
       'time_just_now': '刚刚',
       'time_some_time_ago': '一段时间前',
       'time_one_minute': '1 分钟前',
@@ -442,6 +453,7 @@ class L10n {
   static String get skipAndSend => _t('skipAndSend');
   static String get next => _t('next');
   static String get invalidEmail => _t('invalidEmail');
+  static String get emailRequired => _t('emailRequired');
 
   static String get someTimeAgo => _t('time_some_time_ago');
 

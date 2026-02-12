@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/logic/user_orient.dart';
+import 'package:userorient_flutter/src/models/collection_mode.dart';
+import 'package:userorient_flutter/src/utilities/helper_functions.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/utilities/localizations_overrider.dart';
 import 'package:userorient_flutter/src/utilities/navigation.dart';
@@ -42,10 +44,18 @@ class FormViewState extends State<FormView> {
     _controller.dispose();
   }
 
-  bool get _hasEmail => UserOrient.user?.email != null;
+  bool get _hasEmail =>
+      UserOrient.user?.email != null ||
+      UserOrient.dataCollection.email == CollectionMode.notCollected;
 
   Widget _buildSubmitButton(BuildContext context) {
     if (_hasEmail) {
+      if (UserOrient.dataCollection.email == CollectionMode.notCollected) {
+        logUO('Email view skipped (notCollected)', emoji: '📧');
+      } else {
+        logUO('Email view skipped (email already set)', emoji: '📧');
+      }
+
       return Button(
         onPressed: () {
           final String content = _controller.text.trim();
@@ -75,12 +85,23 @@ class FormViewState extends State<FormView> {
       );
     }
 
+    final bool emailRequired =
+        UserOrient.dataCollection.email == CollectionMode.required;
+
+    logUO(
+      'Showing email view (${emailRequired ? 'required' : 'optional'})',
+      emoji: '📧',
+    );
+
     return Button(
       onPressed: () {
         final String content = _controller.text.trim();
         if (content.length < 10) return;
 
-        Navigation.push(context, EmailView(content: content)).then((submitted) {
+        Navigation.push(
+          context,
+          EmailView(content: content, required: emailRequired),
+        ).then((submitted) {
           if (submitted == true) {
             if (context.mounted) {
               Navigator.pop(context);

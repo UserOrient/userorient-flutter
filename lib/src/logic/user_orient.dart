@@ -6,6 +6,7 @@ import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/models/comment.dart';
 import 'package:userorient_flutter/src/utilities/navigation.dart';
 
+import 'package:userorient_flutter/src/models/collection_mode.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
 import 'package:userorient_flutter/src/logic/user_orient_data.dart';
 import 'package:userorient_flutter/src/models/project.dart';
@@ -27,6 +28,7 @@ class UserOrient {
   static bool _isInitialized = false;
   static String languageCode = 'en';
   static UserOrientTheme? theme;
+  static DataCollection dataCollection = const DataCollection();
   static Map<String, dynamic>? _metaData;
 
   /// Open the UserOrient board view
@@ -49,6 +51,7 @@ class UserOrient {
   static void configure({
     required String apiKey,
     required String languageCode,
+    DataCollection dataCollection = const DataCollection(),
   }) {
     /// Ignore the language code if it's not English
     if (L10n.isSupportedLanguage(languageCode)) {
@@ -56,6 +59,9 @@ class UserOrient {
     }
 
     _apiKey = apiKey;
+    UserOrient.dataCollection = dataCollection;
+
+    logUO('Email collection: ${dataCollection.email.name}, metadata collection: ${dataCollection.metadata.name}', emoji: '⚙️');
   }
 
   /// Override the default light and/or dark theme colors.
@@ -278,6 +284,11 @@ class UserOrient {
 
   // Collects meta data to be sent with each feature request
   static Future<void> _collectMetaData() async {
+    if (dataCollection.metadata == CollectionMode.notCollected) {
+      logUO('Metadata collection skipped (notCollected)', emoji: '🕵🏻‍♂️');
+      return;
+    }
+
     try {
       _metaData = await FeedbackMetaData.collect();
 
