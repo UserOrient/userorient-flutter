@@ -8,7 +8,7 @@ Let your users vote on what to build next. Collect feedback, prioritize your roa
   <img src="https://raw.githubusercontent.com/UserOrient/userorient-flutter/refs/heads/main/assets/cover.png" alt="UserOrient Cover" width="100%"/>
 </p>
 
-## Getting Started
+## 🚀 Getting Started
 
 ### 1. Install
 
@@ -40,7 +40,7 @@ That's it — two lines of setup, one to launch.
 
 ---
 
-## User
+## 👤 User
 
 Identify the current user so votes persist across sessions. Call `setUser` before opening the board.
 
@@ -67,7 +67,7 @@ If `uniqueIdentifier` is omitted, UserOrient generates one automatically.
 
 ---
 
-## Language
+## 🌍 Language
 
 ```dart
 UserOrient.setLanguage(Language.en);
@@ -85,7 +85,7 @@ Falls back to `Language.en` for unsupported codes.
 
 ---
 
-## Theming
+## 🎨 Theming
 
 ```dart
 UserOrient.setTheme(
@@ -109,7 +109,7 @@ Font family is inherited from your app's `ThemeData`.
 
 ---
 
-## Data Collection
+## 🔬 Data Collection
 
 Control what data the SDK collects when a user submits feedback:
 
@@ -130,7 +130,7 @@ UserOrient.setDataCollection(DataCollection(
 
 ---
 
-## Paying Users
+## 💎 Paying Users
 
 Mark paying customers so you can filter their votes in the dashboard:
 
@@ -143,7 +143,7 @@ UserOrient.setUser(
 
 ---
 
-## Logging Out
+## 🚪 Logging Out
 
 Clear cached data when a user logs out:
 
@@ -153,7 +153,7 @@ await UserOrient.clearCache();
 
 ---
 
-## Contact
+## 📬 Contact
 
 - Email: [kamran@userorient.com](mailto:kamran@userorient.com)
 - Twitter: [@userorient](https://twitter.com/userorient)
