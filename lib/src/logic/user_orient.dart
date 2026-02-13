@@ -48,17 +48,18 @@ class UserOrient {
   /// [apiKey] is the API Key from the UserOrient dashboard.
   static void configure({
     required String apiKey,
-    DataCollection dataCollection = const DataCollection(),
   }) {
     _apiKey = apiKey;
-    UserOrient.dataCollection = dataCollection;
-
-    logUO('Email collection: ${dataCollection.email.name}, metadata collection: ${dataCollection.metadata.name}', emoji: '⚙️');
   }
 
   /// Set the language for the SDK UI.
   static void setLanguage(Language language) {
     UserOrient.languageCode = language.name;
+  }
+
+  /// Set data collection preferences for email and metadata.
+  static void setDataCollection(DataCollection dataCollection) {
+    UserOrient.dataCollection = dataCollection;
   }
 
   /// Override the default light and/or dark theme colors.
