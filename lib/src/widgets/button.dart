@@ -75,7 +75,7 @@ class Button extends StatelessWidget {
                           ? context.secondaryTextColor
                           : context.buttonTextColor,
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   if (icon != null &&
