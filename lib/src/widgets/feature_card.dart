@@ -152,7 +152,7 @@ class FeatureCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                feature.titleForLocale(UserOrient.user?.language),
+                feature.titleForLocale(UserOrient.languageCode),
                 style: TextStyle(
                   fontSize: 16.0,
                   height: 24 / 16,
@@ -161,11 +161,11 @@ class FeatureCard extends StatelessWidget {
                 ),
               ),
               if (feature
-                  .descriptionForLocale(UserOrient.user?.language)
+                  .descriptionForLocale(UserOrient.languageCode)
                   .isNotEmpty) ...[
                 const SizedBox(height: 2.0),
                 Text(
-                  feature.descriptionForLocale(UserOrient.user?.language),
+                  feature.descriptionForLocale(UserOrient.languageCode),
                   maxLines: expanded ? null : 2,
                   overflow: expanded ? null : TextOverflow.ellipsis,
                   style: TextStyle(

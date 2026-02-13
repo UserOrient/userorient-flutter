@@ -4,7 +4,6 @@ class User {
   final String? fullName;
   final String? email;
   final String? phoneNumber;
-  final String? language;
   final bool? isPaying;
   final Map<String, dynamic>? extra;
 
@@ -14,7 +13,6 @@ class User {
     this.fullName,
     this.email,
     this.phoneNumber,
-    this.language,
     this.isPaying,
     this.extra,
   });
@@ -27,7 +25,6 @@ class User {
         fullName = null,
         email = null,
         phoneNumber = null,
-        language = null,
         isPaying = null,
         extra = null;
 
@@ -47,7 +44,6 @@ class User {
       fullName: fullName ?? this.fullName,
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
-      language: language ?? this.language,
       isPaying: isPaying ?? this.isPaying,
       extra: extra ?? this.extra,
     );
@@ -65,7 +61,6 @@ class User {
       'fullName': fullName,
       'email': email,
       'phoneNumber': phoneNumber,
-      'language': language,
       'extra': extra,
     };
   }

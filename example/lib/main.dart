@@ -4,7 +4,7 @@ import 'package:userorient_flutter/userorient_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  UserOrient.configure(apiKey: 'YOUR-API-KEY', languageCode: 'en');
+  UserOrient.configure(apiKey: 'YOUR-API-KEY');
 
   runApp(const MainApp());
 }
@@ -41,7 +41,6 @@ class HomePage extends StatelessWidget {
                   fullName: 'Kamran Bekirov',
                   phoneNumber: '+994501234567',
                   email: 'kamran@userorient.com',
-                  language: 'en',
                   extra: {'is_premium': true},
                 );
 
