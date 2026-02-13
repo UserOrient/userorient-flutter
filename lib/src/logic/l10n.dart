@@ -1,10 +1,6 @@
 import 'package:userorient_flutter/userorient_flutter.dart';
 
 class L10n {
-  static bool isSupportedLanguage(String languageCode) {
-    return _content.containsKey(languageCode);
-  }
-
   static const Map<String, dynamic> _content = {
     'az': {
       'title': 'Təkliflər',
@@ -316,8 +312,7 @@ class L10n {
       'form_hint': 'اصف فكرتك...',
       'submit_form': 'إرسال',
       'sent_title': 'تم إرسال طلب الميزة!',
-      'sent_description':
-          'شكراً! سنراجع اقتراحك ونبقيك على اطلاع.',
+      'sent_description': 'شكراً! سنراجع اقتراحك ونبقيك على اطلاع.',
       'go_back': 'تم',
       'add_feature': 'اقتراح ميزة',
       'roadmap': 'خريطة الطريق',
@@ -392,8 +387,7 @@ class L10n {
       'form_hint': '描述你的想法...',
       'submit_form': '提交',
       'sent_title': '功能建议已发送！',
-      'sent_description':
-          '感谢！我们会审核你的建议并及时通知你。',
+      'sent_description': '感谢！我们会审核你的建议并及时通知你。',
       'go_back': '完成',
       'add_feature': '提交建议',
       'roadmap': '路线图',
@@ -462,25 +456,35 @@ class L10n {
 
     if (diff.inMinutes < 60) {
       final n = diff.inMinutes;
-      return n == 1 ? _t('time_one_minute') : _t('time_minutes').replaceFirst('{n}', '$n');
+      return n == 1
+          ? _t('time_one_minute')
+          : _t('time_minutes').replaceFirst('{n}', '$n');
     }
 
     if (diff.inHours < 24) {
       final n = diff.inHours;
-      return n == 1 ? _t('time_one_hour') : _t('time_hours').replaceFirst('{n}', '$n');
+      return n == 1
+          ? _t('time_one_hour')
+          : _t('time_hours').replaceFirst('{n}', '$n');
     }
 
     if (diff.inDays < 30) {
       final n = diff.inDays;
-      return n == 1 ? _t('time_one_day') : _t('time_days').replaceFirst('{n}', '$n');
+      return n == 1
+          ? _t('time_one_day')
+          : _t('time_days').replaceFirst('{n}', '$n');
     }
 
     if (diff.inDays < 365) {
       final n = diff.inDays ~/ 30;
-      return n == 1 ? _t('time_one_month') : _t('time_months').replaceFirst('{n}', '$n');
+      return n == 1
+          ? _t('time_one_month')
+          : _t('time_months').replaceFirst('{n}', '$n');
     }
 
     final n = diff.inDays ~/ 365;
-    return n == 1 ? _t('time_one_year') : _t('time_years').replaceFirst('{n}', '$n');
+    return n == 1
+        ? _t('time_one_year')
+        : _t('time_years').replaceFirst('{n}', '$n');
   }
 }

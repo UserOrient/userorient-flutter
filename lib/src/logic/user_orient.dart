@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:userorient_flutter/src/logic/feedback_meta_data.dart';
-import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/models/comment.dart';
 import 'package:userorient_flutter/src/utilities/navigation.dart';
 
 import 'package:userorient_flutter/src/models/collection_mode.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
+import 'package:userorient_flutter/src/models/language.dart';
 import 'package:userorient_flutter/src/logic/user_orient_data.dart';
 import 'package:userorient_flutter/src/models/project.dart';
 import 'package:userorient_flutter/src/models/user.dart';
@@ -46,22 +46,19 @@ class UserOrient {
   /// Configure the UserOrient SDK. This method must be called before using the SDK.
   ///
   /// [apiKey] is the API Key from the UserOrient dashboard.
-  /// [languageCode] is the language code for the user's language.
-  /// [theme] is the optional theme configuration for customizing colors.
   static void configure({
     required String apiKey,
-    required String languageCode,
     DataCollection dataCollection = const DataCollection(),
   }) {
-    /// Ignore the language code if it's not English
-    if (L10n.isSupportedLanguage(languageCode)) {
-      UserOrient.languageCode = languageCode.toLowerCase();
-    }
-
     _apiKey = apiKey;
     UserOrient.dataCollection = dataCollection;
 
     logUO('Email collection: ${dataCollection.email.name}, metadata collection: ${dataCollection.metadata.name}', emoji: '⚙️');
+  }
+
+  /// Set the language for the SDK UI.
+  static void setLanguage(Language language) {
+    UserOrient.languageCode = language.name;
   }
 
   /// Override the default light and/or dark theme colors.
