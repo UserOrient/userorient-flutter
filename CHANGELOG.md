@@ -1,3 +1,10 @@
+## 2.1.0
+
+- Device and app metadata is now collected with each feedback submission.
+- Added `setDataCollection()` with `CollectionMode` to control email and metadata collection.
+- Introducing new `Language` enum with `fromCode()` helper which replaces the raw `languageCode` string.
+- `UserOrient.configure()` now only takes `apiKey`, to set language call `UserOrient.setLanguage()`.
+
 ## 2.0.0
 
 UserOrient v2.0 is here! In this milestone, lots of cool changes made to make SDK's UI more neutral to fit your own design:
