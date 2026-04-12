@@ -1,3 +1,9 @@
+## 2.1.1
+
+- Upgrade `device_info_plus` to ^13.0.0 and `package_info_plus` to ^10.0.0 to resolve `win32` version conflicts.
+- Upgrade `flutter_svg`, `http`, `shared_preferences`, and `url_launcher`.
+- Update example app for latest Flutter and Xcode.
+
 ## 2.1.0
 
 - Device and app metadata is now collected with each feedback submission.
