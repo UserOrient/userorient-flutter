@@ -1,3 +1,7 @@
+## 2.1.2
+
+- Fix the issue where submit button stuck behind keyboard in apps with persistent bottom navigation bar.
+
 ## 2.1.1
 
 - Upgrade `device_info_plus` to ^13.0.0 and `package_info_plus` to ^10.0.0 to resolve `win32` version conflicts.
