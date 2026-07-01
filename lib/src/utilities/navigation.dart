@@ -8,7 +8,10 @@ class Navigation {
   static Future<T?> push<T>(BuildContext context, Widget child) {
     if ([TargetPlatform.android, TargetPlatform.iOS]
         .contains(defaultTargetPlatform)) {
-      return Navigator.of(context).push(
+      return Navigator.of(
+        context,
+        rootNavigator: true,
+      ).push(
         MaterialPageRoute(
           builder: (_) => child,
         ),
