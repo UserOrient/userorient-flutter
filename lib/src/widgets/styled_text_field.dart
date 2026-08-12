@@ -36,48 +36,48 @@ class StyledTextField extends StatelessWidget {
         ),
       ),
       child: TextField(
-      minLines: minLines,
-      maxLines: minLines,
-      autofocus: autoFocus,
-      maxLength: maxLength,
-      controller: controller,
-      keyboardType: keyboardType,
-      textCapitalization:
-          isEmail ? TextCapitalization.none : TextCapitalization.sentences,
-      inputFormatters: isEmail
-          ? null
-          : const [
-              SentenceCapitalizationFormatter(),
-            ],
-      style: TextStyle(
-        fontSize: 18.0,
-        color: context.textColor,
-      ),
-      cursorHeight: 20,
-      cursorColor: context.textColor,
-      decoration: InputDecoration(
-        hintText: hintText,
-        filled: false,
-        fillColor: Colors.transparent,
-        border: const OutlineInputBorder(
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide.none,
-        ),
-        labelText: label,
-        hintStyle: TextStyle(
+        minLines: minLines,
+        maxLines: minLines,
+        autofocus: autoFocus,
+        maxLength: maxLength,
+        controller: controller,
+        keyboardType: keyboardType,
+        textCapitalization:
+            isEmail ? TextCapitalization.none : TextCapitalization.sentences,
+        inputFormatters: isEmail
+            ? null
+            : const [
+                SentenceCapitalizationFormatter(),
+              ],
+        style: TextStyle(
           fontSize: 18.0,
-          fontWeight: FontWeight.w400,
-          color: context.secondaryTextColor,
-        ),
-        labelStyle: TextStyle(
-          fontSize: 14.0,
           color: context.textColor,
         ),
+        cursorHeight: 20,
+        cursorColor: context.textColor,
+        decoration: InputDecoration(
+          hintText: hintText,
+          filled: false,
+          fillColor: Colors.transparent,
+          border: const OutlineInputBorder(
+            borderSide: BorderSide.none,
+          ),
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide.none,
+          ),
+          enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide.none,
+          ),
+          labelText: label,
+          hintStyle: TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.w400,
+            color: context.secondaryTextColor,
+          ),
+          labelStyle: TextStyle(
+            fontSize: 14.0,
+            color: context.textColor,
+          ),
         ),
       ),
     );
