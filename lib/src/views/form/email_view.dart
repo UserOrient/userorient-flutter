@@ -6,7 +6,7 @@ import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/utilities/localizations_overrider.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
 import 'package:userorient_flutter/src/widgets/button.dart';
-import 'package:userorient_flutter/src/widgets/styled_back_button.dart';
+import 'package:userorient_flutter/src/widgets/sheet_title.dart';
 import 'package:userorient_flutter/src/widgets/styled_text_field.dart';
 
 class EmailView extends StatefulWidget {
@@ -81,25 +81,13 @@ class _EmailViewState extends State<EmailView> {
     return LocalizationsOverrider(
       child: Scaffold(
         backgroundColor: context.backgroundColor,
-        appBar: AppBar(
-          leading: const StyledBackButton(),
-          backgroundColor: context.backgroundColor,
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: Text(
-            L10n.emailPromptTitle,
-            style: TextStyle(
-              fontSize: 18,
-              color: context.textColor,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SheetTitle(text: L10n.emailPromptTitle),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Column(
                   children: [
                     Expanded(
@@ -116,13 +104,13 @@ class _EmailViewState extends State<EmailView> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
               child: Row(
                 children: [
                   if (!_isValid && _hasInteracted)
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 4),
+                        padding: EdgeInsets.zero,
                         child: Text(
                           L10n.invalidEmail,
                           style: const TextStyle(
@@ -132,10 +120,12 @@ class _EmailViewState extends State<EmailView> {
                         ),
                       ),
                     )
-                  else if (_isRequired && _controller.text.trim().isEmpty && !_hasInteracted)
+                  else if (_isRequired &&
+                      _controller.text.trim().isEmpty &&
+                      !_hasInteracted)
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 4),
+                        padding: EdgeInsets.zero,
                         child: Text(
                           L10n.emailRequired,
                           style: TextStyle(

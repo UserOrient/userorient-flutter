@@ -2,26 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:userorient_flutter/src/logic/l10n.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
-import 'package:userorient_flutter/src/utilities/localizations_overrider.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
 import 'package:userorient_flutter/src/widgets/button.dart';
 
-class SentView extends StatelessWidget {
-  const SentView({super.key});
+/// The success state of the feedback form.
+///
+/// Deliberately not a route: sending is a state change of the sheet you are
+/// already looking at, so this replaces the form's body in place rather than
+/// dismissing one sheet and raising another.
+class SentContent extends StatelessWidget {
+  final VoidCallback onDone;
 
-  @override
-  Widget build(BuildContext context) {
-    return LocalizationsOverrider(
-      child: Scaffold(
-        backgroundColor: context.backgroundColor,
-        body: const _Body(),
-      ),
-    );
-  }
-}
-
-class _Body extends StatelessWidget {
-  const _Body();
+  const SentContent({super.key, required this.onDone});
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +64,7 @@ class _Body extends StatelessWidget {
           ),
           const SizedBox(height: 24.0),
           Button(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: onDone,
             label: L10n.goBack,
           ),
           const BottomPadding(32),

@@ -6,11 +6,12 @@ import 'package:userorient_flutter/src/utilities/helper_functions.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/utilities/localizations_overrider.dart';
 import 'package:userorient_flutter/src/utilities/navigation.dart';
-import 'package:userorient_flutter/src/views/email_view.dart';
-import 'package:userorient_flutter/src/views/sent_view.dart';
+import 'package:userorient_flutter/src/utilities/sheet_dismiss.dart';
+import 'package:userorient_flutter/src/views/form/email_view.dart';
+import 'package:userorient_flutter/src/views/form/sent_view.dart';
 import 'package:userorient_flutter/src/widgets/bottom_padding.dart';
 import 'package:userorient_flutter/src/widgets/button.dart';
-import 'package:userorient_flutter/src/widgets/styled_back_button.dart';
+import 'package:userorient_flutter/src/widgets/sheet_title.dart';
 import 'package:userorient_flutter/src/widgets/styled_text_field.dart';
 
 class FormView extends StatefulWidget {
@@ -24,6 +25,7 @@ class FormViewState extends State<FormView> {
   late final TextEditingController _controller;
   bool _isLoading = false;
   bool _isEmpty = true;
+  bool _isSent = false;
 
   @override
   void initState() {
@@ -67,8 +69,8 @@ class FormViewState extends State<FormView> {
 
           UserOrient.submitForm(content: content).then((_) {
             if (context.mounted) {
-              Navigator.pop(context);
-              Navigation.push(context, const SentView());
+              FocusScope.of(context).unfocus();
+              setState(() => _isSent = true);
             }
           });
         },
@@ -102,11 +104,9 @@ class FormViewState extends State<FormView> {
           context,
           EmailView(content: content, required: emailRequired),
         ).then((submitted) {
-          if (submitted == true) {
-            if (context.mounted) {
-              Navigator.pop(context);
-              Navigation.push(context, const SentView());
-            }
+          if (submitted == true && context.mounted) {
+            FocusScope.of(context).unfocus();
+            setState(() => _isSent = true);
           }
         });
       },
@@ -126,67 +126,74 @@ class FormViewState extends State<FormView> {
     return LocalizationsOverrider(
       child: Scaffold(
         backgroundColor: context.backgroundColor,
-        appBar: AppBar(
-          backgroundColor: context.backgroundColor,
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          leading: const StyledBackButton(),
-          title: Text(
-            L10n.addFeature,
-            style: TextStyle(
-              fontSize: 18,
-              color: context.textColor,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: Column(
+        // Sending swaps the body in place — the sheet never leaves.
+        body: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 320),
+          switchInCurve: Curves.easeOutCubic,
+          switchOutCurve: Curves.easeInCubic,
+          child: _isSent
+              ? Column(
+                  key: const ValueKey('sent'),
                   children: [
                     Expanded(
-                      child: StyledTextField(
-                        minLines: 20,
-                        controller: _controller,
-                        hintText: L10n.formHint,
-                        autoFocus: true,
+                      child: SentContent(
+                        onDone: SheetDismiss.of(context),
                       ),
                     ),
                   ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 4),
-                    child: Text(
-                      '${_controller.text.trim().length}/500',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontFeatures: const [
-                          FontFeature.tabularFigures(),
-                        ],
-                        color: _controller.text.trim().isEmpty
-                            ? context.secondaryTextColor.withValues(alpha: 0.5)
-                            : _controller.text.trim().length < 10
-                                ? Colors.red
-                                : context.secondaryTextColor,
+                )
+              : Column(
+                  key: const ValueKey('form'),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SheetTitle(text: L10n.addFeature),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: StyledTextField(
+                                minLines: 20,
+                                controller: _controller,
+                                hintText: L10n.formHint,
+                                autoFocus: true,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const Spacer(),
-                  _buildSubmitButton(context),
-                ],
-              ),
-            ),
-            const BottomPadding(),
-          ],
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.zero,
+                            child: Text(
+                              '${_controller.text.trim().length}/500',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFeatures: const [
+                                  FontFeature.tabularFigures(),
+                                ],
+                                color: _controller.text.trim().isEmpty
+                                    ? context.secondaryTextColor
+                                        .withValues(alpha: 0.5)
+                                    : _controller.text.trim().length < 10
+                                        ? Colors.red
+                                        : context.secondaryTextColor,
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                          _buildSubmitButton(context),
+                        ],
+                      ),
+                    ),
+                    const BottomPadding(),
+                  ],
+                ),
         ),
       ),
     );
