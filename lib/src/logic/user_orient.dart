@@ -14,7 +14,7 @@ import 'package:userorient_flutter/src/models/user.dart';
 import 'package:userorient_flutter/src/models/theme.dart';
 import 'package:userorient_flutter/src/utilities/helper_functions.dart';
 import 'package:userorient_flutter/src/views/board/board_view.dart';
-import 'package:userorient_flutter/src/views/form_view.dart';
+import 'package:userorient_flutter/src/views/form/form_view.dart';
 
 /// Main entry point for the UserOrient SDK.
 class UserOrient {
@@ -31,38 +31,124 @@ class UserOrient {
   static DataCollection dataCollection = const DataCollection();
   static Map<String, dynamic>? _metaData;
 
-  /// Open the UserOrient board view
+  /// Open the UserOrient board.
+  ///
+  /// This is the only entry point. The form for suggesting a feature is
+  /// reached from the board itself, so people see what already exists — and
+  /// upvote it — before filing a duplicate.
   static Future<void> openBoard(BuildContext context) {
     _initialize();
     return Navigation.push(context, const BoardView());
   }
 
-  /// Open the UserOrient feature request form
+  /// Open the feature request form directly.
+  @Deprecated(
+    'Use openBoard() — routing people through the board cuts duplicate '
+    'requests. Will be removed in 4.0.0.',
+  )
   static Future<void> openForm(BuildContext context) {
     _initialize();
     return Navigation.push(context, const FormView());
   }
 
-  /// Configure the UserOrient SDK. This method must be called before using the SDK.
+  /// Configure the UserOrient SDK. Call this once, before opening the board.
   ///
   /// [apiKey] is the API Key from the UserOrient dashboard.
+  ///
+  /// [accentColor] tints the primary button and the voted state. Text on top
+  /// of it is derived automatically, so it stays legible whatever you pass.
+  /// [darkAccentColor] is used when the host app is in dark mode; it falls
+  /// back to [accentColor].
+  ///
+  /// The board owns its own surface — background, dividers and skeletons are
+  /// not configurable, so they can never fall out of contrast with each other.
   static void configure({
     required String apiKey,
+    Color? accentColor,
+    Color? darkAccentColor,
+    Language? language,
+    CollectionMode? collectEmail,
+    CollectionMode? collectMetadata,
   }) {
     _apiKey = apiKey;
+
+    if (language != null) {
+      UserOrient.languageCode = language.name;
+    }
+
+    if (collectEmail != null || collectMetadata != null) {
+      UserOrient.dataCollection = DataCollection(
+        email: collectEmail ?? UserOrient.dataCollection.email,
+        metadata: collectMetadata ?? UserOrient.dataCollection.metadata,
+      );
+    }
+
+    if (accentColor != null || darkAccentColor != null) {
+      UserOrient.theme = UserOrientTheme(
+        light: UserOrientColors(accentColor: accentColor),
+        dark: UserOrientColors(accentColor: darkAccentColor ?? accentColor),
+      );
+
+      logUO('Accent color applied', emoji: '🫟');
+    }
   }
 
-  /// Set the language for the SDK UI.
+  /// Identify the current user. Call before opening the board.
+  ///
+  /// Every field is optional — with none of them, the user is anonymous but
+  /// still gets a stable identity so their votes persist.
+  static void identify({
+    String? id,
+    String? name,
+    String? email,
+    String? phoneNumber,
+    bool? isPaying,
+    Map<String, dynamic>? extra,
+  }) {
+    UserOrient.user = User(
+      uniqueIdentifier: id,
+      fullName: name,
+      email: email,
+      phoneNumber: phoneNumber,
+      isPaying: isPaying,
+      extra: extra,
+    );
+
+    logUO('Identified user', emoji: '👤');
+  }
+
+  /// Forget the current user and drop everything cached about them.
+  ///
+  /// Call this when someone signs out of your app, so the next person does not
+  /// inherit their votes.
+  static Future<void> logout() async {
+    user = null;
+
+    await _clearCache();
+
+    logUO('Logged out', emoji: '👋');
+  }
+
+  @Deprecated(
+    'Use configure(language: ...) instead. Will be removed in 4.0.0.',
+  )
   static void setLanguage(Language language) {
     UserOrient.languageCode = language.name;
   }
 
-  /// Set data collection preferences for email and metadata.
+  @Deprecated(
+    'Use configure(collectEmail: ..., collectMetadata: ...) instead. '
+    'Will be removed in 4.0.0.',
+  )
   static void setDataCollection(DataCollection dataCollection) {
     UserOrient.dataCollection = dataCollection;
   }
 
-  /// Override the default light and/or dark theme colors.
+  @Deprecated(
+    'Use configure(accentColor: ..., darkAccentColor: ...) instead. '
+    'Background colors are no longer configurable. '
+    'Will be removed in 4.0.0.',
+  )
   static void setTheme({
     required UserOrientColors? light,
     required UserOrientColors? dark,
@@ -71,7 +157,7 @@ class UserOrient {
     logUO('Custom theme applied', emoji: '🫟');
   }
 
-  /// Identify the current user. Call before opening any views.
+  @Deprecated('Use identify() instead. Will be removed in 4.0.0.')
   static void setUser({
     String? uniqueIdentifier,
     String? fullName,
@@ -80,22 +166,24 @@ class UserOrient {
     bool? isPaying,
     Map<String, dynamic>? extra,
   }) {
-    final User user = User(
-      uniqueIdentifier: uniqueIdentifier,
-      fullName: fullName,
+    identify(
+      id: uniqueIdentifier,
+      name: fullName,
       email: email,
       phoneNumber: phoneNumber,
       isPaying: isPaying,
       extra: extra,
     );
-
-    UserOrient.user = user;
-
-    logUO('Set user', emoji: '👤');
   }
 
   /// Clear all locally cached data and reset the SDK state.
-  static Future<void> clearCache() async {
+  @Deprecated(
+    'Use logout() — it also forgets the identified user. '
+    'Will be removed in 4.0.0.',
+  )
+  static Future<void> clearCache() => _clearCache();
+
+  static Future<void> _clearCache() async {
     _isInitialized = false;
     userUuid = null;
 
@@ -119,7 +207,7 @@ class UserOrient {
     final bool projectChanged = hasProjectId && cachedProjectId != _apiKey;
 
     if (projectChanged) {
-      await clearCache();
+      await _clearCache();
 
       logUO('Project changed, cache cleared...', emoji: '🔄');
     }
