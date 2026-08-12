@@ -8,148 +8,125 @@ Let your users vote on what to build next. Collect feedback, prioritize your roa
   <img src="https://raw.githubusercontent.com/UserOrient/userorient-flutter/refs/heads/main/assets/cover.png" alt="UserOrient Cover" width="100%"/>
 </p>
 
-## 🚀 Getting Started
-
-### 1. Install
+## 🚀 Install
 
 ```yaml
 dependencies:
   userorient_flutter: <latest-version>
 ```
 
-### 2. Configure
+---
+
+## ⚙️ Configure
+
+Call once at startup. Only `apiKey` is required.
 
 ```dart
 import 'package:userorient_flutter/userorient_flutter.dart';
 
 void main() {
-  UserOrient.configure(apiKey: 'YOUR_API_KEY');
+  UserOrient.configure(
+    // From the dashboard: https://app.userorient.com
+    apiKey: 'YOUR_API_KEY',
+
+    // Colors the primary button and the voted state.
+    accentColor: Colors.blue,
+
+    // Used in dark mode. Falls back to accentColor.
+    darkAccentColor: Colors.lightBlueAccent,
+
+    // Board language. Defaults to English.
+    language: Language.en,
+
+    // Asks for an email on submit.
+    //   required     — must be entered before submitting
+    //   optional     — can be skipped (default)
+    //   notCollected — step is skipped entirely
+    collectEmail: CollectionMode.optional,
+
+    // Phone model, OS version and your app version.
+    collectMetadata: CollectionMode.optional,
+  );
+
   runApp(MyApp());
 }
 ```
 
-Get your API key from the [UserOrient dashboard](https://app.userorient.com).
-
-### 3. Open the board
-
-```dart
-UserOrient.openBoard(context);
-```
-
-That's it — two lines of setup, one to launch.
+You can't change the background or other colors — the board picks those itself so text always stays readable. It does use your app's font.
 
 ---
 
-## 👤 User
+## 👤 Identify
 
-Identify the current user so votes persist across sessions. Call `setUser` before opening the board.
+Tell us who the user is, so their votes are still there next time.
 
 ```dart
-UserOrient.setUser(
-  uniqueIdentifier: '123456',
-  fullName: 'Kamran Bekirov',
+UserOrient.identify(
+  // Your own user ID. We make one up if you skip it.
+  id: '123456',
+
+  // Display name shown on their comments.
+  name: 'Kamran Bekirov',
+
+  // Used for follow-ups on their suggestions.
   email: 'kamran@userorient.com',
+
+  phoneNumber: '+994501234567',
+
+  // Lets you see which votes came from paying customers.
+  isPaying: true,
+
+  // Anything else you want to save about them.
+  extra: {'plan': 'pro', 'seats': 4},
 );
 ```
 
-All fields are optional. Pass whatever you have:
+Every field is optional. Skip them all and the user stays anonymous, but their votes are still remembered.
 
-| Field | Description |
-|---|---|
-| `uniqueIdentifier` | Your internal user ID |
-| `fullName` | Display name |
-| `email` | Email address |
-| `phoneNumber` | Phone number |
-| `isPaying` | Whether this is a paying customer ([learn more](#paying-users)) |
-| `extra` | Any additional key-value data |
+```dart
+// Forgets the user, so the next person doesn't get their votes.
+await UserOrient.logout();
+```
 
-If `uniqueIdentifier` is omitted, UserOrient generates one automatically.
+---
+
+## 📋 Open the board
+
+```dart
+// The only screen you open. Users suggest features from inside the board,
+// so they see what's already there before adding a duplicate.
+UserOrient.openBoard(context);
+```
+
+Slides up as a sheet on phones, in from the side on web and desktop.
 
 ---
 
 ## 🌍 Language
 
-```dart
-UserOrient.setLanguage(Language.en);
-```
-
-Supported: `az` `de` `en` `es` `fr` `it` `tr` `ru` `ar` `uk` `zh`
-
-You can also parse a locale string:
+`az` `de` `en` `es` `fr` `it` `tr` `ru` `ar` `uk` `zh`
 
 ```dart
-UserOrient.setLanguage(Language.fromCode('en-US')); // Language.en
-```
-
-Falls back to `Language.en` for unsupported codes.
-
----
-
-## 🎨 Theming
-
-```dart
-UserOrient.setTheme(
-  light: UserOrientColors(
-    backgroundColor: Colors.white,
-    accentColor: Colors.blue,
-  ),
-  dark: UserOrientColors(
-    backgroundColor: Color(0xff1D1D1D),
-    accentColor: Colors.blue,
-  ),
-);
-```
-
-| Property | Description |
-|---|---|
-| `backgroundColor` | Board background color |
-| `accentColor` | Buttons, active tabs, voted state (text color adjusts automatically) |
-
-Font family is inherited from your app's `ThemeData`.
-
----
-
-## 🔬 Data Collection
-
-Control what data the SDK collects when a user submits feedback:
-
-```dart
-UserOrient.setDataCollection(DataCollection(
-  email: CollectionMode.required,
-  metadata: CollectionMode.optional,
-));
-```
-
-| Mode | Email behavior | Metadata behavior |
-|---|---|---|
-| `required` | User must enter an email before submitting | Always collected |
-| `optional` | User can skip the email step *(default)* | Collected if available *(default)* |
-| `notCollected` | Email step is skipped entirely | Not collected |
-
-**Metadata** includes device info (model, OS version) and app info (version, build number).
-
----
-
-## 💎 Paying Users
-
-Mark paying customers so you can filter their votes in the dashboard:
-
-```dart
-UserOrient.setUser(
-  uniqueIdentifier: '123456',
-  isPaying: true,
-);
+// Turns a locale string into a Language. Unknown ones become English.
+Language.fromCode('en-US'); // Language.en
 ```
 
 ---
 
-## 🚪 Logging Out
+## ⬆️ Upgrading to 3.0.0
 
-Clear cached data when a user logs out:
+The old methods still work for now, but they're removed in 4.0.0.
 
 ```dart
-await UserOrient.clearCache();
+setTheme(light: ..., dark: ...)                →  configure(accentColor: ..., darkAccentColor: ...)
+setLanguage(lang)                              →  configure(language: ...)
+setDataCollection(...)                         →  configure(collectEmail: ..., collectMetadata: ...)
+setUser(uniqueIdentifier: ..., fullName: ...)  →  identify(id: ..., name: ...)
+clearCache()                                   →  logout()
+openForm(context)                              →  openBoard(context)
 ```
+
+`backgroundColor` is gone. It let you set a background the rest of the board couldn't match, so things stopped being readable.
 
 ---
 
