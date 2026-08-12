@@ -24,12 +24,12 @@ class Watermark extends StatelessWidget {
             package: 'userorient_flutter',
           ),
           const SizedBox(width: 6),
-          const Text(
+          Text(
             'Powered by UserOrient',
             style: TextStyle(
               fontSize: 14,
               height: 18 / 14,
-              color: Color(0xffACAEAF),
+              color: context.secondaryTextColor,
             ),
           ),
         ],
