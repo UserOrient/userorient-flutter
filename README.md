@@ -113,23 +113,6 @@ Language.fromCode('en-US'); // Language.en
 
 ---
 
-## ⬆️ Upgrading to 3.0.0
-
-The old methods still work for now, but they're removed in 4.0.0.
-
-```dart
-setTheme(light: ..., dark: ...)                →  configure(accentColor: ..., darkAccentColor: ...)
-setLanguage(lang)                              →  configure(language: ...)
-setDataCollection(...)                         →  configure(collectEmail: ..., collectMetadata: ...)
-setUser(uniqueIdentifier: ..., fullName: ...)  →  identify(id: ..., name: ...)
-clearCache()                                   →  logout()
-openForm(context)                              →  openBoard(context)
-```
-
-`backgroundColor` is gone. It let you set a background the rest of the board couldn't match, so things stopped being readable.
-
----
-
 ## 📬 Contact
 
 - Email: [kamran@userorient.com](mailto:kamran@userorient.com)
