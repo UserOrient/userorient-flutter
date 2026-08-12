@@ -64,14 +64,14 @@ class _CommentTextFieldState extends State<CommentTextField> {
         height: 52,
         alignment: Alignment.center,
         margin: EdgeInsets.only(
-          left: 16,
-          right: 16,
+          left: 20,
+          right: 20,
           bottom: showPlaceholder && !_isFocused ? 16 : 0,
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.fromLTRB(18, 0, 8, 0),
         decoration: BoxDecoration(
           color: context.textFieldFillColor,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(26),
         ),
         child: Stack(
           alignment: Alignment.center,
@@ -105,19 +105,19 @@ class _CommentTextFieldState extends State<CommentTextField> {
                 ),
                 if (_controller.text.isNotEmpty)
                   Padding(
-                    padding: const EdgeInsets.only(left: 16),
+                    padding: const EdgeInsets.only(left: 10),
                     child: GestureDetector(
                       onTap: () {
                         _addComment();
                       },
                       behavior: HitTestBehavior.translucent,
                       child: Container(
-                        width: 52,
-                        height: 36,
+                        width: 38,
+                        height: 38,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: context.buttonColor,
-                          borderRadius: BorderRadius.circular(12),
+                          shape: BoxShape.circle,
                         ),
                         child: _isLoading
                             ? StyledLoadingIndicator.small(

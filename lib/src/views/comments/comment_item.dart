@@ -36,6 +36,52 @@ class CommentReply extends StatelessWidget {
   }
 }
 
+/// Placeholder for a comment still loading. Mirrors [CommentItem]'s geometry
+/// so the thread does not jump when the real text lands.
+class CommentShimmer extends StatelessWidget {
+  final double contentFraction;
+
+  const CommentShimmer({
+    super.key,
+    this.contentFraction = 1.0,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Widget bar({required double width, required double height}) {
+      return Container(
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+          color: context.skeletonColor,
+          borderRadius: BorderRadius.circular(height / 2),
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            bar(width: 112, height: 16),
+            const Spacer(),
+            bar(width: 40, height: 12),
+          ],
+        ),
+        const SizedBox(height: 12),
+        bar(width: double.infinity, height: 14),
+        const SizedBox(height: 8),
+        FractionallySizedBox(
+          alignment: Alignment.centerLeft,
+          widthFactor: contentFraction,
+          child: bar(width: double.infinity, height: 14),
+        ),
+      ],
+    );
+  }
+}
+
 class CommentItem extends StatelessWidget {
   final Comment comment;
 
