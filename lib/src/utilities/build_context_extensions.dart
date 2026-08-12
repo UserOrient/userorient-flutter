@@ -15,7 +15,7 @@ extension BuildContextX on BuildContext {
   Color get textColor =>
       isDark ? const Color(0xffFAFAFA) : const Color(0xff2A2A2A);
   Color get secondaryTextColor =>
-      isDark ? const Color(0xffB2B2B2) : const Color(0xffACAEAF);
+      isDark ? const Color(0xffB2B2B2) : const Color(0xff8A8D8E);
   Color get borderColor =>
       isDark ? const Color(0xff262626) : const Color(0xffF2F2F2);
 
@@ -41,8 +41,9 @@ extension BuildContextX on BuildContext {
       isDark ? const Color(0xff223027) : const Color(0xffDCF9E6);
   Color get tabsBackgroundColor =>
       isDark ? const Color(0xff121212) : const Color(0xffFAFAFA);
+
   Color get textFieldFillColor =>
-      isDark ? const Color(0xff2A2A2A) : const Color(0xffFAFAFA);
+      isDark ? const Color(0xff23252B) : const Color(0xffF1F2F3);
   Color get skeletonColor =>
       isDark ? const Color(0xff3D3D3D) : const Color(0xffE9EAEE);
 }
