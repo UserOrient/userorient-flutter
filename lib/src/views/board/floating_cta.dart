@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:userorient_flutter/src/logic/l10n.dart';
+import 'package:userorient_flutter/src/utilities/navigation.dart';
+import 'package:userorient_flutter/src/views/form/form_view.dart';
 import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/widgets/button.dart';
-import 'package:userorient_flutter/userorient_flutter.dart';
 
 class FloatingCTA extends StatelessWidget {
   final Animation<double> animation;
@@ -34,7 +35,7 @@ class FloatingCTA extends StatelessWidget {
             child: Center(
               child: Button(
                 onPressed: () {
-                  UserOrient.openForm(context);
+                  Navigation.push(context, const FormView());
                 },
                 label: L10n.addFeature,
                 icon: SvgPicture.asset(

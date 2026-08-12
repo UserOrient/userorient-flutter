@@ -151,14 +151,48 @@ class FeatureCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                feature.titleForLocale(UserOrient.languageCode),
-                style: TextStyle(
-                  fontSize: 16.0,
-                  height: 24 / 16,
-                  color: context.textColor,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      feature.titleForLocale(UserOrient.languageCode),
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        height: 24 / 16,
+                        color: context.textColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  if (!expanded && (feature.commentsCount ?? 0) > 0) ...[
+                    const SizedBox(width: 12.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/comments.svg',
+                            package: 'userorient_flutter',
+                          ),
+                          const SizedBox(width: 4.0),
+                          Text(
+                            feature.commentsCount.toString(),
+                            style: TextStyle(
+                              fontSize: 12,
+                              height: 16 / 12,
+                              fontFeatures: const [
+                                FontFeature.tabularFigures(),
+                              ],
+                              color: context.secondaryTextColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ],
               ),
               if (feature
                   .descriptionForLocale(UserOrient.languageCode)
@@ -178,30 +212,9 @@ class FeatureCard extends StatelessWidget {
               _LabelRow(
                 labels: feature.labels,
               ),
-              if (!expanded) ...[
-                const SizedBox(height: 10.0),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/comments.svg',
-                      package: 'userorient_flutter',
-                    ),
-                    const SizedBox(width: 4.0),
-                    Text(
-                      feature.commentsCount.toString(),
-                      style: TextStyle(
-                        fontSize: 12,
-                        height: 16 / 12,
-                        color: context.secondaryTextColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
             ],
           ),
         ),
-        const SizedBox(width: 8.0),
       ],
     );
   }

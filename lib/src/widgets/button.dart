@@ -38,13 +38,20 @@ class Button extends StatelessWidget {
         decoration: BoxDecoration(
           color: muted ? context.unvotedContainerColor : context.buttonColor,
           borderRadius: BorderRadius.circular(26),
-          boxShadow: muted
+          // Neutral, and light mode only: a shadow tinted with the object's
+          // own colour emits rather than occludes.
+          boxShadow: muted || context.isDark
               ? null
-              : [
+              : const [
                   BoxShadow(
-                    color: context.buttonColor.withValues(alpha: 0.1),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
+                    color: Color(0x14000000),
+                    blurRadius: 4,
+                    offset: Offset(0, 1),
+                  ),
+                  BoxShadow(
+                    color: Color(0x1F000000),
+                    blurRadius: 16,
+                    offset: Offset(0, 6),
                   ),
                 ],
         ),
