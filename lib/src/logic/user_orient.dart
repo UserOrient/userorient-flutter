@@ -244,9 +244,16 @@ class UserOrient {
   static Future<void> getComments(Feature feature) async {
     UserOrient.comments.value = null;
 
+    final projectId = _apiKey;
+    final userId = userUuid;
+    if (projectId == null || userId == null) {
+      UserOrient.comments.value = const [];
+      return;
+    }
+
     final List<Comment> comments = await UserOrientData.getComments(
-      projectId: _apiKey!,
-      userId: userUuid!,
+      projectId: projectId,
+      userId: userId,
       featureId: feature.id,
     );
 
