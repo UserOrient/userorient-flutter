@@ -6,6 +6,54 @@ import 'package:userorient_flutter/src/logic/user_orient_data.dart';
 import 'package:userorient_flutter/src/models/feature.dart';
 
 void main() {
+  test('decodes a valid user sync response', () async {
+    final client = MockClient(
+      (_) async => http.Response('{"id":"user-id","email":null}', 200),
+    );
+
+    final user = await UserOrientData.syncUser(
+      user: null,
+      cachedId: null,
+      projectId: 'project',
+      client: client,
+    );
+
+    expect(user.id, 'user-id');
+    expect(user.email, isNull);
+  });
+
+  test('rejects a malformed user sync response', () async {
+    final client = MockClient(
+      (_) async => http.Response('Unhandled platform error.', 200),
+    );
+
+    await expectLater(
+      UserOrientData.syncUser(
+        user: null,
+        cachedId: null,
+        projectId: 'project',
+        client: client,
+      ),
+      throwsA(isA<FormatException>()),
+    );
+  });
+
+  test('rejects a failed user sync response before decoding it', () async {
+    final client = MockClient(
+      (_) async => http.Response('Unhandled platform error.', 500),
+    );
+
+    await expectLater(
+      UserOrientData.syncUser(
+        user: null,
+        cachedId: null,
+        projectId: 'project',
+        client: client,
+      ),
+      throwsA(isA<http.ClientException>()),
+    );
+  });
+
   test(
     'returns no features when the service returns an empty response',
     () async {
@@ -36,10 +84,12 @@ void main() {
     expect(comments, isEmpty);
   });
 
-  test('does not fetch comments before the SDK has identified the user',
-      () async {
-    await UserOrient.getComments(Feature.skeleton());
+  test(
+    'does not fetch comments before the SDK has identified the user',
+    () async {
+      await UserOrient.getComments(Feature.skeleton());
 
-    expect(UserOrient.comments.value, isEmpty);
-  });
+      expect(UserOrient.comments.value, isEmpty);
+    },
+  );
 }

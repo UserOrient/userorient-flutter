@@ -32,23 +32,23 @@ class UserOrient {
   static Map<String, dynamic>? _metaData;
 
   /// Open the UserOrient board view
-  static Future<void> openBoard(BuildContext context) {
-    _initialize();
+  static Future<void> openBoard(BuildContext context) async {
+    await _initialize();
+    if (!context.mounted) return;
     return Navigation.push(context, const BoardView());
   }
 
   /// Open the UserOrient feature request form
-  static Future<void> openForm(BuildContext context) {
-    _initialize();
+  static Future<void> openForm(BuildContext context) async {
+    await _initialize();
+    if (!context.mounted) return;
     return Navigation.push(context, const FormView());
   }
 
   /// Configure the UserOrient SDK. This method must be called before using the SDK.
   ///
   /// [apiKey] is the API Key from the UserOrient dashboard.
-  static void configure({
-    required String apiKey,
-  }) {
+  static void configure({required String apiKey}) {
     _apiKey = apiKey;
   }
 
@@ -153,10 +153,7 @@ class UserOrient {
 
       await _fetchAndSetFeatures();
 
-      logUO(
-        'Initialization completed for project $_apiKey',
-        emoji: '✅',
-      );
+      logUO('Initialization completed for project $_apiKey', emoji: '✅');
 
       await prefs.setString('user_orient_project_id', _apiKey!);
 
@@ -190,8 +187,9 @@ class UserOrient {
       if (f.id == feature.id) {
         return feature.copyWith(
           voted: !feature.voted,
-          voteCount:
-              feature.voted ? feature.voteCount - 1 : feature.voteCount + 1,
+          voteCount: feature.voted
+              ? feature.voteCount - 1
+              : feature.voteCount + 1,
         );
       }
 

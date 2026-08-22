@@ -24,24 +24,53 @@ class UserOrientData {
     required User? user,
     required String? cachedId,
     required String projectId,
+    http.Client? client,
   }) async {
     user ??= const User.anonymous();
     final Endpoint endpoint = RestfulEndpoints.syncUser(projectId);
 
     logUO('Syncing user: ${user.toJson(cachedId)}', emoji: '🔄');
 
-    final http.Response response = await http.post(
-      Uri.parse(endpoint.url),
-      body: jsonEncode(user.toJson(cachedId)),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
+    final uri = Uri.parse(endpoint.url);
+    final http.Response response =
+        await (client?.post(
+              uri,
+              body: jsonEncode(user.toJson(cachedId)),
+              headers: const {'Content-Type': 'application/json'},
+            ) ??
+            http.post(
+              uri,
+              body: jsonEncode(user.toJson(cachedId)),
+              headers: const {'Content-Type': 'application/json'},
+            ));
 
     logUO('Authenticated user: ${response.body}', emoji: '👀');
 
-    final body = jsonDecode(response.body);
-    return ResolvedUser(id: body['id'], email: body['email']);
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      throw http.ClientException(
+        'User sync failed with HTTP ${response.statusCode}',
+        uri,
+      );
+    }
+
+    final dynamic body;
+    try {
+      body = jsonDecode(response.body);
+    } on FormatException {
+      throw const FormatException('User sync returned invalid JSON');
+    }
+
+    if (body is! Map<String, dynamic>) {
+      throw const FormatException('User sync returned an invalid object');
+    }
+
+    final id = body['id'];
+    final email = body['email'];
+    if (id is! String || id.isEmpty || (email != null && email is! String)) {
+      throw const FormatException('User sync returned invalid user data');
+    }
+
+    return ResolvedUser(id: id, email: email as String?);
   }
 
   static Future<Project> getProject({required String projectId}) async {
@@ -93,9 +122,7 @@ class UserOrientData {
     await http.post(
       Uri.parse(endpoint.url),
       body: jsonEncode(endpoint.body),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: {'Content-Type': 'application/json'},
     );
   }
 
@@ -116,9 +143,7 @@ class UserOrientData {
 
     await http.post(
       Uri.parse(endpoint.url),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: {'Content-Type': 'application/json'},
       body: jsonEncode(endpoint.body),
     );
   }
@@ -219,9 +244,7 @@ class UserOrientData {
 
     final http.Response response = await http.post(
       Uri.parse(endpoint.url),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: {'Content-Type': 'application/json'},
       body: jsonEncode(endpoint.body),
     );
 
