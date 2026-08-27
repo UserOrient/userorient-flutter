@@ -15,6 +15,7 @@ import 'package:userorient_flutter/src/models/theme.dart';
 import 'package:userorient_flutter/src/utilities/helper_functions.dart';
 import 'package:userorient_flutter/src/views/board/board_view.dart';
 import 'package:userorient_flutter/src/views/form_view.dart';
+import 'package:userorient_flutter/src/views/initializing_view.dart';
 
 /// Main entry point for the UserOrient SDK.
 class UserOrient {
@@ -30,26 +31,42 @@ class UserOrient {
   static UserOrientTheme? theme;
   static DataCollection dataCollection = const DataCollection();
   static Map<String, dynamic>? _metaData;
+  static void Function(Object error, StackTrace stackTrace)?
+      _initializationErrorHandler;
 
   /// Open the UserOrient board view
-  static Future<void> openBoard(BuildContext context) async {
-    await _initialize();
-    if (!context.mounted) return;
-    return Navigation.push(context, const BoardView());
+  static Future<void> openBoard(BuildContext context) {
+    return Navigation.push(
+      context,
+      InitializingView(
+        initialize: _initialize,
+        onError: _initializationErrorHandler,
+        child: const BoardView(),
+      ),
+    );
   }
 
   /// Open the UserOrient feature request form
-  static Future<void> openForm(BuildContext context) async {
-    await _initialize();
-    if (!context.mounted) return;
-    return Navigation.push(context, const FormView());
+  static Future<void> openForm(BuildContext context) {
+    return Navigation.push(
+      context,
+      InitializingView(
+        initialize: _initialize,
+        onError: _initializationErrorHandler,
+        child: const FormView(),
+      ),
+    );
   }
 
   /// Configure the UserOrient SDK. This method must be called before using the SDK.
   ///
   /// [apiKey] is the API Key from the UserOrient dashboard.
-  static void configure({required String apiKey}) {
+  static void configure({
+    required String apiKey,
+    void Function(Object error, StackTrace stackTrace)? onInitializationError,
+  }) {
     _apiKey = apiKey;
+    _initializationErrorHandler = onInitializationError;
   }
 
   /// Set the language for the SDK UI.
@@ -187,9 +204,8 @@ class UserOrient {
       if (f.id == feature.id) {
         return feature.copyWith(
           voted: !feature.voted,
-          voteCount: feature.voted
-              ? feature.voteCount - 1
-              : feature.voteCount + 1,
+          voteCount:
+              feature.voted ? feature.voteCount - 1 : feature.voteCount + 1,
         );
       }
 
