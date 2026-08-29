@@ -54,24 +54,25 @@ class UserOrientData {
   static Future<List<Feature>> getFeatures({
     required String projectId,
     required String userId,
+    http.Client? client,
   }) async {
     final Endpoint endpoint = RestfulEndpoints.features(
       apiKey: projectId,
       userId: userId,
     );
 
-    final http.Response response = await http.get(
-      Uri.parse(endpoint.url),
-    );
+    final http.Response response =
+        await (client?.get(Uri.parse(endpoint.url)) ??
+            http.get(Uri.parse(endpoint.url)));
 
     logUO(response.body.toString(), emoji: '👀');
 
     // TODO: throws user not found when an old project's user has been used, sync user before, check if it exists then continue
 
-    final List<Feature> features =
-        (jsonDecode(response.body)['features'] as List)
-            .map((feature) => Feature.fromJson(feature))
-            .toList();
+    final List<Feature> features = _decodeObjectList(
+      response.body,
+      field: 'features',
+    ).map(Feature.fromJson).toList();
 
     features.sort((a, b) => b.voteCount.compareTo(a.voteCount));
 
@@ -158,6 +159,7 @@ class UserOrientData {
     required String projectId,
     required String userId,
     required String featureId,
+    http.Client? client,
   }) async {
     final Endpoint endpoint = RestfulEndpoints.comments(
       projectId: projectId,
@@ -167,15 +169,35 @@ class UserOrientData {
 
     logUO(endpoint.url, emoji: '👀');
 
-    final http.Response response = await http.get(
-      Uri.parse(endpoint.url),
-    );
+    final http.Response response =
+        await (client?.get(Uri.parse(endpoint.url)) ??
+            http.get(Uri.parse(endpoint.url)));
 
     logUO(response.body.toString(), emoji: '👀');
 
-    return (jsonDecode(response.body)['comments'] as List).map((comment) {
-      return Comment.fromJson(comment);
-    }).toList();
+    return _decodeObjectList(
+      response.body,
+      field: 'comments',
+    ).map(Comment.fromJson).toList();
+  }
+
+  static List<Map<String, dynamic>> _decodeObjectList(
+    String responseBody, {
+    required String field,
+  }) {
+    if (responseBody.trim().isEmpty) return const [];
+
+    try {
+      final decoded = jsonDecode(responseBody);
+      if (decoded is! Map<String, dynamic>) return const [];
+
+      final value = decoded[field];
+      if (value is! List) return const [];
+
+      return value.whereType<Map<String, dynamic>>().toList(growable: false);
+    } on FormatException {
+      return const [];
+    }
   }
 
   static Future<void> addComment({
