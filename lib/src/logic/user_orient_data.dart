@@ -20,33 +20,90 @@ class ResolvedUser {
 }
 
 class UserOrientData {
+  static const requestTimeout = Duration(seconds: 12);
+
+  static Future<http.Response> _boundedRequest(
+    Future<http.Response> request,
+    Uri uri, {
+    Duration timeout = requestTimeout,
+  }) {
+    return request.timeout(
+      timeout,
+      onTimeout: () => throw http.ClientException(
+        'UserOrient request timed out after ${timeout.inSeconds} seconds',
+        uri,
+      ),
+    );
+  }
+
   static Future<ResolvedUser> syncUser({
     required User? user,
     required String? cachedId,
     required String projectId,
+    http.Client? client,
+    Duration timeout = requestTimeout,
   }) async {
     user ??= const User.anonymous();
     final Endpoint endpoint = RestfulEndpoints.syncUser(projectId);
 
     logUO('Syncing user: ${user.toJson(cachedId)}', emoji: '🔄');
 
-    final http.Response response = await http.post(
-      Uri.parse(endpoint.url),
-      body: jsonEncode(user.toJson(cachedId)),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    final uri = Uri.parse(endpoint.url);
+    final http.Response response = await _boundedRequest(
+      client?.post(
+            uri,
+            body: jsonEncode(user.toJson(cachedId)),
+            headers: const {'Content-Type': 'application/json'},
+          ) ??
+          http.post(
+            uri,
+            body: jsonEncode(user.toJson(cachedId)),
+            headers: const {'Content-Type': 'application/json'},
+          ),
+      uri,
+      timeout: timeout,
     );
 
     logUO('Authenticated user: ${response.body}', emoji: '👀');
 
-    final body = jsonDecode(response.body);
-    return ResolvedUser(id: body['id'], email: body['email']);
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      throw http.ClientException(
+        'User sync failed with HTTP ${response.statusCode}',
+        uri,
+      );
+    }
+
+    final dynamic body;
+    try {
+      body = jsonDecode(response.body);
+    } on FormatException {
+      throw const FormatException('User sync returned invalid JSON');
+    }
+
+    if (body is! Map<String, dynamic>) {
+      throw const FormatException('User sync returned an invalid object');
+    }
+
+    final id = body['id'];
+    final email = body['email'];
+    if (id is! String || id.isEmpty || (email != null && email is! String)) {
+      throw const FormatException('User sync returned invalid user data');
+    }
+
+    return ResolvedUser(id: id, email: email as String?);
   }
 
-  static Future<Project> getProject({required String projectId}) async {
+  static Future<Project> getProject({
+    required String projectId,
+    Duration timeout = requestTimeout,
+  }) async {
     final Endpoint endpoint = RestfulEndpoints.projectDetails(projectId);
-    final http.Response response = await http.get(Uri.parse(endpoint.url));
+    final uri = Uri.parse(endpoint.url);
+    final response = await _boundedRequest(
+      http.get(uri),
+      uri,
+      timeout: timeout,
+    );
 
     return Project.fromJson(jsonDecode(response.body));
   }
@@ -55,15 +112,19 @@ class UserOrientData {
     required String projectId,
     required String userId,
     http.Client? client,
+    Duration timeout = requestTimeout,
   }) async {
     final Endpoint endpoint = RestfulEndpoints.features(
       apiKey: projectId,
       userId: userId,
     );
 
-    final http.Response response =
-        await (client?.get(Uri.parse(endpoint.url)) ??
-            http.get(Uri.parse(endpoint.url)));
+    final uri = Uri.parse(endpoint.url);
+    final response = await _boundedRequest(
+      client?.get(uri) ?? http.get(uri),
+      uri,
+      timeout: timeout,
+    );
 
     logUO(response.body.toString(), emoji: '👀');
 
@@ -93,9 +154,7 @@ class UserOrientData {
     await http.post(
       Uri.parse(endpoint.url),
       body: jsonEncode(endpoint.body),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: {'Content-Type': 'application/json'},
     );
   }
 
@@ -116,9 +175,7 @@ class UserOrientData {
 
     await http.post(
       Uri.parse(endpoint.url),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: {'Content-Type': 'application/json'},
       body: jsonEncode(endpoint.body),
     );
   }
@@ -160,6 +217,7 @@ class UserOrientData {
     required String userId,
     required String featureId,
     http.Client? client,
+    Duration timeout = requestTimeout,
   }) async {
     final Endpoint endpoint = RestfulEndpoints.comments(
       projectId: projectId,
@@ -169,9 +227,12 @@ class UserOrientData {
 
     logUO(endpoint.url, emoji: '👀');
 
-    final http.Response response =
-        await (client?.get(Uri.parse(endpoint.url)) ??
-            http.get(Uri.parse(endpoint.url)));
+    final uri = Uri.parse(endpoint.url);
+    final response = await _boundedRequest(
+      client?.get(uri) ?? http.get(uri),
+      uri,
+      timeout: timeout,
+    );
 
     logUO(response.body.toString(), emoji: '👀');
 
@@ -219,9 +280,7 @@ class UserOrientData {
 
     final http.Response response = await http.post(
       Uri.parse(endpoint.url),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: {'Content-Type': 'application/json'},
       body: jsonEncode(endpoint.body),
     );
 

@@ -15,6 +15,7 @@ import 'package:userorient_flutter/src/models/theme.dart';
 import 'package:userorient_flutter/src/utilities/helper_functions.dart';
 import 'package:userorient_flutter/src/views/board/board_view.dart';
 import 'package:userorient_flutter/src/views/form_view.dart';
+import 'package:userorient_flutter/src/views/initializing_view.dart';
 
 /// Main entry point for the UserOrient SDK.
 class UserOrient {
@@ -30,17 +31,31 @@ class UserOrient {
   static UserOrientTheme? theme;
   static DataCollection dataCollection = const DataCollection();
   static Map<String, dynamic>? _metaData;
+  static void Function(Object error, StackTrace stackTrace)?
+      _initializationErrorHandler;
 
   /// Open the UserOrient board view
   static Future<void> openBoard(BuildContext context) {
-    _initialize();
-    return Navigation.push(context, const BoardView());
+    return Navigation.push(
+      context,
+      InitializingView(
+        initialize: _initialize,
+        onError: _initializationErrorHandler,
+        child: const BoardView(),
+      ),
+    );
   }
 
   /// Open the UserOrient feature request form
   static Future<void> openForm(BuildContext context) {
-    _initialize();
-    return Navigation.push(context, const FormView());
+    return Navigation.push(
+      context,
+      InitializingView(
+        initialize: _initialize,
+        onError: _initializationErrorHandler,
+        child: const FormView(),
+      ),
+    );
   }
 
   /// Configure the UserOrient SDK. This method must be called before using the SDK.
@@ -48,8 +63,10 @@ class UserOrient {
   /// [apiKey] is the API Key from the UserOrient dashboard.
   static void configure({
     required String apiKey,
+    void Function(Object error, StackTrace stackTrace)? onInitializationError,
   }) {
     _apiKey = apiKey;
+    _initializationErrorHandler = onInitializationError;
   }
 
   /// Set the language for the SDK UI.
@@ -153,10 +170,7 @@ class UserOrient {
 
       await _fetchAndSetFeatures();
 
-      logUO(
-        'Initialization completed for project $_apiKey',
-        emoji: '✅',
-      );
+      logUO('Initialization completed for project $_apiKey', emoji: '✅');
 
       await prefs.setString('user_orient_project_id', _apiKey!);
 
