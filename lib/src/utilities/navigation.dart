@@ -46,6 +46,11 @@ class Navigation {
       ].contains(defaultTargetPlatform);
 
   static Future<T?> push<T>(BuildContext context, Widget child) {
+    final ThemeData? fallbackTheme = context.fallbackTheme;
+    if (fallbackTheme != null) {
+      child = HostTheme(data: fallbackTheme, child: child);
+    }
+
     if (isSheetPlatform) {
       final Route<T> route = defaultTargetPlatform == TargetPlatform.iOS
           ? StupidSimpleGlassSheetRoute<T>(
@@ -80,7 +85,11 @@ class Navigation {
           barrierColor: Colors.black38,
           transitionDuration: _PanelMotion.arriveDuration,
           reverseTransitionDuration: _PanelMotion.leaveDuration,
-          pageBuilder: (_, __, ___) => _WebPanel(child: child),
+          // The panel's own chrome needs the fallback theme too, not just the
+          // pages inside it.
+          pageBuilder: (_, __, ___) => fallbackTheme == null
+              ? _WebPanel(child: child)
+              : HostTheme(data: fallbackTheme, child: _WebPanel(child: child)),
           transitionsBuilder: (_, animation, __, child) {
             return FadeTransition(
               // Linear parent, so opacity stays in range whatever the spring

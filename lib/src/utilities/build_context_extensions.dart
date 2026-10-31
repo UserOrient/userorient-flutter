@@ -3,7 +3,49 @@ import 'package:userorient_flutter/src/logic/user_orient.dart';
 import 'package:userorient_flutter/src/models/theme.dart';
 
 extension BuildContextX on BuildContext {
-  bool get isDark => Theme.of(this).brightness == Brightness.dark;
+  /// True when the app is in dark mode.
+  ///
+  /// Apps on the standalone `material_ui` package provide their own Theme,
+  /// which Flutter's [Theme.of] can't see. Without a Flutter Theme above us,
+  /// read it from the app's text color, then the system setting.
+  bool get isDark => hostBrightness == Brightness.dark;
+
+  bool get _hasAppTheme => findAncestorWidgetOfExactType<Theme>() != null;
+
+  Brightness get hostBrightness {
+    if (_hasAppTheme) return Theme.of(this).brightness;
+    final HostTheme? host = findAncestorWidgetOfExactType<HostTheme>();
+    if (host != null) return host.data.brightness;
+    // The app's body text color follows its theme: light text, dark theme.
+    // Skip WidgetsApp's debug error style, which is red whatever the theme.
+    final TextStyle style = DefaultTextStyle.of(this).style;
+    final Color? textColor = style.color;
+    if (textColor != null && style.fontFamily != 'monospace') {
+      return textColor.computeLuminance() > 0.5
+          ? Brightness.dark
+          : Brightness.light;
+    }
+
+    return MediaQuery.platformBrightnessOf(this);
+  }
+
+  /// A Flutter Theme for the SDK's routes when the app doesn't provide one,
+  /// built from the brightness and font the app is actually using.
+  /// Returns null when the app already has a Flutter Theme.
+  ThemeData? get fallbackTheme {
+    if (_hasAppTheme) return null;
+
+    // Pushed from inside the SDK: carry the theme over to the new route.
+    final HostTheme? host = findAncestorWidgetOfExactType<HostTheme>();
+    if (host != null) return host.data;
+
+    String? fontFamily = DefaultTextStyle.of(this).style.fontFamily;
+    // WidgetsApp's debug error style. Seen when the context isn't under a
+    // Scaffold or Material, so it says nothing about the app's font.
+    if (fontFamily == 'monospace') fontFamily = null;
+
+    return ThemeData(brightness: hostBrightness, fontFamily: fontFamily);
+  }
 
   UserOrientColors? get _themeColors =>
       isDark ? UserOrient.theme?.dark : UserOrient.theme?.light;
@@ -46,4 +88,10 @@ extension BuildContextX on BuildContext {
       isDark ? const Color(0xff23252B) : const Color(0xffF1F2F3);
   Color get skeletonColor =>
       isDark ? const Color(0xff3D3D3D) : const Color(0xffE9EAEE);
+}
+
+/// The Theme the SDK wraps its routes in when the app has no Flutter Theme.
+/// Its own type, so it isn't mistaken for the app's.
+class HostTheme extends Theme {
+  const HostTheme({super.key, required super.data, required super.child});
 }
