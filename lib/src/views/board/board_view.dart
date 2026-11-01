@@ -6,6 +6,7 @@ import 'package:userorient_flutter/src/utilities/build_context_extensions.dart';
 import 'package:userorient_flutter/src/utilities/localizations_overrider.dart';
 import 'package:userorient_flutter/src/views/board/board_list.dart';
 import 'package:userorient_flutter/src/views/board/floating_cta.dart';
+import 'package:userorient_flutter/src/views/board/pending_requests.dart';
 import 'package:userorient_flutter/src/widgets/progressive_fade.dart';
 import 'package:userorient_flutter/src/widgets/sheet_title.dart';
 import 'package:userorient_flutter/src/widgets/tip_card.dart';
@@ -51,6 +52,8 @@ class _BoardViewState extends State<BoardView>
 
   @override
   void dispose() {
+    // The thanks is for this visit only.
+    UserOrient.justSent.value = false;
     _fadeHeight.dispose();
     _fabAnimation.dispose();
     _fabController.dispose();
@@ -138,7 +141,12 @@ class _BoardViewState extends State<BoardView>
                               child: BoardList(
                                 features: openFeatures,
                                 shipped: shippedFeatures,
-                                header: const TipCard(),
+                                header: const Column(
+                                  children: [
+                                    TipCard(),
+                                    PendingRequests(),
+                                  ],
+                                ),
                               ),
                             ),
                           );

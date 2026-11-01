@@ -22,6 +22,15 @@ class UserOrient {
   static final ValueNotifier<List<Comment>?> comments = ValueNotifier(null);
   static final ValueNotifier<Project?> project = ValueNotifier(null);
 
+  /// Requests sent this session that are still in review, newest first.
+  /// Kept in memory only.
+  static final ValueNotifier<List<String>> pendingRequests =
+      ValueNotifier(const []);
+
+  /// True right after a request is sent, so the board thanks the user once.
+  /// The board resets it when it closes.
+  static final ValueNotifier<bool> justSent = ValueNotifier(false);
+
   static String? _apiKey;
   static User? user;
   static UserUUID? userUuid;
@@ -189,6 +198,7 @@ class UserOrient {
 
     features.value = null;
     project.value = null;
+    pendingRequests.value = const [];
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('user_orient_project_id');
@@ -324,6 +334,9 @@ class UserOrient {
     if (resolvedEmail != null && user?.email == null) {
       user = user?.copyWith(email: resolvedEmail) ?? User(email: resolvedEmail);
     }
+
+    pendingRequests.value = [content, ...pendingRequests.value];
+    justSent.value = true;
 
     logUO('Feature request sent. ', emoji: '🚀');
   }

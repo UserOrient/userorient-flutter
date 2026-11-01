@@ -7,10 +7,8 @@ class L10n {
       'tip': 'Tezliklə görmək istədiklərinizə səs verin.',
       'form_hint': 'Təklifiniz nədir?',
       'submit_form': 'Göndər',
-      'sent_title': 'Təklif göndərildi!',
-      'sent_description':
-          'Təşəkkürlər! Təklifinizi nəzərdən keçirəcəyik və sizi xəbərdar edəcəyik.',
-      'go_back': 'Tamam',
+      'in_review': 'Nəzərdən keçirilir',
+      'thanks_sent': 'Təşəkkürlər! Tezliklə nəzərdən keçirəcəyik.',
       'add_feature': 'Təklif Göndər',
       'roadmap': 'Yol Xəritəsi',
       'implemented': 'Tamamlanmış',
@@ -45,10 +43,8 @@ class L10n {
       'tip': 'Stimme für die Funktionen, die du bald sehen möchtest.',
       'form_hint': 'Beschreibe deine Idee...',
       'submit_form': 'Absenden',
-      'sent_title': 'Vorschlag gesendet!',
-      'sent_description':
-          'Danke! Wir prüfen deinen Vorschlag und halten dich auf dem Laufenden.',
-      'go_back': 'Fertig',
+      'in_review': 'In Prüfung',
+      'thanks_sent': 'Danke! Wir sehen es uns bald an.',
       'add_feature': 'Vorschlag einreichen',
       'roadmap': 'Roadmap',
       'implemented': 'Implementiert',
@@ -83,10 +79,8 @@ class L10n {
       'tip': 'Vote the features you want to see soon.',
       'form_hint': 'Describe your idea...',
       'submit_form': 'Submit',
-      'sent_title': 'Feature request sent!',
-      'sent_description':
-          'Thanks! We\'ll review your suggestion and keep you posted.',
-      'go_back': 'Done',
+      'in_review': 'In review',
+      'thanks_sent': 'Thanks! We\'ll review it soon.',
       'add_feature': 'Suggest Feature',
       'roadmap': 'Roadmap',
       'implemented': 'Implemented',
@@ -121,10 +115,8 @@ class L10n {
       'tip': 'Vota las funciones que deseas pronto.',
       'form_hint': 'Describe tu idea...',
       'submit_form': 'Enviar',
-      'sent_title': '¡Solicitud de sugerencia enviada!',
-      'sent_description':
-          '¡Gracias! Revisaremos tu sugerencia y te mantendremos informado.',
-      'go_back': 'Listo',
+      'in_review': 'En revisión',
+      'thanks_sent': '¡Gracias! Lo revisaremos pronto.',
       'add_feature': 'Agregar Sugerencia',
       'roadmap': 'Ruta',
       'implemented': 'Implementado',
@@ -159,10 +151,8 @@ class L10n {
       'tip': 'Votez pour les fonctionnalités que vous souhaitez voir bientôt.',
       'form_hint': 'Décrivez votre idée...',
       'submit_form': 'Envoyer',
-      'sent_title': 'Suggestion envoyée !',
-      'sent_description':
-          'Merci ! Nous examinerons votre suggestion et vous tiendrons informé.',
-      'go_back': 'Terminé',
+      'in_review': 'En examen',
+      'thanks_sent': 'Merci ! Nous l\'examinerons bientôt.',
       'add_feature': 'Suggérer une fonctionnalité',
       'roadmap': 'Feuille de route',
       'implemented': 'Implémenté',
@@ -197,10 +187,8 @@ class L10n {
       'tip': 'Vota le funzionalità che vuoi vedere presto.',
       'form_hint': 'Descrivi la tua idea...',
       'submit_form': 'Invia',
-      'sent_title': 'Richiesta di funzionalità inviata!',
-      'sent_description':
-          'Grazie! Esamineremo il tuo suggerimento e ti terremo aggiornato.',
-      'go_back': 'Fatto',
+      'in_review': 'In revisione',
+      'thanks_sent': 'Grazie! Lo esamineremo presto.',
       'add_feature': 'Aggiungi Funzionalità',
       'roadmap': 'Rotta',
       'implemented': 'Implementato',
@@ -235,10 +223,8 @@ class L10n {
       'tip': 'Yakında görmek isteklerinizi oylayın.',
       'form_hint': 'Fikrinizi tanımlayın...',
       'submit_form': 'Gönder',
-      'sent_title': 'Öneri isteği gönderildi!',
-      'sent_description':
-          'Teşekkürler! Önerinizi inceleyecek ve sizi bilgilendireceğiz.',
-      'go_back': 'Tamam',
+      'in_review': 'İnceleniyor',
+      'thanks_sent': 'Teşekkürler! Yakında inceleyeceğiz.',
       'add_feature': 'Öneri Gönder',
       'roadmap': 'Yol Haritası',
       'implemented': 'Tamamlanmış',
@@ -273,10 +259,8 @@ class L10n {
       'tip': 'Голосуйте за функции, которые хотите увидеть в ближайшее время.',
       'form_hint': 'Опишите вашу идею...',
       'submit_form': 'Отправить',
-      'sent_title': 'Запрос отправлен!',
-      'sent_description':
-          'Спасибо! Мы рассмотрим ваше предложение и будем держать вас в курсе.',
-      'go_back': 'Готово',
+      'in_review': 'На рассмотрении',
+      'thanks_sent': 'Спасибо! Скоро рассмотрим.',
       'add_feature': 'Предложить идею',
       'roadmap': 'План развития',
       'implemented': 'Выполнено',
@@ -311,9 +295,8 @@ class L10n {
       'tip': 'صوت للميزات التي تريد رؤيتها قريباً.',
       'form_hint': 'اصف فكرتك...',
       'submit_form': 'إرسال',
-      'sent_title': 'تم إرسال طلب الميزة!',
-      'sent_description': 'شكراً! سنراجع اقتراحك ونبقيك على اطلاع.',
-      'go_back': 'تم',
+      'in_review': 'قيد المراجعة',
+      'thanks_sent': 'شكرًا! سنراجعه قريبًا.',
       'add_feature': 'اقتراح ميزة',
       'roadmap': 'خريطة الطريق',
       'implemented': 'مُنفذ',
@@ -348,10 +331,8 @@ class L10n {
       'tip': 'Голосуйте за функції, які хочете побачити найближчим часом.',
       'form_hint': 'Опишіть свою ідею...',
       'submit_form': 'Надіслати',
-      'sent_title': 'Запит на функцію надіслано!',
-      'sent_description':
-          'Дякуємо! Ми розглянемо вашу пропозицію і триматимемо вас у курсі.',
-      'go_back': 'Готово',
+      'in_review': 'На розгляді',
+      'thanks_sent': 'Дякуємо! Незабаром розглянемо.',
       'add_feature': 'Запропонувати функцію',
       'roadmap': 'План розвитку',
       'implemented': 'Реалізовано',
@@ -386,9 +367,8 @@ class L10n {
       'tip': '为你期待的功能投票。',
       'form_hint': '描述你的想法...',
       'submit_form': '提交',
-      'sent_title': '功能建议已发送！',
-      'sent_description': '感谢！我们会审核你的建议并及时通知你。',
-      'go_back': '完成',
+      'in_review': '审核中',
+      'thanks_sent': '谢谢！我们会尽快审核。',
       'add_feature': '提交建议',
       'roadmap': '路线图',
       'implemented': '已实现',
@@ -428,9 +408,8 @@ class L10n {
   static String get tip => _t('tip');
   static String get formHint => _t('form_hint');
   static String get submitForm => _t('submit_form');
-  static String get sentTitle => _t('sent_title');
-  static String get sentDescription => _t('sent_description');
-  static String get goBack => _t('go_back');
+  static String get inReview => _t('in_review');
+  static String get thanksSent => _t('thanks_sent');
   static String get addFeature => _t('add_feature');
   static String get title => _t('title');
   static String get roadmap => _t('roadmap');

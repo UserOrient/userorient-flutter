@@ -79,6 +79,14 @@ extension BuildContextX on BuildContext {
       ? const Color(0xffB2B2B2).withValues(alpha: .1)
       : const Color(0xffE9EAEE).withValues(alpha: .75);
   Color get votedContainerColor => buttonColor;
+
+  Color get thanksColor =>
+      isDark ? const Color(0xff52DF82) : const Color(0xff16A34A);
+
+  Color get inReviewColor =>
+      isDark ? const Color(0xffF5A524) : const Color(0xffB45309);
+  Color get inReviewContainerColor =>
+      isDark ? const Color(0xff3A2A12) : const Color(0xffFFF4E5);
   Color get completedContainerColor =>
       isDark ? const Color(0xff223027) : const Color(0xffDCF9E6);
   Color get tabsBackgroundColor =>
