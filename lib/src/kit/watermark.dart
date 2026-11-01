@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:userorient_flutter/src/kit/palette.dart';
+import 'package:userorient_flutter/src/kit/tappable.dart';
 
 /// "Powered by UserOrient", hidden on paid plans.
 class Watermark extends StatelessWidget {
@@ -9,7 +10,8 @@ class Watermark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Tappable(
+      focusRadius: BorderRadius.circular(6),
       onTap: () {
         launchUrl(
           Uri.parse('https://userorient.com'),

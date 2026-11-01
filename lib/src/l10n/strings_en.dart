@@ -98,4 +98,10 @@ class StringsEn extends UserOrientStrings {
 
   @override
   String yearsAgo(int n) => '$n years ago';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get vote => 'Vote';
 }

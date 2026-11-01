@@ -98,4 +98,10 @@ class StringsZh extends UserOrientStrings {
 
   @override
   String yearsAgo(int n) => '$n 年前';
+
+  @override
+  String get close => '关闭';
+
+  @override
+  String get vote => '投票';
 }

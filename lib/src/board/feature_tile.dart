@@ -8,6 +8,7 @@ import 'package:userorient_flutter/src/data/feature.dart';
 import 'package:userorient_flutter/src/data/label.dart';
 import 'package:userorient_flutter/src/kit/palette.dart';
 import 'package:userorient_flutter/src/kit/skeleton.dart';
+import 'package:userorient_flutter/src/kit/tappable.dart';
 import 'package:userorient_flutter/src/stage/stage.dart';
 import 'package:userorient_flutter/src/userorient_scope.dart';
 
@@ -38,11 +39,11 @@ class FeatureTile extends StatelessWidget {
       );
     }
 
-    return GestureDetector(
+    return Tappable(
       onTap: () {
         Stage.of(context).push(context, CommentsScreen(feature: feature));
       },
-      behavior: HitTestBehavior.translucent,
+      focusRadius: BorderRadius.circular(8),
       child: Padding(
         key: ValueKey(feature.id),
         padding: const EdgeInsets.symmetric(vertical: 12),

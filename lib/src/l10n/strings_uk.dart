@@ -99,4 +99,10 @@ class StringsUk extends UserOrientStrings {
 
   @override
   String yearsAgo(int n) => '$n років тому';
+
+  @override
+  String get close => 'Закрити';
+
+  @override
+  String get vote => 'Голосувати';
 }

@@ -60,6 +60,8 @@ abstract class UserOrientStrings {
   String get next;
   String get invalidEmail;
   String get emailRequired;
+  String get close;
+  String get vote;
   String get justNow;
   String get someTimeAgo;
   String get minuteAgo;

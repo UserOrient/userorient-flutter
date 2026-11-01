@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:userorient_flutter/src/kit/palette.dart';
+import 'package:userorient_flutter/src/kit/tappable.dart';
 
 enum IconAffinity { leading, trailing }
 
@@ -26,13 +27,9 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     final Palette palette = context.palette;
 
-    return GestureDetector(
-      onTap: () {
-        if (!busy && !disabled) {
-          onPressed();
-        }
-      },
-      behavior: HitTestBehavior.translucent,
+    return Tappable(
+      onTap: busy || disabled ? null : onPressed,
+      focusRadius: BorderRadius.circular(26),
       child: Container(
         height: 52,
         padding: const EdgeInsets.symmetric(horizontal: 24),

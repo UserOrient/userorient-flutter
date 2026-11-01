@@ -98,4 +98,10 @@ class StringsAr extends UserOrientStrings {
 
   @override
   String yearsAgo(int n) => 'منذ $n سنوات';
+
+  @override
+  String get close => 'إغلاق';
+
+  @override
+  String get vote => 'تصويت';
 }

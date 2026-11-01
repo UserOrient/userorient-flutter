@@ -100,4 +100,10 @@ class StringsFr extends UserOrientStrings {
 
   @override
   String yearsAgo(int n) => 'Il y a $n ans';
+
+  @override
+  String get close => 'Fermer';
+
+  @override
+  String get vote => 'Voter';
 }

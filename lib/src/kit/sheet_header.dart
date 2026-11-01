@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:userorient_flutter/src/kit/palette.dart';
+import 'package:userorient_flutter/src/kit/tappable.dart';
+import 'package:userorient_flutter/src/l10n/userorient_strings.dart';
 import 'package:userorient_flutter/src/stage/stage.dart';
 
 /// The large title every sheet opens with, with its own dismiss.
@@ -42,9 +44,10 @@ class _CloseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Tappable(
       onTap: () => Stage.dismiss(context),
-      behavior: HitTestBehavior.opaque,
+      tooltip: UserOrientStrings.of(context).close,
+      focusRadius: BorderRadius.circular(16),
       child: Container(
         width: 32,
         height: 32,

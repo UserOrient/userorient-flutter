@@ -100,4 +100,10 @@ class StringsRu extends UserOrientStrings {
 
   @override
   String yearsAgo(int n) => '$n лет назад';
+
+  @override
+  String get close => 'Закрыть';
+
+  @override
+  String get vote => 'Голосовать';
 }

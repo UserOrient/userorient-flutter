@@ -98,4 +98,10 @@ class StringsAz extends UserOrientStrings {
 
   @override
   String yearsAgo(int n) => '$n il əvvəl';
+
+  @override
+  String get close => 'Bağla';
+
+  @override
+  String get vote => 'Səs ver';
 }

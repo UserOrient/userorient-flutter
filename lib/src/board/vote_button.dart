@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:userorient_flutter/src/data/feature.dart';
 import 'package:userorient_flutter/src/kit/palette.dart';
+import 'package:userorient_flutter/src/kit/tappable.dart';
+import 'package:userorient_flutter/src/l10n/userorient_strings.dart';
 import 'package:userorient_flutter/src/userorient_scope.dart';
 
 /// The square to the left of every feature: an arrow and the vote count,
@@ -43,7 +45,9 @@ class VoteButton extends StatelessWidget {
       );
     }
 
-    return GestureDetector(
+    return Tappable(
+      tooltip: UserOrientStrings.of(context).vote,
+      focusRadius: BorderRadius.circular(12),
       onTap: () {
         UserOrientScope.of(context).board.toggleVote(feature);
 
@@ -53,7 +57,6 @@ class VoteButton extends StatelessWidget {
           HapticFeedback.mediumImpact();
         }
       },
-      behavior: HitTestBehavior.translucent,
       child: _Box(
         color: feature.voted ? palette.accent : palette.muted,
         child: Column(

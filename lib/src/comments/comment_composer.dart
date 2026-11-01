@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:userorient_flutter/src/comments/comments_model.dart';
 import 'package:userorient_flutter/src/kit/palette.dart';
 import 'package:userorient_flutter/src/kit/spinner.dart';
+import 'package:userorient_flutter/src/kit/tappable.dart';
 import 'package:userorient_flutter/src/kit/text_area.dart';
 import 'package:userorient_flutter/src/l10n/userorient_strings.dart';
 
@@ -57,80 +58,86 @@ class _CommentComposerState extends State<CommentComposer> {
     final Palette palette = context.palette;
     final bool isEmpty = _controller.text.isEmpty;
 
+    // The whole pill focuses the field, and reads as text on hover.
     return GestureDetector(
       onTap: _focusNode.requestFocus,
       behavior: HitTestBehavior.translucent,
-      child: Container(
-        height: 52,
-        alignment: Alignment.center,
-        margin: EdgeInsets.only(
-          left: 20,
-          right: 20,
-          bottom: isEmpty && !_focusNode.hasFocus ? 16 : 0,
-        ),
-        padding: const EdgeInsets.fromLTRB(18, 0, 8, 0),
-        decoration: BoxDecoration(
-          color: palette.field,
-          borderRadius: BorderRadius.circular(26),
-        ),
-        child: Stack(
+      child: MouseRegion(
+        cursor: SystemMouseCursors.text,
+        child: Container(
+          height: 52,
           alignment: Alignment.center,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: EditableText(
-                    controller: _controller,
-                    focusNode: _focusNode,
-                    style: TextStyle(fontSize: 16, color: palette.text),
-                    textCapitalization: TextCapitalization.sentences,
-                    inputFormatters: const [SentenceCaseFormatter()],
-                    cursorColor: palette.text,
-                    backgroundCursorColor: Colors.transparent,
-                    onSubmitted: (_) => _send(),
-                    textInputAction: TextInputAction.done,
-                  ),
-                ),
-                if (!isEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: GestureDetector(
-                      onTap: _send,
-                      behavior: HitTestBehavior.translucent,
-                      child: Container(
-                        width: 38,
-                        height: 38,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: palette.accent,
-                          shape: BoxShape.circle,
-                        ),
-                        child: _isSending
-                            ? Spinner.small(color: palette.onAccent)
-                            : SvgPicture.asset(
-                                'assets/add-comment.svg',
-                                package: 'userorient_flutter',
-                                width: 24,
-                                height: 24,
-                                colorFilter: ColorFilter.mode(
-                                  palette.onAccent,
-                                  BlendMode.srcIn,
-                                ),
-                              ),
-                      ),
+          margin: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            bottom: isEmpty && !_focusNode.hasFocus ? 16 : 0,
+          ),
+          padding: const EdgeInsets.fromLTRB(18, 0, 8, 0),
+          decoration: BoxDecoration(
+            color: palette.field,
+            borderRadius: BorderRadius.circular(26),
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: EditableText(
+                      controller: _controller,
+                      focusNode: _focusNode,
+                      style: TextStyle(fontSize: 16, color: palette.text),
+                      textCapitalization: TextCapitalization.sentences,
+                      inputFormatters: const [SentenceCaseFormatter()],
+                      cursorColor: palette.text,
+                      backgroundCursorColor: Colors.transparent,
+                      onSubmitted: (_) => _send(),
+                      textInputAction: TextInputAction.done,
                     ),
                   ),
-              ],
-            ),
-            if (isEmpty)
-              Positioned(
-                left: 0,
-                child: Text(
-                  UserOrientStrings.of(context).commentHint,
-                  style: TextStyle(fontSize: 16, color: palette.secondaryText),
-                ),
+                  if (!isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Tappable(
+                        onTap: _isSending ? null : _send,
+                        tooltip: UserOrientStrings.of(context).send,
+                        focusRadius: BorderRadius.circular(19),
+                        child: Container(
+                          width: 38,
+                          height: 38,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: palette.accent,
+                            shape: BoxShape.circle,
+                          ),
+                          child: _isSending
+                              ? Spinner.small(color: palette.onAccent)
+                              : SvgPicture.asset(
+                                  'assets/add-comment.svg',
+                                  package: 'userorient_flutter',
+                                  width: 24,
+                                  height: 24,
+                                  colorFilter: ColorFilter.mode(
+                                    palette.onAccent,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
-          ],
+              if (isEmpty)
+                Positioned(
+                  left: 0,
+                  child: Text(
+                    UserOrientStrings.of(context).commentHint,
+                    style:
+                        TextStyle(fontSize: 16, color: palette.secondaryText),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
