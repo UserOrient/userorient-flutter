@@ -46,7 +46,7 @@ class _CloseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Tappable(
       onTap: () => Stage.dismiss(context),
-      tooltip: UserOrientStrings.of(context).close,
+      semanticLabel: UserOrientStrings.of(context).close,
       focusRadius: BorderRadius.circular(16),
       child: Container(
         width: 32,

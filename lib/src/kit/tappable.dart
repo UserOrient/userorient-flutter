@@ -5,14 +5,14 @@ import 'package:userorient_flutter/src/kit/palette.dart';
 /// Anything the user can press, other than text fields.
 class Tappable extends StatefulWidget {
   final VoidCallback? onTap;
-  final String? tooltip;
+  final String? semanticLabel;
   final BorderRadius focusRadius;
   final Widget child;
 
   const Tappable({
     super.key,
     required this.onTap,
-    this.tooltip,
+    this.semanticLabel,
     this.focusRadius = BorderRadius.zero,
     required this.child,
   });
@@ -32,7 +32,7 @@ class _TappableState extends State<Tappable> {
 
   @override
   Widget build(BuildContext context) {
-    Widget result = FocusableActionDetector(
+    final Widget detector = FocusableActionDetector(
       enabled: _enabled,
       mouseCursor: _enabled ? SystemMouseCursors.click : MouseCursor.defer,
       onShowFocusHighlight: _setFocusHighlight,
@@ -64,15 +64,11 @@ class _TappableState extends State<Tappable> {
       ),
     );
 
-    final String? tooltip = widget.tooltip;
-    if (tooltip != null) {
-      result = Tooltip(message: tooltip, child: result);
-    }
-
     return Semantics(
       button: true,
       enabled: _enabled,
-      child: result,
+      label: widget.semanticLabel,
+      child: detector,
     );
   }
 }

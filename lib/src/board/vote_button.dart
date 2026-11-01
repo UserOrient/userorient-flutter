@@ -46,7 +46,7 @@ class VoteButton extends StatelessWidget {
     }
 
     return Tappable(
-      tooltip: UserOrientStrings.of(context).vote,
+      semanticLabel: UserOrientStrings.of(context).vote,
       focusRadius: BorderRadius.circular(12),
       onTap: () {
         UserOrientScope.of(context).board.toggleVote(feature);

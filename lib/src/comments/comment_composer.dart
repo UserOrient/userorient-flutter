@@ -100,7 +100,7 @@ class _CommentComposerState extends State<CommentComposer> {
                       padding: const EdgeInsets.only(left: 10),
                       child: Tappable(
                         onTap: _isSending ? null : _send,
-                        tooltip: UserOrientStrings.of(context).send,
+                        semanticLabel: UserOrientStrings.of(context).send,
                         focusRadius: BorderRadius.circular(19),
                         child: Container(
                           width: 38,
