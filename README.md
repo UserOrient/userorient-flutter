@@ -26,7 +26,10 @@ dependencies:
 import 'package:userorient_flutter/userorient_flutter.dart';
 
 void main() {
-  UserOrient.configure(apiKey: 'YOUR_API_KEY');
+  UserOrient.configure(
+    apiKey: 'YOUR_API_KEY',
+  );
+
   runApp(MyApp());
 }
 ```
@@ -38,13 +41,6 @@ UserOrient.openBoard(context);
 ```
 
 That's it. Your users can now vote, comment and suggest features.
-
-## How it looks
-
-- **Fits your app.** It uses your app's font and follows its light or dark mode.
-- **Native on every platform.** A sheet on phones, a side panel on web and desktop.
-- **One entry point.** Users suggest features from inside the board, so they see what's already there before adding a duplicate.
-- **Reviewed before it's public.** New suggestions go to you first until you accept and publish it.
 
 ## Options
 
