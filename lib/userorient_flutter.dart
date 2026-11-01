@@ -1,5 +1,5 @@
 /// Flutter SDK for UserOrient — embeddable feature voting and feedback board.
-library userorient_flutter;
+library;
 
 export 'src/logic/user_orient.dart';
 export 'src/models/collection_mode.dart';
