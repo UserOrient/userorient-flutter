@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -40,6 +41,11 @@ class _CommentComposerState extends State<CommentComposer> {
 
   void _rebuild() => setState(() {});
 
+  static bool get _hasSoftKeyboard => switch (defaultTargetPlatform) {
+        TargetPlatform.android || TargetPlatform.iOS => true,
+        _ => false,
+      };
+
   Future<void> _send() async {
     final String content = _controller.text;
     if (content.isEmpty || _isSending) return;
@@ -70,7 +76,10 @@ class _CommentComposerState extends State<CommentComposer> {
           margin: EdgeInsets.only(
             left: 20,
             right: 20,
-            bottom: isEmpty && !_focusNode.hasFocus ? 16 : 0,
+            // On touch screens the keyboard brings its own spacing, so the
+            // gap closes while typing. Elsewhere it never moves.
+            bottom:
+                _hasSoftKeyboard && (!isEmpty || _focusNode.hasFocus) ? 0 : 16,
           ),
           padding: const EdgeInsets.fromLTRB(18, 0, 8, 0),
           decoration: BoxDecoration(
